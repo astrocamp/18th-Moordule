@@ -105,7 +105,7 @@ Logo:Design.com, Illustrator
 
 ---
 
-鄧鈺馨 Cindy [GitHub](https://github.com/YuHsinTengCindy)  
+🌟鄧鈺馨 Cindy [GitHub](https://github.com/YuHsinTengCindy)  
 團隊負責：書記
 
 柳澤豐 Richard [GitHub](https://github.com/richart-coder)  
