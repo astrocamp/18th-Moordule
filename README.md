@@ -125,4 +125,4 @@ Logo:Design.com, Illustrator
 團隊負責：書記
 
 王廷安 [GitHub](https://github.com/Tingan111)  
-團隊負責：測試負責人
+團隊負責：測試負責人 2
