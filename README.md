@@ -122,7 +122,7 @@ Logo:Design.com, Illustrator
 🌟 張家瑞 Gary [GitHub](https://github.com/Gary0306)  
 團隊負責：溝通員
 
-陳思妤 Emma [GitHub](https://github.com/Emma-EC)  
+🌎 陳思妤 Emma [GitHub](https://github.com/Emma-EC)  
 團隊負責：書記
 
 王廷安 [GitHub](https://github.com/Tingan111)  
