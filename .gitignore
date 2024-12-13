@@ -1,0 +1,6 @@
+static/
+**/__pycache__/
+README.md/
+
+.venv/
+.env/
