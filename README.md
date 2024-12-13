@@ -71,18 +71,20 @@ TODO xxx
 ---
 
 git clone https://github.com/astrocamp/18th-Moordule.git(將專案複製到本地)  
-cd 18th-Moordule(進入專案目錄)  
-//
-poetry install(安裝 Poetry 相關套件)
-npm install(安裝 npm 相關套件)
-建立.env(設定環境變數)
-//?
+cd 18th-Moordule(進入專案目錄)
+
+- poetry 輸出 requirements.txt:
+  poetry export -f requirements.txt --output requirements.txt
+- 安裝所有套件: poetry install
 
 ## 執行環境
 
----
-
-npm run dev?
+- 開啟開發伺服器: poetry run python manage.py runserver
+- 啟動 css 打包: npm run css
+- 啟動 js 打包: npm run js
+- 產生資料庫: poetry run python manage.py makemigrations
+- 運行資料庫遷移: poetry run python manage.py migrate
+- 建立應用程式: poetry run python manage.py startapp ${app_dir}
 
 ## 技術使用
 
