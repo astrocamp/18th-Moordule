@@ -108,7 +108,7 @@ Logo:Design.com, Illustrator
 鄧鈺馨 Cindy [GitHub](https://github.com/YuHsinTengCindy)  
 團隊負責：書記
 
-柳澤豐 Richard [GitHub](https://github.com/richart-coder)  
+柳澤豐 RichardT [GitHub](https://github.com/richart-coder)  
 團隊負責：技術負責人
 
 - 資料庫
