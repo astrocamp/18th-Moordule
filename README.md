@@ -118,7 +118,7 @@ Logo:Design.com, Illustrator
 
 - logo 製作
 
-張家瑞 Gary [GitHub](https://github.com/Gary0306)  
+🌟 張家瑞 Gary [GitHub](https://github.com/Gary0306)  
 團隊負責：溝通員
 
 陳思妤 Emma [GitHub](https://github.com/Emma-EC)  
