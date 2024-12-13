@@ -117,6 +117,7 @@ Logo:Design.com, Illustrator
 團隊負責：小組長
 
 - logo 製作
+- 建立 flow chart
 
 張家瑞 Gary [GitHub](https://github.com/Gary0306)  
 團隊負責：溝通員
