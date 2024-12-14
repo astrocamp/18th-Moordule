@@ -105,7 +105,7 @@ Logo:Design.com, Illustrator
 
 ---
 
-🌟鄧鈺馨 Cindy [GitHub](https://github.com/YuHsinTengCindy)  
+🌟 鄧鈺馨 Cindy [GitHub](https://github.com/YuHsinTengCindy)  
 團隊負責：書記
 
 柳澤豐 Richard [GitHub](https://github.com/richart-coder)  
@@ -118,6 +118,7 @@ Logo:Design.com, Illustrator
 
 - logo 製作
 - 建立 flow chart
+- 設計頁面
 
 🌟 張家瑞 Gary [GitHub](https://github.com/Gary0306)  
 團隊負責：溝通員
