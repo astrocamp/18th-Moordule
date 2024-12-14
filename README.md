@@ -1,6 +1,6 @@
 # Moordule 多揪
 
-### 揪朋友 來多揪 越揪越多好朋友
+### 揪朋友 來多揪 越揪越多好朋友 123
 
 ![moordule]()
 TODO 照片網址
@@ -105,7 +105,7 @@ Logo:Design.com, Illustrator
 
 ---
 
-鄧鈺馨 Cindy [GitHub](https://github.com/YuHsinTengCindy)  
+🌟 鄧鈺馨 Cindy [GitHub](https://github.com/YuHsinTengCindy)  
 團隊負責：書記
 
 柳澤豐 Richard [GitHub](https://github.com/richart-coder)  
@@ -117,11 +117,13 @@ Logo:Design.com, Illustrator
 團隊負責：小組長
 
 - logo 製作
+- 建立 flow chart
+- 設計頁面
 
-張家瑞 Gary [GitHub](https://github.com/Gary0306)  
+🌟 張家瑞 Gary [GitHub](https://github.com/Gary0306)  
 團隊負責：溝通員
 
-陳思妤 Emma [GitHub](https://github.com/Emma-EC)  
+🌎 陳思妤 Emma [GitHub](https://github.com/Emma-EC)  
 團隊負責：書記
 
 王廷安 [GitHub](https://github.com/Tingan111)  
