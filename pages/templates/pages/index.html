@@ -8,6 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Moordule</title>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
     <style>
         * {
             margin: 0;
@@ -52,21 +53,22 @@
 
         .nav-links a.active {
             background-color: #F6D246; /* Yellow */
-            color: black;
+            color: white;
             border-radius: 50px;
             padding: 10px 20px;
+           
         }
 
 
         .nav-links a.login {
             background-color: #F78888; /* Pink */
-            color: black;
+            color: white;
             border-radius: 50px;
         }
 
         .nav-links a.register {
             background-color: #5DA2D5; /* Blue */
-            color: black;
+            color: white;
             border-radius: 50px;
         }
 
@@ -171,6 +173,14 @@
             margin-bottom: 21px;
         }
 
+        .fi-rr-search-heart {
+            opacity: 0.5; /* 设置透明度为50% */
+        }
+        
+        .fi-rr-search-heart {
+            color: rgba(0, 0, 0, 0.5); /* 设置字体颜色为半透明黑色 */
+        }
+
         .buttons {
             display: flex;
             justify-content: center;
@@ -190,12 +200,12 @@
 
         .btn-login {
             background-color: #F6D246;
-            color: #000;
+            color: #fff;
         }
 
         .btn-register {
             background-color: #5DA2D5;
-            color: #000;
+            color: #fff;
         }
     </style>
 </head>
@@ -203,12 +213,13 @@
     <!-- Navigation -->
     <nav class="navbar">
         <div class="logo">
-            <img src="logo.png" alt="MOODGELE Logo">
+            <img src="logo.png" alt="MOORDULE Logo">
+            <img src="logo-word.png" alt="Moordule 多揪" class="logo">
         </div>
         <div class="nav-links">
             <div class="search-bar">
                 <input type="text" placeholder="我想要揪...">
-                <img src="search-icon.png" alt="Search Icon">
+                <i class="fi fi-rr-search-heart"></i>
             </div clas="nav-links">
             <a href="#" class="active">活動</a>
             <a href="#" class="login">登入</a>
@@ -246,8 +257,4 @@
     </div>
 </body>
 </html>
-
-
-
-
 {% endblock content %}
