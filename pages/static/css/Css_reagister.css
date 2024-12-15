@@ -144,15 +144,15 @@ h1 {
 .register-form {
   display: flex;
   flex-direction: column; /* 垂直排列表單內容 */
-  width: 100%; /* 表單填滿父容器 */
+  width: 100%; 
   max-width: 500px; /* 設置最大寬度，防止過寬 */
   margin: auto; /* 表單居中顯示 */
  
 }
 
 .register-form input {
-  width: 80%; /* 輸入框填滿父容器 */
-  padding: 4px 20px; /* 上下12px，左右15px，增加內邊距 */
+  width: 80%; /* 輸入框填滿容器設定 */
+  padding: 4px 20px; 
   font-size: 16px; /* 字體大小，增加可讀性 */
   border: 1px solid #ccc; /* 輸入框邊框顏色 */
   border-radius: 25px; 
@@ -163,7 +163,7 @@ h1 {
 }
 
 .register-form input:focus {
-  border-color: var(--lightblue-color); /* 聚焦時邊框變色 */
+  border-color: var(--lightblue-color); 
   box-shadow: 0 0 5px rgba(144, 204, 244, 0.5); /* 添加陰影效果 */
 }
 
@@ -177,36 +177,36 @@ button[data-role="login"] {
   border: 2px solid white; /* 邊框 */
   border-radius: 25px; /* 邊框圓角 */
   cursor: pointer; /* 指標變為手形 */
-  text-align: center; /* 文字居中 */
+  text-align: center; 
   margin-bottom: 21px;
 }
 
 /* 註冊按鈕樣式 */
 button[data-role="register"] {
   background-color: var(--lightblue-color); /* 註冊按鈕的背景顏色 */
-  box-shadow: 0 0 0 4px var(--lightblue-color); /* 外層框陰影，讓邊框更突出 */
+  box-shadow: 0 0 0 4px var(--lightblue-color); 
 }
 
 button[data-role="register"]:hover {
-  background-color: #478bb1; /* 鼠標懸停時背景顏色變暗 */
+  background-color: #478bb1; 
   transform: scale(1.1); /* 放大 10% */
 }
 
 /* 登入按鈕樣式 */
 button[data-role="login"] {
   background-color: var(--yellow-color); 
-  box-shadow: 0 0 0 4px var(--yellow-color);  /* 外層框陰影，讓邊框更突出 */
+  box-shadow: 0 0 0 4px var(--yellow-color);  
 }
 
 button[data-role="login"]:hover {
-  background-color: #f4c72e; /* 鼠標懸停時背景顏色變暗 */
-  
+  background-color: #f4c72e; /* 背景顏色變暗 */
+  transform: scale(1.1); /* 放大 10% */
 }
 
 /* 按鈕內部文字的顏色 */
 button[data-role="register"] a,
 button[data-role="login"] a {
-  color: white; /* 設定 <a> 標籤文字顏色為白色 */
+  color: white; 
 }
 
   .google-btn {
@@ -294,24 +294,3 @@ button[data-role="login"] a {
 }
 
 
-/* 平板模式調整
-@media (max-width: 1024px) {
-  .nav-container {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .main-logo {
-    width: 40%; LOGO 縮小 
-    margin-bottom: 20px;
-  }
-
-  .welcome-section {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .register-form input {
-    width: 90%;
-  }
-}*/
