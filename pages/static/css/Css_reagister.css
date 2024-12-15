@@ -1,0 +1,317 @@
+/* 全域設定 */
+/* 備著資訊給小組了解跟自己整理,
+提醒自己也提醒大家，正式上線前要記得拔備著 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+:root {
+  --pink-color: #F78888;
+  --yellow-color: #F6D246;
+  --gray-color: #ECECEC;
+  --lightblue-color: #90CCF4;
+  --darkblue-color: #5DA2D5;
+  
+}
+body {
+  font-family: Arial, sans-serif; /* 之後可調整字體 */
+  background-color: white; 
+  line-height: 1.6;
+  
+}
+
+/* 導覽列 */
+nav {
+  background-color: white;
+  border-bottom: 1px solid #ddd;
+  
+}
+
+.nav-container {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.nav-container ul {
+  display: flex;
+  list-style: none;
+}
+
+.nav-container ul li {
+  margin-left: 21px;
+}
+
+.nav-container a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+}
+
+.nav-button {
+  border: none;
+  border-radius: 50%; /* 完全圓形 */
+  width: 50px; /* 固定寬度 */
+  height: 50px; /* 固定高度 */
+  display: flex;
+  justify-content: center; /* 讓文字水平居中 */
+  align-items: center; /* 讓文字垂直居中 */
+  cursor: pointer;  /* 轉手圖案 */
+  color: white; /* 文字顏色 */
+  font-weight: bold; /* 文字粗體 */
+}
+.nav-button:hover{
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* hover添加陰影 */
+}
+
+/* 按鈕背景顏色 */
+.activity {
+  background-color: var(--pink-color);
+}
+
+.login {
+  background-color: var(--yellow-color);
+}
+
+.about {
+  background-color: var(--gray-color);
+}
+
+
+/* 輸入框樣式 */
+.nav-container input[type="text"] {
+  padding: 8px 12px;
+  border-radius: 15px;
+  border: none;
+  outline: none;
+  background-color: var(--gray-color);
+}
+
+
+
+.logo {
+  height: 50px; /* LOGO先撐高圖尺寸 */
+  margin: 0 21px;
+}
+.main-logo img {
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+
+/* 主要內容區塊，設定為Flexbox */
+.content-container {
+   display: flex;
+   align-items: center;
+   max-width: 1200px;
+   margin: auto;
+  justify-content: space-between;
+  padding: 20px;
+       gap: 21px;
+}
+
+/* 左側區塊 */
+.for-left-form {
+  width: 50%;
+  text-align: center;
+}
+/* 左側區塊 */
+.for-right-form {
+  width: 50%;
+  text-align: center;
+}
+/* 右側表單區域 */
+.welcome-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+h1 {
+  font-size: 38px;
+  margin-bottom: 21px;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column; /* 垂直排列表單內容 */
+  width: 100%; /* 表單填滿父容器 */
+  max-width: 500px; /* 設置最大寬度，防止過寬 */
+  margin: auto; /* 表單居中顯示 */
+ 
+}
+
+.register-form input {
+  width: 80%; /* 輸入框填滿父容器 */
+  padding: 4px 20px; /* 上下12px，左右15px，增加內邊距 */
+  font-size: 16px; /* 字體大小，增加可讀性 */
+  border: 1px solid #ccc; /* 輸入框邊框顏色 */
+  border-radius: 25px; 
+  outline: none; /* 移除預設的外框 */
+  background-color: var(--gray-color);
+  margin: auto; 
+  margin-bottom: 21px;
+}
+
+.register-form input:focus {
+  border-color: var(--lightblue-color); /* 聚焦時邊框變色 */
+  box-shadow: 0 0 5px rgba(144, 204, 244, 0.5); /* 添加陰影效果 */
+}
+
+
+/* 按鈕樣式統一 */
+button[data-role="register"],
+button[data-role="login"] {
+  color: white; /* 文字顏色白色 */
+  font-size: 16px; /* 字型大小 */
+  padding: 1px 21px; 
+  border: 2px solid white; /* 邊框 */
+  border-radius: 25px; /* 邊框圓角 */
+  cursor: pointer; /* 指標變為手形 */
+  text-align: center; /* 文字居中 */
+  margin-bottom: 21px;
+}
+
+/* 註冊按鈕樣式 */
+button[data-role="register"] {
+  background-color: var(--lightblue-color); /* 註冊按鈕的背景顏色 */
+  box-shadow: 0 0 0 4px var(--lightblue-color); /* 外層框陰影，讓邊框更突出 */
+}
+
+button[data-role="register"]:hover {
+  background-color: #478bb1; /* 鼠標懸停時背景顏色變暗 */
+  transform: scale(1.1); /* 放大 10% */
+}
+
+/* 登入按鈕樣式 */
+button[data-role="login"] {
+  background-color: var(--yellow-color); 
+  box-shadow: 0 0 0 4px var(--yellow-color);  /* 外層框陰影，讓邊框更突出 */
+}
+
+button[data-role="login"]:hover {
+  background-color: #f4c72e; /* 鼠標懸停時背景顏色變暗 */
+  
+}
+
+/* 按鈕內部文字的顏色 */
+button[data-role="register"] a,
+button[data-role="login"] a {
+  color: white; /* 設定 <a> 標籤文字顏色為白色 */
+}
+
+  .google-btn {
+  display: block;
+  width: 40%;
+  max-width: 400px;
+  margin-bottom: 21px;
+  padding: 10px;
+  background-color: var(--darkblue-color); 
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.divider {
+  margin-bottom: 21px;
+  font-weight: bold;
+}
+
+.already-account {
+  margin-bottom: 21px;
+}
+
+.login-link {
+  color: var(--yellow-color);
+  font-weight: bold;
+}
+
+/* 使用者好評 */
+.user-reviews {
+  display: flex;
+  justify-content: center;
+  gap: 21px;
+  padding: 21px;
+}
+
+.review-box {
+  background: white;
+  padding: 21px;
+  border: 1px solid black;
+  border-radius: 10px;
+  width: 220px;
+  height: 250px;
+  text-align: center;
+  display: flex;
+  justify-content: center; /* 水平居中 */
+  align-items: center; /* 垂直居中 */
+}
+.main-logo {
+  display: block; 
+}
+
+
+@media (max-width: 768px) {
+  .content-container {
+    flex-direction: column; /* 手機模式：上下排列 */
+    align-items: center;
+    gap: 21px;
+  }
+
+
+  .main-logo.logo-02 {
+    display: none;
+  }
+  .user-reviews{
+    display: none;
+  }
+  .for-right-form {
+    width: 70%; /* 讓註冊區塊填滿畫面 */
+  }
+
+  .register-form input,
+  button[data-role="register"],
+  button[data-role="login"],
+  .google-btn {
+    width: 90%; /* 表單和按鈕填滿螢幕寬度 */
+    margin: 10px auto;
+  }
+
+  h1 {
+    font-size: 28px; /* 標題字體縮小 */
+    text-align: center;
+  }
+}
+
+
+/* 平板模式調整
+@media (max-width: 1024px) {
+  .nav-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .main-logo {
+    width: 40%; LOGO 縮小 
+    margin-bottom: 20px;
+  }
+
+  .welcome-section {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .register-form input {
+    width: 90%;
+  }
+}*/
