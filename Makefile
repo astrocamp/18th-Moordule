@@ -1,23 +1,47 @@
+.PHONY: start migrations migrate startapp precommit
+
 shell:
-	python manage.py shell
+	poetry run python manage.py shell
 	
 start:
-	python manage.py runserver
+	poetry run python manage.py runserver
 
 migrations:
-	python manage.py makemigrations
+	poetry run python manage.py makemigrations
 
 migrate:
-	python manage.py migrate
+	poetry run python manage.py migrate
 
-startapp: 
-	python manage.py startapp ${name}
+startapp:
+	poetry run python manage.py startapp ${name}
 
 precommit:
+	poetry run pre-commit run --all-files
+
+commit:
+	poetry run cz commit
+
+
+# 雷雷的python指令
+
+intoshell:
+	python manage.py shell
+	
+server:
+	python manage.py runserver
+
+migration:
+	python manage.py makemigrations
+
+mi:
+	python manage.py migrate
+
+startapps: 
+	python manage.py startapp ${name}
+
+precommits:
 	pre-commit run --all-files
 
-commit: 
+commits: 
 	cz commit
 
-# 先加入要提交的文件 - git add .
-# 然後使用 commitizen - poetry run cz commit
