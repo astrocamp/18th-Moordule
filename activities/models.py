@@ -3,22 +3,6 @@ from django.conf import settings
 from django.utils import timezone
 
 class Activity(models.Model):
-    # """
-    # Activity
-    # 欄位說明：
-    # - title: 活動名稱或主題。
-    # - description: 活動描述。
-    # - location_area: 活動所在區域(如台北市信義區)
-    # - start_time, end_time: 活動開始與結束時間。
-    # - max_participants: 活動限制的人數上限。
-    # - creator: 活動創建者(透過外部User或Member模型)。
-    # - created_at: 活動建立時間。
-
-    # 後續擴充可以新增：
-    # - tags、image、budget_type、event_type等欄位。
-    # - 參加者中介模型(Participation)、留言模型(Comment)、回饋模型(Feedback)。
-    # - 金流相關(Wallet等)。
-    # """
 
     title = models.CharField(max_length=100, help_text="活動標題")
     description = models.TextField(help_text="活動描述", blank=True)
