@@ -1,12 +1,6 @@
 {% extends "base/layout.html" %}
 <!---->
-{% block content %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moordule</title>
+{% block head %}
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
     <style>
         * {
@@ -168,7 +162,7 @@
 
         .content-section p {
             font-size: 20px;
-            color: #black;
+            color: black;
             margin-bottom: 21px;
         }
 
@@ -207,8 +201,10 @@
             color: #fff;
         }
     </style>
-</head>
-<body>
+{% endblock head %}
+
+
+{% block content %}
     <!-- Navigation -->
     <nav class="navbar">
         <div class="logo">

@@ -23,3 +23,13 @@ commit:
 
 # 先加入要提交的文件 - git add .
 # 然後使用 commitizen - poetry run cz commit
+
+server:
+	python manage.py runserver
+
+migtion:
+	python manage.py makemigrations
+
+mig:
+	python manage.py migrate
+
