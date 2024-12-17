@@ -22,9 +22,7 @@ class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
     avatar_url = models.CharField(max_length=255, blank=True, null=True)
     live_in = models.CharField(max_length=255, blank=True, null=True)
-    hobby_id = models.ForeignKey(
-        Hobby, on_delete=models.SET_NULL, blank=True, null=True
-    )
+    hobby = models.ForeignKey(Hobby, on_delete=models.SET_NULL, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     USERNAME_FIELD = "email"
