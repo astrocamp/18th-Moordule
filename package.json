@@ -1,16 +1,18 @@
 {
-	"name": "moordule",
-	"version": "1.0.0",
-	"description": "poetry export --format requirements.txt --output requirements.txt",
-	"main": "index.js",
-	"scripts": {
-		"js": "esbuild ./src/script/main.js --bundle --outfile=static/dist/bundle.js --watch",
-		"css": "tailwindcss -i ./src/style/main.css -o ./static/dist/bundle.css --watch"
-	},
-	"author": "",
-	"license": "ISC",
-	"devDependencies": {
-		"esbuild": "0.24.0",
-		"tailwindcss": "^3.4.16"
-	}
+  "name": "moordule",
+  "version": "1.0.0",
+  "description": "poetry export --format requirements.txt --output requirements.txt",
+  "main": "index.js",
+  "scripts": {
+    "js": "esbuild ./src/script/main.js --bundle --outfile=static/dist/bundle.js --watch",
+    "css": "tailwindcss -i ./src/style/main.css -o ./static/dist/bundle.css --watch",
+    "dev": "npm-run-all --parallel css js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "esbuild": "0.24.0",
+    "npm-run-all": "^4.1.5",
+    "tailwindcss": "^3.4.16"
+  }
 }
