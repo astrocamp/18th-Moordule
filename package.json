@@ -5,17 +5,27 @@
 	"main": "index.js",
 	"scripts": {
 		"js": "esbuild ./src/script/main.js --bundle --outfile=static/dist/bundle.js --watch",
+<<<<<<< HEAD
 		"css": "tailwindcss -i ./src/style/main.css -o ./static/dist/bundle.css --watch"
+=======
+		"css": "tailwindcss -i ./src/style/main.css -o ./static/dist/bundle.css --watch",
+		"dev": "npm-run-all --parallel css js"
+>>>>>>> b3c40a8 (feat(CustomUserModel): 初始化使用者模型)
 	},
 	"author": "",
 	"license": "ISC",
 	"devDependencies": {
 		"esbuild": "0.24.0",
+<<<<<<< HEAD
 		"tailwindcss": "^3.4.16"
 	},
 	"dependencies": {
 		"alpinejs": "^3.14.7",
 		"htmx.org": "^2.0.4",
 		"zxcvbn": "^4.4.2"
+=======
+		"npm-run-all": "^4.1.5",
+		"tailwindcss": "^3.4.16"
+>>>>>>> b3c40a8 (feat(CustomUserModel): 初始化使用者模型)
 	}
 }

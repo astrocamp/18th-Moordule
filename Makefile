@@ -1,7 +1,9 @@
-.PHONY: start migrations migrate startapp precommit
+
+.PHONY: shell start migrations migrate startapp precommit commit
+
 
 shell:
-	poetry run python manage.py shell
+  poetry run python manage.py shell
 	
 start:
 	poetry run python manage.py runserver

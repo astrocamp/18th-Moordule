@@ -1,7 +1,8 @@
 static/
 **/__pycache__/
-README.md
+node_modules/
 
+.env
 .venv/
 .env
 
