@@ -1,0 +1,13 @@
+{% extends "base/layout.html" %}{% block content %}
+
+<h1>方案名稱{{ .name }}</h1>
+
+<h2>金額＄{{ .price }}</h2>
+
+<ul>
+  <li>方案內容{{ .i}}</li>
+</ul>
+
+<a href="{% url 'cashflows:purchaes' %}"><button>購買</button></a>
+
+{% endblock content %}
