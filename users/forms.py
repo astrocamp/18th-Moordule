@@ -18,7 +18,7 @@ class UserRegistrationForm(UserCreationForm):
         widget=forms.EmailInput(
             attrs={
                 "type": "email",
-                "pattern": "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$",
+                "pattern": "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}",
                 "title": "請輸入有效的電子郵件地址",
             }
         ),
