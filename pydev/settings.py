@@ -84,8 +84,12 @@ DATABASES = {
         "NAME": os.getenv("POSTGRES_NAME"),
         "USER": os.getenv("POSTGRES_USER"),
         "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
+<<<<<<< Updated upstream
         "HOST": os.getenv("POSTGRES_HOST"),
-        "PORT": os.getenv("POSTGRES_PORT","5433"),
+=======
+        "HOST": os.getenv("POSTGRES_HOST", "localhost"),
+>>>>>>> Stashed changes
+        "PORT": os.getenv("POSTGRES_PORT", "5433"),
     }
 }
 
