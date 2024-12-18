@@ -1,6 +1,7 @@
 {% extends "base/layout.html" %}
 <!---->
 {% block content %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -51,23 +52,22 @@
         }
 
         .nav-links a.active {
-            background-color: #F6D246; /* Yellow */
-            color: white;
+            background-color: #F78888; /* Pink */
+            color: #fff;
             border-radius: 50px;
             padding: 10px 20px;
-           
         }
 
 
-        .nav-links a.login {
-            background-color: #F78888; /* Pink */
-            color: white;
+        .nav-links a.mypage {
+            background-color: #F6D246; /* Yellow */
+            color: #fff;
             border-radius: 50px;
         }
 
-        .nav-links a.register {
+        .nav-links a.logout {
             background-color: #5DA2D5; /* Blue */
-            color: white;
+            color: #fff;
             border-radius: 50px;
         }
 
@@ -192,18 +192,13 @@
             font-size: 18px;
             text-align: center;
             line-height: 45px;
-            border: none;
+            border: 2px solid #F78888;
             cursor: pointer;
             border-radius: 25px;
         }
 
-        .btn-login {
-            background-color: #F6D246;
-            color: #fff;
-        }
-
-        .btn-register {
-            background-color: #5DA2D5;
+        .btn-findactivities {
+            background-color: #F78888;
             color: #fff;
         }
     </style>
@@ -212,7 +207,7 @@
     <!-- Navigation -->
     <nav class="navbar">
         <div class="logo">
-            <img src="logo.png" alt="MOORDULE Logo">
+            <img src="logo.png" alt="MOODGELE Logo">
             <img src="logo-word.png" alt="Moordule 多揪" class="logo">
         </div>
         <div class="nav-links">
@@ -221,8 +216,8 @@
                 <i class="fi fi-rr-search-heart"></i>
             </div clas="nav-links">
             <a href="#" class="active">活動</a>
-            <a href="#" class="login">登入</a>
-            <a href="#" class="register">註冊</a>
+            <a href="#" class="mypage">我的頁面</a>
+            <a href="#" class="logout">登出</a>
         </div>
     </nav>
 
@@ -244,16 +239,19 @@
 
         <!-- Center Content -->
         <div class="content-section">
-            <img src="logo.png" alt="MOODGELE Logo">
+            <img src="logo.png" alt="Moordule Logo">
             <h1>Moordule 多揪</h1>
             <p>揪朋友 來多揪 越多朋友越好揪</p>
             <p>More friends you meet, the more life feels sweeet.</p>
             <div class="buttons">
-                <button class="btn btn-login">登入</button>
-                <button class="btn btn-register">註冊</button>
+                <button class="btn btn-findactivities">找活動</button>
             </div>
         </div>
     </div>
 </body>
 </html>
+
+
+
+
 {% endblock content %}
