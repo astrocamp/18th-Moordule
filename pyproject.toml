@@ -10,7 +10,7 @@ readme = "README.md"
 python = "^3.12"
 django = "^5.1.4"
 psycopg2-binary = "^2.9.10"
-psycopg = {extras = ["binary"], version = "^3.2.3"}
+python-dotenv = "^1.0.1"
 
 
 [tool.poetry.group.dev.dependencies]
