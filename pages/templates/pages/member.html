@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MOOEDULE 多揪</title>
+{%extend "base/layout.html"%}
+
+{%block head%}
     <!-- 引入 Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- 引入 Flaticon 圖示庫 -->
@@ -11,8 +8,11 @@
       rel="stylesheet"
       href="https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css"
     />
-  </head>
-  <body class="bg-gray-100">
+{%enblcok head%}
+
+{%block content%}
+
+  <div class="bg-gray-100">
     <!-- Header Navigation -->
     <header class="bg-white p-5 flex justify-between items-center shadow-md">
       <!-- Logo -->
@@ -115,6 +115,7 @@
 
         <!-- 活動資訊卡 -->
         <div class="bg-white p-4 rounded-lg shadow-lg">
+          <p class="text-gray-500 font-medium text-2xl text-center">已報名的活動</p>
           <div class="w-full h-48 bg-gray-200 rounded-lg flex items-center justify-center">
             <span class="text-gray-500">活動 photo</span>
           </div>
@@ -126,11 +127,11 @@
 
         <!-- 我的錢包 -->
         <div class="bg-white p-4 rounded-lg shadow-lg text-center">
-          <h3 class="text-gray-700 mb-2">我的錢包</h3>
+          <h3 class="text-gray-700 mb-2 text-xl">我的錢包</h3>
           <div class="w-32 h-24 mx-auto bg-yellow-400 rounded-full flex items-center justify-center text-white text-7xl font-small">
             99
           </div>
-          <button class="mt-4 bg-yellow-400 text-white px-8 py-2 rounded-full">
+          <button class="mt-4 bg-yellow-400 text-white text-xl px-8 py-2 rounded-full">
             儲值
           </button>
         </div>
@@ -150,5 +151,6 @@
         </div>
       </div>
     </div>
-  </body>
-</html>
+  </div>
+
+  {%enbock content%}
