@@ -79,14 +79,12 @@ def user_create_view(request: HttpRequest):
         form.save()
         signin_url = reverse("users:signin")
         return HttpResponse("", headers={"HX-Redirect": signin_url})
-        # return HttpResponse("", headers={"HX-Push": "/"})  # 只在成功時設置 URL
-    else:
 
-        return render(
-            request,
-            "users/components/signup_form.html",
-            {"meetups": meetups, "form": form},
-        )
+    return render(
+        request,
+        "users/components/signup_form.html",
+        {"meetups": meetups, "form": form},
+    )
 
 
 @require_POST
