@@ -18,7 +18,7 @@ class Hobby(models.Model):
 
 
 class CustomUser(AbstractUser):
-    username = None
+    username = models.CharField(max_length=150, blank=True, null=True)
     email = models.EmailField(unique=True)
     avatar_url = models.CharField(max_length=255, blank=True, null=True)
     live_in = models.CharField(max_length=255, blank=True, null=True)

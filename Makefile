@@ -3,7 +3,7 @@
 
 
 shell:
-  poetry run python manage.py shell
+	poetry run python manage.py shell
 	
 start:
 	poetry run python manage.py runserver

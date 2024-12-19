@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     "shared",
     "activities",
     "cashflows",
-    "shared",
 ]
 
 MIDDLEWARE = [
@@ -76,7 +75,6 @@ TEMPLATES = [
             ],
             "builtins": [
                 "shared.templatetags.common_components",
-                "shared.templatetags.meetup_components",
             ],
         },
     },
