@@ -4,7 +4,7 @@ node_modules/
 
 .env
 .venv/
-.env
+
 
 node_modules/
 staticfiles/

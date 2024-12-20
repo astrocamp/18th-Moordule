@@ -1,0 +1,25 @@
+{% load static %}
+{% extends 'base/layout.html' %}
+{% block head %}
+    <title>activities</title>
+{% endblock %}
+{% block content %}
+<div>
+    <h1>刪除確認</h1>
+<p>您確定要刪除聚會 <strong>{{ activity.title }}</strong> 嗎？</p>
+<strong>{{ activity.title }}</strong><br>
+                    地址：{{ activity.address }}<br>
+                    開始時間：{{ activity.start_time|date:"Y-m-d H:i" }}<br>
+                    持續時間：{{ activity.duration }} 小時<br>
+                    參加人數上限：{{ activity.max_participants }}<br>
+                    預計結束時間：{{ activity.end_time|date:"Y-m-d H:i" }}<br>
+                    建立時間：{{ activity.created_at|date:"Y-m-d H:i" }}<br>
+                    
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit">確定刪除</button>
+    <a href="{% url 'activities:index' %}">取消</a>
+</form>
+
+</div>
+{% endblock %}

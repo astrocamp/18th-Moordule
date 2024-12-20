@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>更新活動</title>
+</head>
+<body>
+    <h1>更新活動</h1>
+    {% if error_message %}
+        <p style="color: red;">{{ error_message }}</p>
+    {% endif %}
+    <form method="POST">
+        {% csrf_token %}
+        <label for="title">活動標題：</label>
+        <input type="text" id="title" name="title" value="{{ activity.title }}" required><br>
+
+        <label for="description">活動描述：</label>
+        <textarea id="description" name="description">{{ activity.description }}</textarea><br>
+
+        <label for="address">活動地址：</label>
+        <input type="text" id="address" name="address" value="{{ activity.address }}" required><br>
+
+        <label for="start_time">開始時間：</label>
+        <input type="datetime-local" id="start_time" name="start_time" value="{{ activity.start_time|date:"Y-m-d\TH:i" }}" required><br>
+
+        <label for="duration">持續時間（小時）：</label>
+        <input type="number" id="duration" name="duration" value="{{ activity.duration }}" min="1" required><br>
+
+        <label for="max_participants">參加人數上限：</label>
+        <input type="number" id="max_participants" name="max_participants" value="{{ activity.max_participants }}" min="1" required><br>
+
+        <button type="submit">更新活動</button>
+        
+    </form>
+</body>
+</html>
