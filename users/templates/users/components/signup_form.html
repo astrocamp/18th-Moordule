@@ -1,0 +1,60 @@
+{% load auth_components %}
+<meta name="htmx-config" content='{"includeIndicatorStyles": false}' />
+<style>
+	.htmx-indicator {
+		display: none;
+	}
+	.htmx-request .htmx-indicator {
+		display: flex;
+	}
+</style>
+<form
+	class="w-[70%] mx-auto text-center"
+	hx-post="{% url 'users:new' %}"
+	hx-target="this"
+	hx-swap="outerHTML"
+	hx-on::before-request="this.classList.add('htmx-request')"
+	hx-on::after-request="this.classList.remove('htmx-request')"
+>
+	{% csrf_token %}
+	<fieldset class="mb-4">
+		<!--prettier-ignore-->
+		{% email_input verbose_name="電子郵件:" placeholder="請輸入電子郵件" value=form.email.value error=form.email.errors.0|default:'' %}
+		<!--prettier-ignore-->
+		{% password_input verbose_name="密碼:" name="password1" placeholder="請輸入密碼" value=form.password1.value  %}
+    {% password_input verbose_name="確認密碼:" name="password2" placeholder="請再輸入密碼" value=form.password2.value validate=False error=form.password2.errors.0|default:'' %}
+	</fieldset>
+
+	<div class="relative mb-4 inline-block">
+		{% moordule_button text="註冊" color="#2C3E73" %}
+		<div
+			class="htmx-indicator absolute inset-0 items-center justify-center bg-opacity-50 bg-gray-100 rounded"
+		>
+			<div
+				class="w-5 h-5 border-2 border-gray-300 border-t-blue-500 rounded-full animate-spin"
+			></div>
+		</div>
+	</div>
+
+	<div class="text-center mb-4">或</div>
+
+	<!--prettier-ignore-->
+	<div class="flex justify-center mb-6">
+        <button 
+            type="button"
+            class="flex items-center justify-center w-[52%] py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-white hover:brightness-110 bg-moordule-deep-blue"
+        >
+				    {% include 'shared/icon.html' %}
+            <span class="ml-1">Google 註冊</span>
+        </button>
+    </div>
+
+	<div class="flex flex-col items-center gap-[21px]">
+		<span>已經有帳號了？</span>
+		<a
+			class="text-white rounded-2xl py-0.5 px-6 outline-offset-2 bg-moordule-yellow outline outline-1 outline-moordule-yellow"
+			href="{% url 'users:signin' %}"
+			>登入</a
+		>
+	</div>
+</form>

@@ -1,0 +1,80 @@
+{% load auth_components %}
+<meta name="htmx-config" content='{"includeIndicatorStyles": false}' />
+<style>
+	.htmx-indicator {
+		display: none;
+	}
+	.htmx-request .htmx-indicator {
+		display: flex;
+	}
+</style>
+
+<form
+	x-data="{ 
+        showError: {% if form.errors %}true{% else %}false{% endif %}
+    }"
+	x-init="
+        $nextTick(() => {
+            if(showError) {
+                setTimeout(() => showError = false, 3000)
+            }
+        })
+    "
+	class="w-[70%] bg-white rounded-lg space-y-[21px]"
+	hx-post="{% url 'users:login' %}"
+	hx-target="#signup-form"
+	hx-wrap="innerHTML"
+	hx-trigger="submit throttle:300ms"
+	hx-on::before-request="this.classList.add('htmx-request')"
+	hx-on::after-request="this.classList.remove('htmx-request')"
+>
+	{% csrf_token %}
+	<p
+		x-show="showError"
+		class="text-red-500 text-sm absolute left-[50%] -translate-x-[50%]"
+	>
+		{% for error in form.errors %}
+		<span>{{ error }}</span>
+		{% endfor %}
+	</p>
+
+	<fieldset>
+		<!--prettier-ignore-->
+		{% email_input verbose_name="電子郵件:" value=form.data.email placeholder="請輸入電子郵件" validate=False %}
+		<!--prettier-ignore-->
+		{% password_input verbose_name="密碼:" value=form.data.password placeholder="請輸入密碼" name="password" validate=False %}
+	</fieldset>
+	<div class="flex justify-center items-center gap-6">
+		<div class="relative">
+			{% moordule_button text="登入" color="#F6D246" %}
+			<div
+				class="htmx-indicator absolute inset-0 items-center justify-center bg-opacity-50 bg-gray-100 rounded"
+			>
+				<div
+					class="w-5 h-5 border-2 border-gray-300 border-t-blue-500 rounded-full animate-spin"
+				></div>
+			</div>
+		</div>
+		<a href="">忘記密碼</a>
+	</div>
+	<div class="text-center">OR</div>
+	<!--prettier-ignore-->
+	<div class="flex justify-center">
+        <button 
+            type="button"
+            class="flex items-center justify-center w-[52%] py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-white hover:brightness-110 bg-moordule-deep-blue"
+        >
+				    {% include 'shared/icon.html' %}
+            <span class="ml-1">Google 登入</span>
+        </button>
+    </div>
+
+	<div class="flex flex-col items-center gap-[21px]">
+		<span>尚未擁有帳號？</span>
+		<a
+			class="text-white rounded-2xl py-0.5 px-6 outline-offset-2 bg-moordule-deep-blue outline outline-1 outline-moordule-deep-blue"
+			href="{% url 'users:signup' %}"
+			>註冊</a
+		>
+	</div>
+</form>
