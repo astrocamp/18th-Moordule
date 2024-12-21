@@ -1,23 +1,32 @@
-
 import os
+import environ 
 from pathlib import Path
+from dotenv import load_dotenv
+load_dotenv()
 
 from dotenv import load_dotenv
 
 load_dotenv()
 AUTH_USER_MODEL = "users.CustomUser"
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+DEBUG = os.getenv('DEBUG', 'True') == 'True'
+
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '*').split(',')
+
+# 初始化環境變數
 BASE_DIR = Path(__file__).resolve().parent.parent
+# env = environ.Env(DEBUG=(bool, False))
+# environ.Env.read_env(str(BASE_DIR / ".env"))
 db_url = os.getenv("DATABASE_URL")
 # AUTH_USER_MODEL = "users.CustomUser"
+# DEBUG = env.bool("DEBUG", default=False)
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-jvpy^z_uod9g^p8i^ob%ee)mvc2s@#+oj-h3pzw5yq1&_^%xo5"
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -25,6 +34,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # Django 內建 APP
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -36,7 +46,19 @@ INSTALLED_APPS = [
     "shared",
     "activities",
     "cashflows",
+    # 第三方套件
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',  # Google 登入提供者
 ]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',  # Django 預設認證
+    'allauth.account.auth_backends.AuthenticationBackend',  # allauth 認證
+]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -46,7 +68,11 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "allauth.account.middleware.AccountMiddleware", # Add the account middleware:
 ]
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
 ROOT_URLCONF = "pydev.urls"
 
@@ -73,8 +99,16 @@ TEMPLATES = [
 WSGI_APPLICATION = "pydev.wsgi.application"
 
 
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "APP": {
+            "client_id": os.getenv("GMAIL_CLIENT_ID"),
+            "secret": os.getenv("GMAIL_API_SECRET"),
+        },
+        "SCOPE": ["profile", "email"],
+        "AUTH_PARAMS": {"access_type": "online"},
+    }
+}
 
 
 DATABASES = {
@@ -110,7 +144,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
@@ -119,3 +154,5 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
