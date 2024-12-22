@@ -1,0 +1,12 @@
+{% extends "base/layout.html" %} <br />
+{% block head %}
+<title>LINE Pay Checkout</title>
+{% endblock %} <br />
+
+{% block content%}
+<h1>LINE Pay 測試結帳</h1>
+<form method="POST">
+  {% csrf_token %}
+  <button type="submit">前往付款</button>
+</form>
+{% endblock %}
