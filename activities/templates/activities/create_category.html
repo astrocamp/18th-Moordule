@@ -1,0 +1,26 @@
+{% extends "base/layout.html" %}
+{% block head %}
+    <title>聚會類別建立</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+{% endblock head %}
+
+{% block content %} 
+<div>
+    <h2>建立聚會類別</h2>
+    <form method="POST" action="{% url 'activities:category' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">建立</button>
+    </form>
+
+    <h3>所有聚會類別</h3>
+    <ul>
+        {% for category in categories %}
+            <li>{{ category.name }} - {{ category.description }}</li>
+        {% empty %}
+            <li>目前沒有任何類別。</li>
+        {% endfor %}
+    </ul>
+
+</div>
+{% endblock content %}

@@ -18,10 +18,6 @@ link 等shared 健全後修改統一
             --moordule-pink: #F78888;
         }
 
-        body {
-            font-family: 'Arial', sans-serif;
-        }
-
         .nav-button {
             border-radius: 21px;
             padding: 12px 24px;
@@ -43,10 +39,8 @@ link 等shared 健全後修改統一
         建立聚會
     </header>
 
+
  
- {% if error_message %}
-            <p class="text-red-500 text-sm mb-4">{{ error_message }}</p>
-        {% endif %}
 
 
  <form method="POST" class="space-y-4">
@@ -68,13 +62,15 @@ link 等shared 健全後修改統一
                     <input type="text" id="title" name="title" value="{{ form_data.title|default:'' }}" required 
                     class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-yellow-500">
                 
-                    <label class="block font-bold text-gray-800 mb-2">興趣：</label>
-                    <select class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-yellow-500">
-                        <option value="">選擇興趣</option>
-                        <option value="music">音樂</option>
-                        <option value="sports">運動</option>
-                        <option value="gaming">遊戲</option>
+                    <label class="block font-bold text-gray-800 mb-2">類別：</label>
+                    <select name="category" id="category" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-yellow-500">
+                        <option value="" disabled selected>選擇類別</option>
+                        {% for category in categories %}
+                            <option value="{{ category.id }}" {% if form.category.value == category.id %}selected{% endif %}>{{ category.name }}</option>
+                        {% endfor %}
                     </select>
+
+
                 </div>
             </div>
 
@@ -82,34 +78,49 @@ link 等shared 健全後修改統一
             <div class="flex-1 space-y-6">
                 <div class="bg-white rounded-card">
                     <h2 class="text-lg font-bold text-gray-800 mb-4">聚會設定</h2>
+                    
                     <p class="text-gray-700">開始時間：</p>
                     <input type="datetime-local" id="start_time" name="start_time" value="{{ form_data.start_time|default:'' }}" required
                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                     {% if form.start_time.errors %}
+                        <ul class="errorlist">
+                            {% for error in form.start_time.errors %}
+                                <li class="text-red-600">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+
                     <p class="text-gray-700">聚會地點（地址）：</p>
                     <input type="text" id="address" name="address" value="{{ form_data.address|default:'' }}" required
                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                    
                     <p class="text-gray-700">聚會時長（小時）：</p>
                     <input type="number" id="duration" name="duration" value="{{ form_data.duration|default:1 }}" min="1" required
                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500">
+        
+
+
                     <p class="text-gray-700">參加人數：</p>
                     <input type="number" id="max_participants" name="max_participants" value="{{ form_data.max_participants|default:10 }}" min="1" required
                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500">
     
                     
                 </div>
-                     <div class="bg-white rounded-card">
+                    <div class="bg-white rounded-card">
                     <h2 class="text-lg font-bold text-gray-800 mb-4">聚會詳細</h2>
                     <p class="text-gray-700">內容描述：</p>
 
-                    <textarea id="description" name="description" required 
-          class="w-full px-4 py-2 mt-2 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-yellow-500">{{ form.description }}</textarea>
+                    <textarea id="description" name="description" required
+                        class="w-full px-4 py-2 mt-2 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-yellow-500">
+                        {{ form_data.description|default:'' }}
+                    </textarea>
+</div>
 
-                </div>
             </div>
         </div>
 
         
-       <!-- Footer Section -->
+       
         <div class="bg-white rounded-card text-center py-4">
             <p class="text-gray-800 mb-4">創建聚會規則與扣 $ 規則</p>
                <p class="text-gray-700">聚會規則內容：**待更新** Lorem ipsum dolor sit amet consectetur,
