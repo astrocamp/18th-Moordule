@@ -27,6 +27,16 @@
         <label for="duration">持續時間（小時）：</label>
         <input type="number" id="duration" name="duration" value="{{ activity.duration }}" min="1" required><br>
 
+         <label class="block font-bold text-gray-800 mb-2">聚會類別：</label>
+        {{ form.category }}
+        {% for error in form.category.errors %}
+            <p style="color: red;">{{ error }}</p>
+        {% endfor %}
+        <br>
+
+
+
+
         <label for="max_participants">參加人數上限：</label>
         <input type="number" id="max_participants" name="max_participants" value="{{ activity.max_participants }}" min="1" required><br>
 
