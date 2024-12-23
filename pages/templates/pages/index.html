@@ -68,11 +68,13 @@
           </svg>
         </button>
       </div>
-      <button
-        class="px-4 py-1 rounded-full bg-pink-300 text-white hover:bg-pink-400"
-      >
-        活動
-      </button>
+      <a href="{% url 'activities:index' %}">
+        <button
+          class="px-4 py-1 rounded-full bg-pink-300 text-white hover:bg-pink-400"
+        >
+          活動
+        </button>
+      </a>
       <button
         class="px-4 py-1 rounded-full bg-yellow-300 text-white hover:bg-yellow-400"
       >
