@@ -1,39 +1,60 @@
 {% extends "base/layout.html" %}
+{% load static %}
 <!---->
 {% block head %}
 <script src="https://cdn.tailwindcss.com"></script>
-{% endblock head %} {% block content %}
 <style>
+  /* 自訂主色系 */
+  :root {
+    --moordule-yellow: #F6D246;
+    --moordule-gray: #ECECEC;
+    --moordule-light-blue: #90CCF4;
+    --moordule-deep-blue: #5DA2D5;
+    --moordule-pink: #F78888;
+  }
+  {% endblock head %}
+  
+  {% block content %}
   /* 自定義動畫效果 */
   @keyframes moveDown {
     0% {
-      transform: translateY(-100%);
-      transform: translateX(-100%);
-      transform: rotateX(50%);
+      transform: translateY(0); /* 初始位置 */
     }
     100% {
-      transform: translateY(30%);
-      transform: rotateY(70%);
+      transform: translateY(-100%); /* 向上移動整個內容 */
     }
   }
-
+  
   @keyframes moveUp {
     0% {
-      transform: translateY(40%);
+      transform: translateY(0); /* 初始位置 */
     }
     100% {
-      transform: translateY(-100%);
-      transform: translateX(-100%);
+      transform: translateY(100%); /* 向下移動整個內容 */
     }
   }
-
+  
+  /* 動畫類別 */
   .animate-down {
-    animation: moveDown 4s infinite alternate ease-in-out;
+    animation: moveDown 2s linear infinite; /* 向上滾動 */
   }
-
+  
   .animate-up {
-    animation: moveUp 4s infinite alternate ease-in-out;
+    animation: moveUp 2s linear infinite; /* 向下滾動 */
   }
+  
+  /* 滾動容器樣式 */
+  .scroll-container {
+    position: relative;
+    overflow: hidden; /* 隱藏溢出內容 */
+    height: 200px; /* 可視區域的高度 */
+  }
+  
+  /* 滾動內容樣式 */
+  .scroll-content {
+    display: flex;
+    flex-direction: column; /* 縱向排列內容 */
+  }  
 </style>
 <div class="bg-white text-gray-900">
   <!-- 頂部導航欄 -->
@@ -41,11 +62,11 @@
     class="bg-white border-b w-full border-gray-200 px-4 py-4 flex justify-between items-center shadow-md fixed top-0 left-0 z-10"
   >
     <div class="flex items-center space-x-2">
-      <img src="path-to-logo.png" alt="MOODGELE" class="h-8" />
-      <span class="text-xl font-bold">MOODGELE 多揪</span>
+      <img src="https://miro.medium.com/v2/resize:fit:1400/format:webp/1*6ZwQRYRaqm19xh11PlFsQw.jpeg" alt="MOORDULE" class="h-8 mt-2" />
+      <span class="text-xl font-bold">MOORDULE 多揪</span>
     </div>
 
-    <div class="flex items-center space-x-2">
+    <div class="flex items-center space-x-3">
       <div class="relative">
         <input
           type="text"
@@ -68,54 +89,88 @@
           </svg>
         </button>
       </div>
-      <a href="{% url 'activities:index' %}">
-        <button
-          class="px-4 py-1 rounded-full bg-pink-300 text-white hover:bg-pink-400"
-        >
+      <a href="{%url 'activities:index' %}" class="block">
+        <button class="bg-[#F78888] text-white rounded-[50px] px-[20px] py-[10px]">
           活動
         </button>
       </a>
-      <button
-        class="px-4 py-1 rounded-full bg-yellow-300 text-white hover:bg-yellow-400"
-      >
-        登入
-      </button>
-      <button
-        class="px-4 py-1 rounded-full bg-blue-400 text-white hover:bg-blue-500"
-      >
-        註冊
-      </button>
+      
+      <a href="{%url 'users:signin' %}" class="block">
+        <button class="bg-yellow-300 text-white rounded-[50px] px-[20px] py-[10px]">
+          登入
+        </button>
+      </a>
+      
+      <a href="{%url 'users:signup' %}" class="block">
+        <button class="bg-[#5DA2D5] text-white rounded-[50px] px-[20px] py-[10px]">
+          註冊
+        </button>
+      </a>
+      
     </div>
   </nav>
   <!-- 主頁內容 -->
   <main class="flex flex-col lg:flex-row w-full max-w-screen-lg mx-auto mt-8">
     <!-- 左邊區域：上下流動方框 -->
     <div class="flex flex-col w-full lg:w-2/5 space-y-4 relative">
-      <div class="h-40 bg-gray-100 border rounded-lg animate-up"></div>
-      <div class="h-40 bg-gray-100 border rounded-lg animate-up"></div>
-      <div class="h-40 bg-gray-100 border rounded-lg animate-up"></div>
+      <!-- 第一個方框 -->
+      <a href="https://example.com/link1" class="h-40 bg-gray-100 border rounded-lg animate-up flex items-center justify-center">
+        <img src="https://miro.medium.com/v2/resize:fit:622/format:webp/1*w1MjwyQiX262MkK79TdE_w.jpeg" alt="圖片 1" class="w-full h-full object-cover rounded-lg">
+      </a>
+    
+      <!-- 第二個方框 -->
+      <a href="https://example.com/link2" class="h-40 bg-gray-100 border rounded-lg animate-up flex items-center justify-center">
+        <img src="https://miro.medium.com/v2/resize:fit:692/format:webp/1*jdXIBc_pncEYbqsMGGf81g.jpeg" alt="圖片 2" class="w-full h-full object-cover rounded-lg">
+      </a>
+    
+      <!-- 第三個方框 -->
+      <a href="https://example.com/link3" class="h-40 bg-gray-100 border rounded-lg animate-up flex items-center justify-center">
+        <img src="https://miro.medium.com/v2/resize:fit:690/format:webp/1*PSQ8e_hEM9eOYtMXswH8yA.jpeg" alt="圖片 3" class="w-full h-full object-cover rounded-lg">
+      </a>
+    
+      <!-- 第四個方框 -->
+      <a href="https://example.com/link4" class="h-40 bg-gray-100 border rounded-lg animate-up flex items-center justify-center">
+        <img src="https://miro.medium.com/v2/resize:fit:1034/format:webp/1*XNp17xSsVbHdKxP0spEp1A.png" alt="圖片 4" class="w-full h-full object-cover rounded-lg">
+      </a>
     </div>
-
+    
     <div class="flex flex-col w-full lg:w-2/5 space-y-4 m-8 relative">
-      <div class="h-40 bg-gray-100 border rounded-lg animate-down"></div>
-      <div class="h-40 bg-gray-100 border rounded-lg animate-down"></div>
-      <div class="h-40 bg-gray-100 border rounded-lg animate-down"></div>
+      <!-- 第一個方框 -->
+      <a href="https://example.com/link5" class="h-40 bg-gray-100 border rounded-lg animate-up flex items-center justify-center">
+        <img src="https://miro.medium.com/v2/resize:fit:746/format:webp/1*3jP_nttgjfnzlWLKTzvgqw.jpeg" alt="圖片 5" class="w-full h-full object-cover rounded-lg">
+      </a>
+    
+      <!-- 第二個方框 -->
+      <a href="https://example.com/link6" class="h-40 bg-gray-100 border rounded-lg animate-up flex items-center justify-center">
+        <img src="https://miro.medium.com/v2/resize:fit:630/format:webp/1*5xh2fKvJByPlTheZik_VCg.jpeg" alt="圖片 6" class="w-full h-full object-cover rounded-lg">
+      </a>
+    
+      <!-- 第三個方框 -->
+      <a href="https://example.com/link7" class="h-40 bg-gray-100 border rounded-lg animate-up flex items-center justify-center">
+        <img src="https://miro.medium.com/v2/resize:fit:628/format:webp/1*zysizqg1tTRa1AM0rOSxkQ.jpeg" alt="圖片 7" class="w-full h-full object-cover rounded-lg">
+      </a>
+    
+      <!-- 第四個方框 -->
+      <a href="https://example.com/link8" class="h-40 bg-gray-100 border rounded-lg animate-up flex items-center justify-center">
+        <img src="https://miro.medium.com/v2/resize:fit:1142/format:webp/1*6lqXOP4ZzkXb-0etPKl_fA.jpeg" alt="圖片 8" class="w-full h-full object-cover rounded-lg">
+      </a>
     </div>
+    
 
     <!-- 右邊區域 -->
     <div class="w-full lg:w-3/5 flex flex-col items-center text-center">
       <!-- Logo 與文字 -->
       <div class="flex items-center justify-center mb-4">
-        <img src="logo.png" alt="Logo" class="w-28 h-28 object-contain" />
+        <img src="https://miro.medium.com/v2/resize:fit:1400/format:webp/1*6ZwQRYRaqm19xh11PlFsQw.jpeg" alt="Logo" class="w-164 h-164 object-contain mt-40" />
       </div>
-      <h1 class="text-3xl font-bold mb-2">MOODGELE 多撇</h1>
-      <p class="text-gray-600 mb-4">撇朋友 來多撇 越多朋友越好撇</p>
-      <p class="text-gray-500 italic mb-4">
-        More friends you meet, the more life feels sweeet
+      {% comment %} <h1 class="text-3xl font-bold mb-2">MOORDULE 多揪</h1> {% endcomment %}
+      <p class="text-gray-600 mb-4 text-xl">揪朋友 來多揪 越多朋友越好揪</p>
+      <p class="text-gray-500 mb-4 text-lg">
+        More friends you meet, the more life feels sweeet.
       </p>
       <!-- 按鈕 -->
       <button
-        class="bg-red-300 text-white px-6 py-2 rounded-lg shadow-md hover:bg-red-400 transition"
+        class="bg-[#F78888] text-white px-6 py-2 rounded-lg shadow-md hover:bg-red-400 transition"
       >
         找活動
       </button>
@@ -133,7 +188,7 @@
         >
           photo
         </div>
-        <div class="bg-blue-200 p-4">
+        <div class="bg-[#5DA2D5] p-4">
           <div class="flex justify-between items-center mb-2">
             <h3 class="font-bold">聚會名稱</h3>
             <div class="flex items-center gap-1">
@@ -172,7 +227,7 @@
         >
           photo
         </div>
-        <div class="bg-pink-200 p-4">
+        <div class="bg-[#F78888] p-4">
           <div class="flex justify-between items-center mb-2">
             <h3 class="font-bold">聚會名稱</h3>
             <div class="flex items-center gap-1">
@@ -197,10 +252,10 @@
             vmcn/lsnjlv/n mv,c/skl/fbnlkvad ml/v m,/wsbf jnl/dzvm
           </p>
           <button
-            class="w-full py-2 rounded-full bg-white text-pink-400 font-bold"
-          >
-            馬上揪
-          </button>
+          class="w-full py-2 rounded-full bg-white text-[#F78888] font-bold"
+        >
+          馬上揪
+        </button>
         </div>
       </div>
 
@@ -211,7 +266,7 @@
         >
           photo
         </div>
-        <div class="bg-yellow-200 p-4">
+        <div class="bg-yellow-300 p-4">
           <div class="flex justify-between items-center mb-2">
             <h3 class="font-bold">聚會名稱</h3>
             <div class="flex items-center gap-1">
@@ -256,7 +311,7 @@
           <span class="text-white">photo</span>
           <span class="text-yellow-400">聚會照片A</span>
         </div>
-        <div class="bg-blue-300 py-2 text-center text-white">揪吃飯</div>
+        <div class="bg-[#5DA2D5] py-2 text-center text-white">揪吃飯</div>
       </div>
 
       <!-- Card 2 -->
@@ -265,7 +320,7 @@
           <span class="text-white">photo</span>
           <span class="text-yellow-400">聚會照片B</span>
         </div>
-        <div class="bg-pink-300 py-2 text-center text-white">揪唱歌</div>
+        <div class="bg-[#F78888] py-2 text-center text-white">揪唱歌</div>
       </div>
 
       <!-- Card 3 -->
@@ -283,7 +338,7 @@
           <span class="text-white">photo</span>
           <span class="text-yellow-400">聚會照片D</span>
         </div>
-        <div class="bg-pink-300 py-2 text-center text-white">揪運動</div>
+        <div class="bg-[#F78888] py-2 text-center text-white">揪運動</div>
       </div>
 
       <!-- Card 5 -->
@@ -301,7 +356,7 @@
           <span class="text-white">photo</span>
           <span class="text-yellow-400">聚會照片F</span>
         </div>
-        <div class="bg-blue-300 py-2 text-center text-white">揪討論</div>
+        <div class="bg-[#5DA2D5] py-2 text-center text-white">揪討論</div>
       </div>
     </div>
   </main>
@@ -412,7 +467,7 @@
       class="flex flex-col md:flex-row justify-center items-center gap-8 max-w-5xl mx-auto"
     >
       <!-- First Plan -->
-      <div class="bg-blue-400 rounded-3xl p-8 text-white w-full md:w-1/3">
+      <div class="bg-[#5DA2D5] rounded-3xl p-8 text-white w-full md:w-1/3">
         <div class="text-center mb-6">
           <p class="text-lg mb-2">初來乍到 想試揪</p>
           <div class="flex justify-center items-baseline">
@@ -437,7 +492,7 @@
       </div>
 
       <!-- Second Plan -->
-      <div class="bg-red-300 rounded-3xl p-8 text-white w-full md:w-1/3">
+      <div class="bg-[#F78888] rounded-3xl p-8 text-white w-full md:w-1/3">
         <div class="text-center mb-6">
           <p class="text-lg mb-2">三五成群 長長久久</p>
           <div class="flex justify-center items-baseline">
@@ -464,6 +519,7 @@
           </div>
         </div>
       </div>
+      
 
       <!-- Third Plan -->
       <div class="bg-yellow-300 rounded-3xl p-8 text-white w-full md:w-1/3">
@@ -493,9 +549,9 @@
   </div>
   <div class="font-sans bg-gray-50 text-gray-700">
     <!-- Wave Section -->
-    <section class="relative bg-blue-300 text-center text-white">
+    <section class="relative bg-[#90CCF4] text-center text-white">
       <div
-        class="w-full h-40 bg-blue-300 absolute top-0 left-0 transform rotate-180"
+        class="w-full h-40 bg-[#90CCF4] absolute top-0 left-0 transform rotate-180"
       >
         <!-- 波浪形狀 -->
         <svg class="absolute bottom-0" viewBox="0 0 1440 320">
@@ -517,9 +573,9 @@
     </section>
 
     <!-- Links Section -->
-    <section class="bg-blue-300 text-white py-8">
+    <section class="bg-[#90CCF4] text-white py-8">
       <div
-        class="container mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-center bg-blue-300"
+        class="container mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-center bg-[#90CCF4]"
       >
         <!-- 活動相關 -->
         <div>
@@ -574,7 +630,7 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-blue-400 text-center text-white text-sm py-4">
+    <footer class="bg-[#5DA2D5] text-center text-white text-sm py-4">
       <p>公司：中文名字還沒確定股份有限公司</p>
       <p>統編：13145200</p>
       <p>地址：123 商業大道, 台北市, 台灣</p>
