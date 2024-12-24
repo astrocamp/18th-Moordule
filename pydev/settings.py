@@ -2,26 +2,15 @@ import os
 from pathlib import Path
 
 from dotenv import load_dotenv
+load_dotenv()
 
-# for 第三方們的 API 串接
-import environ
-env = environ.Env()
-environ.Env.read_env()
-
-# google登入：獲取 ALLOWED_HOSTS 的值，默認為 '*'
 allowed_hosts_env = os.getenv('ALLOWED_HOSTS', '*').split(',')
-
-# LINE PAY API 的
-line_pay_hostname = env('HOSTNAME')
-
-# 合併兩者的值
+line_pay_hostname =  os.getenv('HOSTNAME')
 ALLOWED_HOSTS = allowed_hosts_env + [line_pay_hostname]
 
-#LINE PAY API 的 CSRF_TRUSTED_ORIGINS
-CSRF_TRUSTED_ORIGINS = [f"https://{env('HOSTNAME')}"]
+CSRF_TRUSTED_ORIGINS = [f"https://{os.getenv('HOSTNAME')}"]
 
-# 加載環境變量
-load_dotenv()
+ 
 AUTH_USER_MODEL = "users.CustomUser"
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
@@ -41,7 +30,7 @@ db_url = os.getenv("DATABASE_URL")
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-jvpy^z_uod9g^p8i^ob%ee)mvc2s@#+oj-h3pzw5yq1&_^%xo5"
+SECRET_KEY =  os.getenv("SECRET_KEY")
 
 ALLOWED_HOSTS = []
 
@@ -61,11 +50,10 @@ INSTALLED_APPS = [
     "shared",
     "activities",
     "cashflows",
-    # 第三方套件
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',  # Google 登入提供者
+    'allauth.socialaccount.providers.google', 
 ]
 
 AUTHENTICATION_BACKENDS = [
