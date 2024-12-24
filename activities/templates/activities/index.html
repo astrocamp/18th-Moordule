@@ -1,61 +1,1014 @@
-{% extends "base/layout.html" %}
+{% extends "base/layout.html" %} {% block head %}
+<title>聚會列表</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  /* 自訂主色系 */
+  :root {
+    --moordule-pink: #f78888;
+    --moordule-yellow: #f6d246;
+    --moordule-gray: #ececec;
+    --moordule-light-blue: #90ccf4;
+    --moordule-deep-blue: #5da2d5;
+  }
 
-{% block head %} 
-    <title>聚會列表</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* 自訂主色系 */
-        :root {
-            --moordule-pink: #F78888;
-            --moordule-yellow: #F6D246;
-            --moordule-gray: #ECECEC;
-            --moordule-light-blue: #90CCF4;
-            --moordule-deep-blue: #5DA2D5;
-        }
-    </style>
-    <link
-      rel="stylesheet"
-      href="https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css"
+  html {
+    scroll-behavior: smooth;
+  }
+</style>
+<link
+  rel="stylesheet"
+  href="https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css"
+/>
+{% endblock head %} {% block content %}
+<div class="bg-white text-gray-900">
+  <!-- 頂部導航欄 -->
+  <nav
+    class="bg-white border-b w-full border-gray-200 px-4 py-4 flex justify-between items-center shadow-md fixed top-0 left-0 z-10"
+  >
+    <div class="flex items-center space-x-2">
+      <img
+        src="https://miro.medium.com/v2/resize:fit:1400/format:webp/1*M9eXElapdctvl-nQbPG38w.jpeg"
+        alt="MOODGELE"
+        class="h-8"
+      />
+      <img
+        src="https://miro.medium.com/v2/resize:fit:1400/format:webp/1*sphjBoiQpYV1I4Z5hOl5Qw.jpeg"
+        alt="MOODGELE"
+        class="h-8"
+      />
+    </div>
+
+    <div class="flex items-center space-x-2">
+      <div class="relative">
+        <input
+          type="text"
+          placeholder="我想要揪..."
+          class="pl-4 pr-10 py-1 rounded-full bg-gray-100 focus:outline-none"
+        />
+        <button class="absolute right-3 top-1/2 transform -translate-y-1/2">
+          <svg
+            width="24px"
+            height="24px"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            stroke="#707070"
+            stroke-width="0.384"
+          >
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g
+              id="SVGRepo_tracerCarrier"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></g>
+            <g id="SVGRepo_iconCarrier">
+              <path
+                d="M10.975 20.1548C5.87857 20.1548 1.75 16.0331 1.75 10.9524H0.25C0.25 16.8647 5.05335 21.6548 10.975 21.6548V20.1548ZM1.75 10.9524C1.75 5.87165 5.87857 1.75 10.975 1.75V0.25C5.05335 0.25 0.25 5.04001 0.25 10.9524H1.75ZM10.975 1.75C16.0714 1.75 20.2 5.87165 20.2 10.9524H21.7C21.7 5.04001 16.8966 0.25 10.975 0.25V1.75ZM20.2 10.9524C20.2 16.0331 16.0714 20.1548 10.975 20.1548V21.6548C16.8966 21.6548 21.7 16.8647 21.7 10.9524H20.2Z"
+                fill="#71717A"
+              ></path>
+              <path
+                d="M15.3667 8.65071L14.8253 9.16978L14.8258 9.17029L15.3667 8.65071ZM12.31 8.65071L12.8475 9.1738L12.8514 9.16978L12.31 8.65071ZM11 9.99681L10.4625 10.5199C10.6037 10.665 10.7976 10.7468 11 10.7468C11.2024 10.7468 11.3963 10.665 11.5375 10.5199L11 9.99681ZM9.69 8.65071L9.14863 9.16979L9.15251 9.17379L9.69 8.65071ZM6.63334 8.65071L7.17421 9.17029L7.1747 9.16978L6.63334 8.65071ZM6 10.2215H5.25H6ZM6.63334 11.7923L6.09245 12.3119L6.09579 12.3153L6.63334 11.7923ZM10.5344 15.8019L11.0756 15.2826L11.072 15.2789L10.5344 15.8019ZM11.4656 15.8019L10.928 15.2789L10.9244 15.2826L11.4656 15.8019ZM15.3667 11.7923L15.9042 12.3154L15.9075 12.3119L15.3667 11.7923ZM16 10.2215H16.75H16ZM15.908 8.13165C15.6406 7.85271 15.3192 7.63092 14.9635 7.47947L14.3759 8.85958C14.5456 8.93184 14.6984 9.03745 14.8253 9.16978L15.908 8.13165ZM14.9635 7.47947C14.6078 7.32802 14.225 7.25 13.8383 7.25V8.75C14.0233 8.75 14.2062 8.78733 14.3759 8.85958L14.9635 7.47947ZM13.8383 7.25C13.4517 7.25 13.0689 7.32802 12.7132 7.47947L13.3008 8.85958C13.4705 8.78732 13.6534 8.75 13.8383 8.75V7.25ZM12.7132 7.47947C12.3575 7.63092 12.0361 7.85271 11.7686 8.13165L12.8514 9.16978C12.9782 9.03745 13.1311 8.93184 13.3008 8.85958L12.7132 7.47947ZM11.7725 8.12764L10.4625 9.47373L11.5375 10.5199L12.8475 9.17379L11.7725 8.12764ZM11.5375 9.47373L10.2275 8.12764L9.15251 9.17379L10.4625 10.5199L11.5375 9.47373ZM10.2314 8.13165C9.96391 7.85271 9.64252 7.63092 9.28681 7.47947L8.6992 8.85958C8.86891 8.93184 9.02176 9.03745 9.14864 9.16978L10.2314 8.13165ZM9.28681 7.47947C8.93111 7.32802 8.54834 7.25 8.16167 7.25V8.75C8.3466 8.75 8.52949 8.78732 8.6992 8.85958L9.28681 7.47947ZM8.16167 7.25C7.77499 7.25 7.39223 7.32802 7.03653 7.47947L7.62413 8.85958C7.79385 8.78732 7.97674 8.75 8.16167 8.75V7.25ZM7.03653 7.47947C6.68081 7.63092 6.35942 7.85271 6.09198 8.13165L7.1747 9.16978C7.30157 9.03745 7.45443 8.93184 7.62413 8.85958L7.03653 7.47947ZM6.09246 8.13114C5.55221 8.69354 5.25 9.44212 5.25 10.2215H6.75C6.75 9.8308 6.90144 9.45424 7.17421 9.17029L6.09246 8.13114ZM5.25 10.2215C5.25 11.0009 5.55221 11.7495 6.09246 12.3119L7.17421 11.2728C6.90144 10.9888 6.75 10.6122 6.75 10.2215H5.25ZM6.09579 12.3153L9.9969 16.3249L11.072 15.2789L7.17089 11.2693L6.09579 12.3153ZM9.9933 16.3212C10.1237 16.457 10.2801 16.5649 10.4531 16.6385L11.0404 15.2583C11.0534 15.2638 11.0654 15.272 11.0756 15.2826L9.9933 16.3212ZM10.4531 16.6385C10.6261 16.7121 10.8121 16.75 11 16.75V15.25C11.0138 15.25 11.0275 15.2528 11.0404 15.2583L10.4531 16.6385ZM11 16.75C11.1879 16.75 11.3739 16.7121 11.5469 16.6385L10.9596 15.2583C10.9725 15.2528 10.9862 15.25 11 15.25V16.75ZM11.5469 16.6385C11.7199 16.5649 11.8763 16.457 12.0067 16.3212L10.9244 15.2826C10.9346 15.272 10.9466 15.2638 10.9596 15.2583L11.5469 16.6385ZM12.0031 16.3249L15.9042 12.3153L14.8291 11.2693L10.928 15.2789L12.0031 16.3249ZM15.9075 12.3119C16.4478 11.7495 16.75 11.0009 16.75 10.2215H15.25C15.25 10.6122 15.0986 10.9888 14.8258 11.2728L15.9075 12.3119ZM16.75 10.2215C16.75 9.44212 16.4478 8.69354 15.9075 8.13114L14.8258 9.17029C15.0986 9.45424 15.25 9.8308 15.25 10.2215H16.75Z"
+                fill="#71717A"
+              ></path>
+              <path
+                d="M17.9589 18.0002C17.6627 17.7106 17.1878 17.716 16.8983 18.0122C16.6087 18.3083 16.6141 18.7832 16.9103 19.0728L17.9589 18.0002ZM21.4758 23.5363C21.772 23.8259 22.2468 23.8205 22.5364 23.5243C22.826 23.2281 22.8206 22.7533 22.5244 22.4637L21.4758 23.5363ZM16.9103 19.0728L21.4758 23.5363L22.5244 22.4637L17.9589 18.0002L16.9103 19.0728Z"
+                fill="#71717A"
+              ></path>
+            </g>
+          </svg>
+        </button>
+      </div>
+      <button
+        class="px-4 py-1 rounded-full bg-yellow-300 text-white hover:bg-yellow-400"
+      >
+        登入
+      </button>
+      <button
+        class="px-4 py-1 rounded-full bg-[#5DA2D5] text-white hover:bg-blue-500"
+      >
+        註冊
+      </button>
+    </div>
+  </nav>
+
+  <!-- 特別活動 banner -->
+  <section id="top">
+    <img
+      src="https://images.unsplash.com/photo-1541379889336-70f26e4c4617?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2hpbmVzZSUyMG5ldyUyMHllYXJ8ZW58MHx8MHx8fDA%3D"
+      alt="chinese new year"
+      class="w-full h-[70vh] object-cover"
     />
-{% endblock head %}
-{% block content %}
-<body class="bg-[var(--moordule-gray)] font-sans">
-    <header class="bg-[var(moordule-yellow)] text-white text-center py-4 text-2xl font-bold">
-        聚會列表
-    </header>
+  </section>
+  <!-- 按鈕去各區 -->
+  <div class="flex justify-center space-x-10 my-10">
+    <a href="#eat"
+      ><button
+        class="text-xl px-4 py-1 rounded-full bg-[#F78888] text-white hover:bg-pink-500"
+      >
+        揪吃飯
+      </button></a
+    >
+    <a href="#drink"
+      ><button
+        class="text-xl px-4 py-1 rounded-full bg-yellow-300 text-white hover:bg-yellow-500"
+      >
+        揪喝酒
+      </button></a
+    >
+    <a href="#sports"
+      ><button
+        class="text-xl px-4 py-1 rounded-full bg-[#5DA2D5] text-white hover:bg-blue-500"
+      >
+        揪運動
+      </button></a
+    >
+    <a href="#sing"
+      ><button
+        class="text-xl px-4 py-1 rounded-full bg-yellow-300 text-white hover:bg-yellow-500"
+      >
+        揪唱歌
+      </button></a
+    >
+    <a href="#movies"
+      ><button
+        class="text-xl px-4 py-1 rounded-full bg-[#F78888] text-white hover:bg-pink-500"
+      >
+        揪電影
+      </button></a
+    >
+    <a href="#seminer"
+      ><button
+        class="text-xl px-4 py-1 rounded-full bg-[#5DA2D5] text-white hover:bg-blue-500"
+      >
+        揪討論
+      </button></a
+    >
+  </div>
 
+  <section>
+    <h1 class="flex justify-center my-10 text-4xl">各種聚會等你來揪</h1>
 
-    <div class="container mx-auto mt-6 px-4">
-        <!-- 新增聚會按鈕 -->
-        <div class="flex justify-center mb-6">
-            <a href="{% url 'activities:create' %}" class="inline-block">
-                <button class="bg-[var(--moordule-light-blue)] text-white px-6 py-2 rounded hover:bg-[var(--moordule-deep-blue)]">新增聚會</button>
-            </a>
+    <!-- 聚會種類 分區:吃飯 -->
+    <div id="eat" class="mx-20 pt-12">
+      <h2 class="my-10 text-3xl">揪吃飯</h2>
+      <div class="flex justify-center gap-6">
+        <!-- Card 1 -->
+        <div class="w-80 rounded-3xl overflow-hidden shadow-lg">
+          <img
+            src="https://miro.medium.com/v2/resize:fit:746/format:webp/1*3jP_nttgjfnzlWLKTzvgqw.jpeg"
+            alt="pizza"
+            class="h-48 w-full object-cover"
+          />
+          <div class="bg-[#F78888] p-4">
+            <div class="flex justify-between items-center mb-2">
+              <h3 class="font-bold text-2xl">蘇阿姨披薩</h3>
+              <div class="flex items-center gap-1">
+                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                  />
+                </svg>
+                <span>4</span>
+              </div>
+            </div>
+            <div class="flex justify-between gap-2 text-sm mb-2">
+              <div class="flex">
+                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    fill-rule="evenodd"
+                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <span>大安區光復南路300號</span>
+              </div>
+              <span class="text-lg">今天 19:30</span>
+            </div>
+            <span class="text-lg font-medium">活動內容：</span>
+            <p class="text-sm mb-4 text-lg">
+              nbj/lv m/dfb mID,b ;KNadvbj/fbnm/S sdvbjk/ vmcn/lsnjlv/n
+              mv,c/skl/fbnlkvad ml/v m,/wsbf jnl/dzvm
+            </p>
+            <button
+              class="w-full py-2 rounded-full bg-white text-[#F78888] font-bold"
+            >
+              馬上揪
+            </button>
+          </div>
         </div>
 
-        <!-- 聚會列表 -->
-        {% if activities %}
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {% for activity in activities %}
-                    <div class="bg-white rounded-lg shadow-md p-6 relative">
-                        <h3 class="text-lg font-semibold text-[var(--moordule-pink)]">{{ activity.title }}</h3>
-                        <p class="text-gray-700 mt-2"><strong>地址：</strong>{{ activity.address }}</p>
-                        <p class="text-gray-700"><strong>開始時間：</strong>{{ activity.start_time|date:"Y-m-d H:i" }}</p>
-                        <p class="text-gray-700"><strong>持續時間：</strong>{{ activity.duration }} 小時</p>
-                        <p class="text-gray-700"><strong>參加人數上限：</strong>{{ activity.max_participants }}</p>
-                        <p class="text-gray-700"><strong>聚會類別：</strong>{{ activity.category }}</p>
-                        <p class="text-gray-700"><strong>預計結束時間：</strong>{{ activity.end_time|date:"Y-m-d H:i" }}</p>
-                        <p class="text-gray-700"><strong>建立時間：</strong>{{ activity.created_at|date:"Y-m-d H:i" }}</p>
-
-                        <div class="mt-4 flex justify-end space-x-2">
-                            <a href="{% url 'activities:update' activity.id %}" class="bg-[var(--moordule-yellow)] text-white px-4 py-2 rounded hover:bg-[var(--moordule-light-blue)]">更新聚會</a>
-                            <a href="{% url 'activities:confirm_delete' activity.id %}" class="bg-[var(--moordule-pink)] text-white px-4 py-2 rounded hover:bg-red-600">刪除</a>
-                        </div>
-                    </div>
-                {% endfor %}
+        <!-- Card 2 -->
+        <div class="w-80 rounded-3xl overflow-hidden shadow-lg">
+          <img
+            src="https://images.unsplash.com/photo-1605926637512-c8b131444a4b?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZGlubmVyfGVufDB8fDB8fHww"
+            alt="pizza"
+            class="h-48 w-full object-cover"
+          />
+          <div class="bg-[#F78888] p-4">
+            <div class="flex justify-between items-center mb-2">
+              <h3 class="font-bold text-2xl">雅室牛排</h3>
+              <div class="flex items-center gap-1">
+                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                  />
+                </svg>
+                <span>4</span>
+              </div>
             </div>
-        {% else %}
-            <p class="text-center text-gray-500 text-lg mt-12">目前沒有活動。</p>
-        {% endif %}
+            <div class="flex justify-between gap-2 text-sm mb-2">
+              <div class="flex">
+                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    fill-rule="evenodd"
+                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <span>仁愛路四段105巷1號</span>
+              </div>
+              <span class="text-lg">今天 19:30</span>
+            </div>
+            <span class="text-lg font-medium">活動內容：</span>
+            <p class="text-sm mb-4 text-lg">
+              nbj/lv m/dfb mID,b ;KNadvbj/fbnm/S sdvbjk/ vmcn/lsnjlv/n
+              mv,c/skl/fbnlkvad ml/v m,/wsbf jnl/dzvm
+            </p>
+            <button
+              class="w-full py-2 rounded-full bg-white text-[#F78888] font-bold"
+            >
+              馬上揪
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="w-80 rounded-3xl overflow-hidden shadow-lg">
+          <img
+            src="https://images.unsplash.com/photo-1530062845289-9109b2c9c868?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGRpbm5lcnxlbnwwfHwwfHx8MA%3D%3D"
+            alt="pizza"
+            class="h-48 w-full object-cover"
+          />
+          <div class="bg-[#F78888] p-4">
+            <div class="flex justify-between items-center mb-2">
+              <h3 class="font-bold text-2xl">公園聚餐</h3>
+              <div class="flex items-center gap-1">
+                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                  />
+                </svg>
+                <span>4</span>
+              </div>
+            </div>
+            <div class="flex justify-between gap-2 text-sm mb-2">
+              <div class="flex">
+                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    fill-rule="evenodd"
+                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <span>圓山捷運站花博公園</span>
+              </div>
+              <span class="text-lg">週六 12:30</span>
+            </div>
+            <span class="text-lg font-medium">活動內容：</span>
+            <p class="text-sm mb-4 text-lg">
+              nbj/lv m/dfb mID,b ;KNadvbj/fbnm/S sdvbjk/ vmcn/lsnjlv/n
+              mv,c/skl/fbnlkvad ml/v m,/wsbf jnl/dzvm
+            </p>
+            <button
+              class="w-full py-2 rounded-full bg-white text-[#F78888] font-bold"
+            >
+              馬上揪
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
-{% endblock content %}
+    <!-- 聚會種類 分區:喝酒 -->
+    <div id="drink" class="mx-20 pt-12">
+      <h2 class="my-10 text-3xl">揪喝酒</h2>
+      <div class="flex justify-center gap-6">
+        <!-- Card 1 -->
+        <div class="w-80 rounded-3xl overflow-hidden shadow-lg">
+          <img
+            src="https://miro.medium.com/v2/resize:fit:630/format:webp/1*5xh2fKvJByPlTheZik_VCg.jpeg"
+            alt="pizza"
+            class="h-48 w-full object-cover"
+          />
+          <div class="bg-yellow-300 p-4">
+            <div class="flex justify-between items-center mb-2">
+              <h3 class="font-bold text-2xl">品酒會-威士忌</h3>
+              <div class="flex items-center gap-1">
+                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                  />
+                </svg>
+                <span>20</span>
+              </div>
+            </div>
+            <div class="flex justify-between gap-2 text-sm mb-2">
+              <div class="flex">
+                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    fill-rule="evenodd"
+                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <span>大安區光復南路300號</span>
+              </div>
+              <span class="text-lg">今天 19:30</span>
+            </div>
+            <span class="text-lg font-medium">活動內容：</span>
+            <p class="text-sm mb-4 text-lg">
+              nbj/lv m/dfb mID,b ;KNadvbj/fbnm/S sdvbjk/ vmcn/lsnjlv/n
+              mv,c/skl/fbnlkvad ml/v m,/wsbf jnl/dzvm
+            </p>
+            <button
+              class="w-full py-2 rounded-full bg-white text-yebg-yellow-300 font-bold"
+            >
+              馬上揪
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="w-80 rounded-3xl overflow-hidden shadow-lg">
+          <img
+            src="https://miro.medium.com/v2/resize:fit:1060/format:webp/1*QtZmqsm_bwzQUyCK6vgZZw.jpeg"
+            alt="pizza"
+            class="h-48 w-full object-cover"
+          />
+          <div class="bg-yellow-300 p-4">
+            <div class="flex justify-between items-center mb-2">
+              <h3 class="font-bold text-2xl">葡萄酒小酌</h3>
+              <div class="flex items-center gap-1">
+                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                  />
+                </svg>
+                <span>4</span>
+              </div>
+            </div>
+            <div class="flex justify-between gap-2 text-sm mb-2">
+              <div class="flex">
+                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    fill-rule="evenodd"
+                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <span>仁愛路四段105巷1號</span>
+              </div>
+              <span class="text-lg">今天 19:30</span>
+            </div>
+            <span class="text-lg font-medium">活動內容：</span>
+            <p class="text-sm mb-4 text-lg">
+              nbj/lv m/dfb mID,b ;KNadvbj/fbnm/S sdvbjk/ vmcn/lsnjlv/n
+              mv,c/skl/fbnlkvad ml/v m,/wsbf jnl/dzvm
+            </p>
+            <button
+              class="w-full py-2 rounded-full bg-white text-yebg-yellow-300 font-bold"
+            >
+              馬上揪
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="w-80 rounded-3xl overflow-hidden shadow-lg">
+          <img
+            src="https://plus.unsplash.com/premium_photo-1698529231408-80642212fd1b?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8bmV3JTIweWVhcnxlbnwwfHwwfHx8MA%3D%3D"
+            alt="pizza"
+            class="h-48 w-full object-cover"
+          />
+          <div class="bg-yellow-300 p-4">
+            <div class="flex justify-between items-center mb-2">
+              <h3 class="font-bold text-2xl">2025跨年party</h3>
+              <div class="flex items-center gap-1">
+                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                  />
+                </svg>
+                <span>30</span>
+              </div>
+            </div>
+            <div class="flex justify-between gap-2 text-sm mb-2">
+              <div class="flex">
+                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    fill-rule="evenodd"
+                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <span>圓山捷運站花博公園</span>
+              </div>
+              <span class="text-lg">週六 12:30</span>
+            </div>
+            <span class="text-lg font-medium">活動內容：</span>
+            <p class="text-sm mb-4 text-lg">
+              nbj/lv m/dfb mID,b ;KNadvbj/fbnm/S sdvbjk/ vmcn/lsnjlv/n
+              mv,c/skl/fbnlkvad ml/v m,/wsbf jnl/dzvm
+            </p>
+            <button
+              class="w-full py-2 rounded-full bg-white text-yebg-yellow-300 font-bold"
+            >
+              馬上揪
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 聚會種類 分區:運動 -->
+    <div id="sports" class="mx-20 pt-12">
+      <h2 class="my-10 text-3xl">揪運動</h2>
+      <div class="flex justify-center gap-6">
+        <!-- Card 1 -->
+        <div class="w-80 rounded-3xl overflow-hidden shadow-lg">
+          <img
+            src="https://miro.medium.com/v2/resize:fit:622/format:webp/1*w1MjwyQiX262MkK79TdE_w.jpeg"
+            alt="pizza"
+            class="h-48 w-full object-cover"
+          />
+          <div class="bg-[#5DA2D5] p-4">
+            <div class="flex justify-between items-center mb-2">
+              <h3 class="font-bold text-2xl">揪團練核心</h3>
+              <div class="flex items-center gap-1">
+                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                  />
+                </svg>
+                <span>6</span>
+              </div>
+            </div>
+            <div class="flex justify-between gap-2 text-sm mb-2">
+              <div class="flex">
+                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    fill-rule="evenodd"
+                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <span>大安區光復南路300號</span>
+              </div>
+              <span class="text-lg">今天 19:30</span>
+            </div>
+            <span class="text-lg font-medium">活動內容：</span>
+            <p class="text-sm mb-4 text-lg">
+              nbj/lv m/dfb mID,b ;KNadvbj/fbnm/S sdvbjk/ vmcn/lsnjlv/n
+              mv,c/skl/fbnlkvad ml/v m,/wsbf jnl/dzvm
+            </p>
+            <button
+              class="w-full py-2 rounded-full bg-white text-[#5DA2D5] font-bold"
+            >
+              馬上揪
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="w-80 rounded-3xl overflow-hidden shadow-lg">
+          <img
+            src="https://miro.medium.com/v2/resize:fit:692/format:webp/1*jdXIBc_pncEYbqsMGGf81g.jpeg"
+            alt="pizza"
+            class="h-48 w-full object-cover"
+          />
+          <div class="bg-[#5DA2D5] p-4">
+            <div class="flex justify-between items-center mb-2">
+              <h3 class="font-bold text-2xl">棒球賽事 台灣VS 日本</h3>
+              <div class="flex items-center gap-1">
+                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                  />
+                </svg>
+                <span>20</span>
+              </div>
+            </div>
+            <div class="flex justify-between gap-2 text-sm mb-2">
+              <div class="flex">
+                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    fill-rule="evenodd"
+                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <span>台北大巨蛋</span>
+              </div>
+              <span class="text-lg">今天 19:30</span>
+            </div>
+            <span class="text-lg font-medium">活動內容：</span>
+            <p class="text-sm mb-4 text-lg">
+              nbj/lv m/dfb mID,b ;KNadvbj/fbnm/S sdvbjk/ vmcn/lsnjlv/n
+              mv,c/skl/fbnlkvad ml/v m,/wsbf jnl/dzvm
+            </p>
+            <button
+              class="w-full py-2 rounded-full bg-white text-[#5DA2D5] font-bold"
+            >
+              馬上揪
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="w-80 rounded-3xl overflow-hidden shadow-lg">
+          <img
+            src="https://miro.medium.com/v2/resize:fit:690/format:webp/1*PSQ8e_hEM9eOYtMXswH8yA.jpeg"
+            alt="pizza"
+            class="h-48 w-full object-cover"
+          />
+          <div class="bg-[#5DA2D5] p-4">
+            <div class="flex justify-between items-center mb-2">
+              <h3 class="font-bold text-2xl">滑翔翼</h3>
+              <div class="flex items-center gap-1">
+                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                  />
+                </svg>
+                <span>4</span>
+              </div>
+            </div>
+            <div class="flex justify-between gap-2 text-sm mb-2">
+              <div class="flex">
+                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    fill-rule="evenodd"
+                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <span>圓山捷運站花博公園</span>
+              </div>
+              <span class="text-lg">週六 12:30</span>
+            </div>
+            <span class="text-lg font-medium">活動內容：</span>
+            <p class="text-sm mb-4 text-lg">
+              nbj/lv m/dfb mID,b ;KNadvbj/fbnm/S sdvbjk/ vmcn/lsnjlv/n
+              mv,c/skl/fbnlkvad ml/v m,/wsbf jnl/dzvm
+            </p>
+            <button
+              class="w-full py-2 rounded-full bg-white text-[#5DA2D5] font-bold"
+            >
+              馬上揪
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 聚會種類 分區:唱歌 -->
+    <div id="sing" class="mx-20 pt-12">
+      <h2 class="my-10 text-3xl">揪唱歌</h2>
+      <div class="flex justify-center gap-6">
+        <!-- Card 1 -->
+        <div class="w-80 rounded-3xl overflow-hidden shadow-lg">
+          <img
+            src="https://miro.medium.com/v2/resize:fit:588/format:webp/1*DIz0UDCT9-2PKZXo7pQfWA.jpeg"
+            alt="pizza"
+            class="h-48 w-full object-cover"
+          />
+          <div class="bg-[#F78888] p-4">
+            <div class="flex justify-between items-center mb-2">
+              <h3 class="font-bold text-2xl">Shelly PUB駐唱場</h3>
+              <div class="flex items-center gap-1">
+                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                  />
+                </svg>
+                <span>20</span>
+              </div>
+            </div>
+            <div class="flex justify-between gap-2 text-sm mb-2">
+              <div class="flex">
+                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    fill-rule="evenodd"
+                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <span>大安區光復南路300號</span>
+              </div>
+              <span class="text-lg">今天 21:30</span>
+            </div>
+            <span class="text-lg font-medium">活動內容：</span>
+            <p class="text-sm mb-4 text-lg">
+              nbj/lv m/dfb mID,b ;KNadvbj/fbnm/S sdvbjk/ vmcn/lsnjlv/n
+              mv,c/skl/fbnlkvad ml/v m,/wsbf jnl/dzvm
+            </p>
+            <button
+              class="w-full py-2 rounded-full bg-white text-[#F78888] font-bold"
+            >
+              馬上揪
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="w-80 rounded-3xl overflow-hidden shadow-lg">
+          <img
+            src="https://miro.medium.com/v2/resize:fit:550/format:webp/1*WdCBUu2dsh5LpI4JyTuYdA.jpeg"
+            alt="pizza"
+            class="h-48 w-full object-cover"
+          />
+          <div class="bg-[#F78888] p-4">
+            <div class="flex justify-between items-center mb-2">
+              <h3 class="font-bold text-2xl">KTV4hr</h3>
+              <div class="flex items-center gap-1">
+                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                  />
+                </svg>
+                <span>8</span>
+              </div>
+            </div>
+            <div class="flex justify-between gap-2 text-sm mb-2">
+              <div class="flex">
+                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    fill-rule="evenodd"
+                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <span>仁愛路四段105巷1號</span>
+              </div>
+              <span class="text-lg">今天 19:30</span>
+            </div>
+            <span class="text-lg font-medium">活動內容：</span>
+            <p class="text-sm mb-4 text-lg">
+              nbj/lv m/dfb mID,b ;KNadvbj/fbnm/S sdvbjk/ vmcn/lsnjlv/n
+              mv,c/skl/fbnlkvad ml/v m,/wsbf jnl/dzvm
+            </p>
+            <button
+              class="w-full py-2 rounded-full bg-white text-[#F78888] font-bold"
+            >
+              馬上揪
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="w-80 rounded-3xl overflow-hidden shadow-lg">
+          <img
+            src="https://live.staticflickr.com/65535/51536329822_7a13ea8497_c.jpg"
+            alt="pizza"
+            class="h-48 w-full object-cover"
+          />
+          <div class="bg-[#F78888] p-4">
+            <div class="flex justify-between items-center mb-2">
+              <h3 class="font-bold text-2xl">錢櫃KTV歡唱6小時</h3>
+              <div class="flex items-center gap-1">
+                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                  />
+                </svg>
+                <span>4</span>
+              </div>
+            </div>
+            <div class="flex justify-between gap-2 text-sm mb-2">
+              <div class="flex">
+                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    fill-rule="evenodd"
+                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <span>圓山捷運站花博公園</span>
+              </div>
+              <span class="text-lg">週六 12:30</span>
+            </div>
+            <span class="text-lg font-medium">活動內容：</span>
+            <p class="text-sm mb-4 text-lg">
+              nbj/lv m/dfb mID,b ;KNadvbj/fbnm/S sdvbjk/ vmcn/lsnjlv/n
+              mv,c/skl/fbnlkvad ml/v m,/wsbf jnl/dzvm
+            </p>
+            <button
+              class="w-full py-2 rounded-full bg-white text-[#F78888] font-bold"
+            >
+              馬上揪
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 聚會種類 分區:電影 -->
+    <div id="movies" class="mx-20 pt-12">
+      <h2 class="my-10 text-3xl">揪電影</h2>
+      <div class="flex justify-center gap-6">
+        <!-- Card 1 -->
+        <div class="w-80 rounded-3xl overflow-hidden shadow-lg">
+          <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqB3WEBFVo6gfJC2PClwQu5kd9qC4aPQNz1w&s"
+            alt="pizza"
+            class="h-48 w-full object-cover"
+          />
+          <div class="bg-yellow-300 p-4">
+            <div class="flex justify-between items-center mb-2">
+              <h3 class="font-bold text-2xl">工作中的細胞真人版</h3>
+              <div class="flex items-center gap-1">
+                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                  />
+                </svg>
+                <span>4</span>
+              </div>
+            </div>
+            <div class="flex justify-between gap-2 text-sm mb-2">
+              <div class="flex">
+                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    fill-rule="evenodd"
+                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <span>美麗華影城</span>
+              </div>
+              <span class="text-lg">今天 19:30</span>
+            </div>
+            <span class="text-lg font-medium">活動內容：</span>
+            <p class="text-sm mb-4 text-lg">
+              nbj/lv m/dfb mID,b ;KNadvbj/fbnm/S sdvbjk/ vmcn/lsnjlv/n
+              mv,c/skl/fbnlkvad ml/v m,/wsbf jnl/dzvm
+            </p>
+            <button
+              class="w-full py-2 rounded-full bg-white text-yellowbg-yellow-300 font-bold"
+            >
+              馬上揪
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="w-80 rounded-3xl overflow-hidden shadow-lg">
+          <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxEguyY6t0BGQ74GxK-rvbePLkW2J_CWPtxA&s"
+            alt="pizza"
+            class="h-48 w-full object-cover"
+          />
+          <div class="bg-yellow-300 p-4">
+            <div class="flex justify-between items-center mb-2">
+              <h3 class="font-bold text-2xl">爆裂點</h3>
+              <div class="flex items-center gap-1">
+                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                  />
+                </svg>
+                <span>4</span>
+              </div>
+            </div>
+            <div class="flex justify-between gap-2 text-sm mb-2">
+              <div class="flex">
+                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    fill-rule="evenodd"
+                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <span>華納威秀京站</span>
+              </div>
+              <span class="text-lg">今天 19:30</span>
+            </div>
+            <span class="text-lg font-medium">活動內容：</span>
+            <p class="text-sm mb-4 text-lg">
+              nbj/lv m/dfb mID,b ;KNadvbj/fbnm/S sdvbjk/ vmcn/lsnjlv/n
+              mv,c/skl/fbnlkvad ml/v m,/wsbf jnl/dzvm
+            </p>
+            <button
+              class="w-full py-2 rounded-full bg-white text-yellowbg-yellow-300 font-bold"
+            >
+              馬上揪
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="w-80 rounded-3xl overflow-hidden shadow-lg">
+          <img
+            src="https://cdn.hk01.com/di/media/images/3064021/org/9638dbcd0244934ac4a1216b62bff99b.jpg/5Y0xzpiGPhK5SvjnMy1PC8lyMBFvBXKnE_8RURP_EVE?v=w1920r16_9"
+            alt="pizza"
+            class="h-48 w-full object-cover"
+          />
+          <div class="bg-yellow-300 p-4">
+            <div class="flex justify-between items-center mb-2">
+              <h3 class="font-bold text-2xl">獅子王-擬真版</h3>
+              <div class="flex items-center gap-1">
+                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                  />
+                </svg>
+                <span>4</span>
+              </div>
+            </div>
+            <div class="flex justify-between gap-2 text-sm mb-2">
+              <div class="flex">
+                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    fill-rule="evenodd"
+                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <span>真善美影城</span>
+              </div>
+              <span class="text-lg">週六 12:30</span>
+            </div>
+            <span class="text-lg font-medium">活動內容：</span>
+            <p class="text-sm mb-4 text-lg">
+              nbj/lv m/dfb mID,b ;KNadvbj/fbnm/S sdvbjk/ vmcn/lsnjlv/n
+              mv,c/skl/fbnlkvad ml/v m,/wsbf jnl/dzvm
+            </p>
+            <button
+              class="w-full py-2 rounded-full bg-white text-yellowbg-yellow-300 font-bold"
+            >
+              馬上揪
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 聚會種類 分區:討論 -->
+    <div id="seminer" class="mx-20 pt-12">
+      <h2 class="my-10 text-3xl">揪討論</h2>
+      <div class="flex justify-center gap-6">
+        <!-- Card 1 -->
+        <div class="w-80 rounded-3xl overflow-hidden shadow-lg">
+          <img
+            src="https://miro.medium.com/v2/resize:fit:1142/format:webp/1*6lqXOP4ZzkXb-0etPKl_fA.jpeg"
+            alt="pizza"
+            class="h-48 w-full object-cover"
+          />
+          <div class="bg-[#5DA2D5] p-4">
+            <div class="flex justify-between items-center mb-2">
+              <h3 class="font-bold text-2xl">週二默默會</h3>
+              <div class="flex items-center gap-1">
+                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                  />
+                </svg>
+                <span>4</span>
+              </div>
+            </div>
+            <div class="flex justify-between gap-2 text-sm mb-2">
+              <div class="flex">
+                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    fill-rule="evenodd"
+                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <span>中正區衡陽路7號</span>
+              </div>
+              <span class="text-lg">週二 19:00</span>
+            </div>
+            <span class="text-lg font-medium">活動內容：</span>
+            <p class="text-sm mb-4 text-lg">
+              nbj/lv m/dfb mID,b ;KNadvbj/fbnm/S sdvbjk/ vmcn/lsnjlv/n
+              mv,c/skl/fbnlkvad ml/v m,/wsbf jnl/dzvm
+            </p>
+            <button
+              class="w-full py-2 rounded-full bg-white text-[#5DA2D5] font-bold"
+            >
+              馬上揪
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="w-80 rounded-3xl overflow-hidden shadow-lg">
+          <img
+            src="https://miro.medium.com/v2/resize:fit:1034/format:webp/1*XNp17xSsVbHdKxP0spEp1A.png"
+            alt="pizza"
+            class="h-48 w-full object-cover"
+          />
+          <div class="bg-[#5DA2D5] p-4">
+            <div class="flex justify-between items-center mb-2">
+              <h3 class="font-bold text-2xl">Ai新技術發表會</h3>
+              <div class="flex items-center gap-1">
+                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                  />
+                </svg>
+                <span>4</span>
+              </div>
+            </div>
+            <div class="flex justify-between gap-2 text-sm mb-2">
+              <div class="flex">
+                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    fill-rule="evenodd"
+                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <span>中正區衡陽路7號</span>
+              </div>
+              <span class="text-lg">今天 19:30</span>
+            </div>
+            <span class="text-lg font-medium">活動內容：</span>
+            <p class="text-sm mb-4 text-lg">
+              nbj/lv m/dfb mID,b ;KNadvbj/fbnm/S sdvbjk/ vmcn/lsnjlv/n
+              mv,c/skl/fbnlkvad ml/v m,/wsbf jnl/dzvm
+            </p>
+            <button
+              class="w-full py-2 rounded-full bg-white text-[#5DA2D5] font-bold"
+            >
+              馬上揪
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="w-80 rounded-3xl overflow-hidden shadow-lg">
+          <img
+            src="https://media.istockphoto.com/id/2014868550/photo/businessman-training-new-employees-in-the-office.webp?a=1&b=1&s=612x612&w=0&k=20&c=Czr6yVCM--Ru2LfZK44gkWfsEzQ6wrRWDu0S3oXdJoQ="
+            alt="pizza"
+            class="h-48 w-full object-cover"
+          />
+          <div class="bg-[#5DA2D5] p-4">
+            <div class="flex justify-between items-center mb-2">
+              <h3 class="font-bold text-2xl">專案討論</h3>
+              <div class="flex items-center gap-1">
+                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                  />
+                </svg>
+                <span>4</span>
+              </div>
+            </div>
+            <div class="flex justify-between gap-2 text-sm mb-2">
+              <div class="flex">
+                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    fill-rule="evenodd"
+                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <span>圓山捷運站花博公園</span>
+              </div>
+              <span class="text-lg">週六 12:30</span>
+            </div>
+            <span class="text-lg font-medium">活動內容：</span>
+            <p class="text-sm mb-4 text-lg">
+              nbj/lv m/dfb mID,b ;KNadvbj/fbnm/S sdvbjk/ vmcn/lsnjlv/n
+              mv,c/skl/fbnlkvad ml/v m,/wsbf jnl/dzvm
+            </p>
+            <button
+              class="w-full py-2 rounded-full bg-white text-[#5DA2D5] font-bold"
+            >
+              馬上揪
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- 回到頂部按鈕 -->
+  <a href="#top">
+    <button
+      onclick="scrollToTop()"
+      class="fixed bottom-4 right-4 w-14 h-14 bg-yellow-300 text-white rounded-full shadow-lg flex items-center justify-center hover:bg-yellow-400 transition duration-300"
+      aria-label="Back to top"
+    >
+      <svg
+        class="w-8 h-8"
+        fill="#ffffff"
+        viewBox="0 0 32 32"
+        xmlns="http://www.w3.org/2000/svg"
+        stroke="#ffffff"
+      >
+        <path
+          d="M0 16q0-3.232 1.28-6.208t3.392-5.12 5.12-3.392 6.208-1.28q3.264 0 6.24 1.28t5.088 3.392 3.392 5.12 1.28 6.208q0 3.264-1.28 6.208t-3.392 5.12-5.12 3.424-6.208 1.248-6.208-1.248-5.12-3.424-3.392-5.12-1.28-6.208zM4 16q0 3.264 1.6 6.048t4.384 4.352 6.016 1.6 6.016-1.6 4.384-4.352 1.6-6.048-1.6-6.016-4.384-4.352-6.016-1.632-6.016 1.632-4.384 4.352-1.6 6.016zM10.048 13.632q0.096-0.608 0.544-1.056l4-4q0.576-0.576 1.408-0.576t1.408 0.576l4 4q0.448 0.448 0.544 1.056t-0.096 1.152q-0.224 0.544-0.736 0.896t-1.12 0.32h-1.984v6.016q0 0.832-0.608 1.408t-1.408 0.576-1.408-0.576-0.576-1.408v-6.016h-2.016q-0.608 0-1.12-0.32t-0.736-0.896-0.096-1.152z"
+        ></path>
+      </svg>
+    </button>
+  </a>
+
+  {% endblock content %}
+</div>
