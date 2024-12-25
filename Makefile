@@ -1,5 +1,5 @@
 
-.PHONY: shell start migrations migrate startapp precommit commit
+.PHONY: shell start migrations migrate startapp precommit commit users meetups records
 
 
 shell:
@@ -23,9 +23,6 @@ precommit:
 commit:
 	poetry run cz commit
 
-# 先加入要提交的文件 - git add .
-# 然後使用 commitizen - poetry run cz commit
-
 server:
 	python manage.py runserver
 
@@ -35,3 +32,11 @@ migtion:
 mig:
 	python manage.py migrate
 
+users:
+	python manage.py generate_fake_users --count 20
+
+meetups:
+	python manage.py generate_fake_meetups --count 30
+
+records:
+	python manage.py generate_fake_records --count 10 --force
