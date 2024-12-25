@@ -78,16 +78,20 @@
           </svg>
         </button>
       </div>
-      <button
-        class="px-4 py-1 rounded-full bg-yellow-300 text-white hover:bg-yellow-400"
-      >
-        登入
-      </button>
-      <button
-        class="px-4 py-1 rounded-full bg-[#5DA2D5] text-white hover:bg-blue-500"
-      >
-        註冊
-      </button>
+      <a href="{% url 'users:signin' %}">
+        <button
+          class="px-4 py-1 rounded-full bg-yellow-300 text-white hover:bg-yellow-400"
+        >
+          登入
+        </button>
+      </a>
+      <a href="{% url 'users:signup' %}">
+        <button
+          class="px-4 py-1 rounded-full bg-[#5DA2D5] text-white hover:bg-blue-500"
+        >
+          註冊
+        </button>
+      </a>
     </div>
   </nav>
 
@@ -1009,6 +1013,113 @@
       </svg>
     </button>
   </a>
-
-  {% endblock content %}
 </div>
+
+<footer class="font-sans bg-gray-50 text-gray-700">
+  <!-- Wave Section -->
+  <section class="relative bg-blue-300 text-center text-white">
+    <div
+      class="w-full h-40 bg-blue-300 absolute top-0 left-0 transform rotate-180"
+    >
+      <!-- 波浪形狀 -->
+      <svg class="absolute bottom-0" viewBox="0 0 1440 320">
+        <path
+          fill="#ffffff"
+          fill-opacity="1"
+          d="M0,192L120,208C240,224,480,256,720,261.3C960,267,1200,245,1320,234.7L1440,224L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"
+        ></path>
+      </svg>
+    </div>
+    <div class="relative z-10 py-12">
+      <img
+        src="https://via.placeholder.com/80"
+        alt="logo"
+        class="mx-auto mb-4"
+      />
+      <h2 class="text-3xl font-bold">MOODGELE 多揪</h2>
+    </div>
+  </section>
+
+  <!-- Links Section -->
+  <section class="bg-blue-300 text-white py-8">
+    <div
+      class="container mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-center bg-blue-300"
+    >
+      <!-- 活動相關 -->
+      <div>
+        <h3 class="font-bold text-lg mb-2">活動相關</h3>
+        <ul class="space-y-1">
+          <a href="#top">
+            <li>特別活動</li>
+          </a>
+          <li>今日聚會</li>
+          <a href="#eat">
+            <li>揪要吃飯</li>
+          </a>
+          <a href="#drink">
+            <li>揪要喝酒</li>
+          </a>
+          <a href="#sports">
+            <li>揪要運動</li>
+          </a>
+          <a href="#sing">
+            <li>揪要唱歌</li>
+          </a>
+          <a href="#movies">
+            <li>揪要電影</li>
+          </a>
+          <a href="#seminer">
+            <li>揪要討論</li>
+          </a>
+        </ul>
+      </div>
+
+      <!-- 服務相關 -->
+      <div>
+        <h3 class="font-bold text-lg mb-2">服務相關</h3>
+        <ul class="space-y-1">
+          <li>F & Q</li>
+          <li>收費方式</li>
+          <li>隱私政策</li>
+          <li>使用條款</li>
+        </ul>
+      </div>
+
+      <!-- 會員相關 -->
+      <div>
+        <h3 class="font-bold text-lg mb-2">會員相關</h3>
+        <ul class="space-y-1">
+          <li>我的頁面</li>
+          <li>我的紀錄</li>
+          <li>我要揪團</li>
+          <li>我的聚會</li>
+          <li>我的錢包</li>
+          <li>我的通知</li>
+        </ul>
+      </div>
+
+      <!-- 社群媒體 -->
+      <div>
+        <h3 class="font-bold text-lg mb-2">社群媒體</h3>
+        <ul class="space-y-1">
+          <li>Facebook</li>
+          <li>Instagram</li>
+          <li>Discord</li>
+          <a href="https://github.com/astrocamp/18th-Moordule">
+            <li>GitHub</li>
+          </a>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <div class="bg-blue-400 text-center text-white text-sm py-4">
+    <p>公司：中文名字還沒確定股份有限公司</p>
+    <p>統編：13145200</p>
+    <p>地址：168 衡陽路7號5F, 台北市, 台灣</p>
+    <p>客服信箱：service@moordule.com</p>
+    <p>© 2024 ALL RIGHTS RESERVED ReCharm Internation Match Ltd.</p>
+  </div>
+</footer>
+{% endblock content %}

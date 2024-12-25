@@ -1,19 +1,15 @@
 # Moordule 多揪
 
-### 揪朋友 來多揪 越揪越多好朋友 123
-
-![moordule]()
-TODO 照片網址
-
-TODO Logo
+![moordule](https://miro.medium.com/v2/resize:fit:1400/format:webp/1*M9eXElapdctvl-nQbPG38w.jpeg)
+![moordule-text](https://miro.medium.com/v2/resize:fit:1400/format:webp/1*sphjBoiQpYV1I4Z5hOl5Qw.jpeg)
 
 ### 揪朋友 來多揪 越揪越多好朋友
 
-![Moordule-QRcode] ()
+![Moordule-QRcode] (https://miro.medium.com/v2/resize:fit:1400/format:webp/1*eUziMkHk2T129_qoLBXSFQ.png)
 
 掃描 QR Code，輕鬆加入聚會，開啟人生新篇章
 
-TODO 專案網址  
+專案網址 : https://www.moordule.com
 TODO 介紹影片  
 TODO 介紹簡報
 
@@ -21,7 +17,7 @@ TODO 介紹簡報
 
 ---
 
-Moordule 多揪 是一個聚會交友平台，讓使用者更容易接觸到與自己興趣相近的朋友圈。
+Moordule 多揪 是一個以**聚會**為出發點的交友平台，讓使用者更容易接觸到與自己興趣相近的朋友圈。
 
 TODO
 使用者可以：  
@@ -50,6 +46,11 @@ why
 
 ### 會員功能：
 
+- 參與聚會
+- 創建聚會
+- 給予聚會回饋
+- 儲值
+
 ### 聚會功能：
 
 ### 聊天功能：
@@ -66,40 +67,42 @@ VIP 會員制度：
 
 TODO xxx
 
-## 安裝環境
+## 環境設定
 
 ---
+
+### 安裝環境
 
 git clone https://github.com/astrocamp/18th-Moordule.git(將專案複製到本地)  
 cd 18th-Moordule(進入專案目錄)
 
 - poetry 輸出 requirements.txt:
-  poetry export -f requirements.txt --output requirements.txt
-- 安裝所有套件: poetry install
+  `poetry export -f requirements.txt --output requirements.txt`
+- 安裝所有套件: `poetry install`
+- 安裝裝 npm:`npm i`
 
-## 執行環境
+### 執行環境
 
-- 開啟開發伺服器: poetry run python manage.py runserver
-- 啟動 css 打包: npm run css
-- 啟動 js 打包: npm run js
-- 產生資料庫: poetry run python manage.py makemigrations
-- 運行資料庫遷移: poetry run python manage.py migrate
-- 建立應用程式: poetry run python manage.py startapp ${app_dir}
+- 開啟開發伺服器: `poetry run python manage.py runserver`
+- 啟動 CSS & JS 打包: `npm run dev`
+- 產生資料庫: `poetry run python manage.py makemigrations`
+- 運行資料庫遷移: `poetry run python manage.py migrate`
+- 建立應用程式: `poetry run python manage.py startapp ${app_dir}`
 
 ## 技術使用
 
 ---
 
-前端：  
-後端：  
-資料庫：[TablePlus](https://tableplus.com/)
-版本控制：Git
-第三方登入：
+前端：`Tailwind`,
+後端：`Django`,
+資料庫：`PostgreSQL`, [TablePlus](https://tableplus.com/)
+版本控制：`Git`
+第三方登入：`Google`
 
 郵件發送：Mailgun?  
 部署：Heroku?  
-Logo:Design.com, Illustrator  
-規劃：Miro, Asana
+排版設計:`Design.com`, `Illustrator`, `Canva`
+規劃：`Miro`, `Asana`
 
 ## 團隊成員
 
