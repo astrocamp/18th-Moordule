@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+{% extends "base/layout.html" %} {% block head %}
     <title>更新活動</title>
-</head>
-<body>
+{% endblock head %} {% block content %}
+
     <h1>更新活動</h1>
     {% if error_message %}
         <p style="color: red;">{{ error_message }}</p>
@@ -44,4 +41,5 @@
         
     </form>
 </body>
-</html>
+
+{% endblock content %} 

@@ -11,5 +11,7 @@ urlpatterns = [
     path('confirm_delete/<int:activity_id>/', views.confirm_delete, name='confirm_delete'),  
     path('create_category/', views.create_category, name='category'), 
     path('search/', views.search, name='search'), 
+    path('information', views.information, name='information'), 
+    #information後面要改掛id
 ]
 
