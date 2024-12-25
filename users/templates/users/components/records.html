@@ -1,0 +1,24 @@
+<!--prettier-ignore-->
+{% for record in records %}
+<tr class="hover:bg-gray-50" style="border-top: 0">
+	<td class="w-48 px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+		{{ record.created_at|date:"Y/m/d H:i" }}
+	</td>
+	<td class="w-48 px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+		{{ record.amount }}
+	</td>
+	<td class="w-48 px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+		<!-- prettier-ignore -->
+		{% if record.type == 'meetup' %}{{record.notes.topic}}{% else %}{{record.notes.payment_method}}{% endif %}
+	</td>
+</tr>
+{% endfor %}
+
+<!-- 如果記錄不足 5 筆，補充空行 -->
+{% for _ in extra_rows %}
+<tr class="opacity-0" style="border-top: 0">
+	<td class="w-48 px-6 py-4 text-sm text-gray-400">NULL</td>
+	<td class="w-48 px-6 py-4 text-sm text-gray-400">NULL</td>
+	<td class="w-48 px-6 py-4 text-sm text-gray-400">NULL</td>
+</tr>
+{% endfor %}

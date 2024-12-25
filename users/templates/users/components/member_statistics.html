@@ -1,0 +1,27 @@
+<!-- users/templates/users/components/member_statistics.html -->
+{% load record_components %}
+<div class="mb-6 w-[1200px] bg-white p-8 shadow-lg rounded-lg">
+	<div class="space-y-6">
+		<div>
+			<h3 class="text-lg font-medium text-gray-900">聚會參與統計</h3>
+			<div class="grid grid-cols-3 gap-4 mt-3">
+				<!--prettier-ignore-->
+				{% stats_field label=labels.0 value=stats.count|default:0 %}
+        {% stats_field label=labels.1 value=stats.total_amount|floatformat:0|default:0 %}
+        {% stats_field label=labels.2 value=stats.average|default:0 %}
+			</div>
+		</div>
+	</div>
+</div>
+
+{% comment %}
+<div>
+	<h3 class="text-lg font-medium text-gray-900">儲值統計</h3>
+	<div class="grid grid-cols-3 gap-4 mt-3">
+		<!--prettier-ignore-->
+		{% stats_field label="儲值次數" value=topup_stats.count %}
+      {% stats_field label="總儲值" value=topup_stats.total_amount|floatformat:0 %}
+      {% stats_field label="平均每次" value=topup_stats.average|floatformat:0 %}
+	</div>
+</div>
+{% endcomment %}

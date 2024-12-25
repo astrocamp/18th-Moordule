@@ -1,0 +1,52 @@
+{% load record_components %}
+<!--prettier-ignore-->
+{% if should_redirect %}
+<!-- 預防使用者亂輸入網址 -->
+
+<div
+	hx-get="{{ request.path }}?page={{ redirect_page }}"
+	hx-trigger="load"
+	hx-target="#record_manager"
+	hx-swap="outerHTML"
+	hx-push-url="true"
+></div>
+{% endif %}
+<!--prettier-ignore-->
+{% if should_render %}
+<div
+	id="record_manager"
+	class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+>
+	{% member_statistics id=user.pk type="topup" %}
+	<div class="w-[1200px] bg-white p-8 shadow-lg rounded-lg">
+		<div id="records-container">
+			<table class="w-full border rounded-md overflow-hidden">
+				<thead class="min-w-full bg-gray-50">
+					<tr>
+						<th
+							class="w-48 px-6 py-3 text-left text-sm font-medium text-gray-500"
+						>
+							日期
+						</th>
+						<th
+							class="w-48 px-6 py-3 text-left text-sm font-medium text-gray-500"
+						>
+							金額
+						</th>
+						<th
+							class="w-48 px-6 py-3 text-left text-sm font-medium text-gray-500"
+						>
+							標註
+						</th>
+					</tr>
+				</thead>
+				<tbody id="records-tbody" class="bg-white divide-y divide-gray-200">
+					<!-- prettier-ignore -->
+					{% include "users/components/records.html" with records=page_object %}
+				</tbody>
+			</table>
+			{% include "shared/paginator.html" with type="meetup" %}
+		</div>
+	</div>
+</div>
+{% endif %}
