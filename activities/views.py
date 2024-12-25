@@ -88,3 +88,5 @@ def confirm_delete(request, activity_id):
         return redirect("activities:index")
     return render(request, "activities/confirm_delete.html", {"activity": activity})
 
+def search(request):
+    return render(request,"activities/search.html")
