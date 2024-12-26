@@ -18,15 +18,35 @@ class Hobby(models.Model):
 
 
 class CustomUser(AbstractUser):
+    
+    GENDER_CHOICES = [
+        ('male', 'Male'),  # ('存儲值', '顯示值')
+        ('female', 'Female'),
+        ('other', 'Other'),
+    ]
+
+    HOBB_CHOICES = [
+        ('eating', '吃飯'),
+        ('drinking', '喝酒'),
+        ('sleeping', '唱歌'),
+        ('sports', '運動'),
+        ('movies', '電影'),
+        ('discussion', '討論'),
+    ]
     username = models.CharField(max_length=150, blank=True, null=True)
     email = models.EmailField(unique=True)
     avatar_url = models.CharField(max_length=255, blank=True, null=True)
+    birth_date= models.DateField(blank=True, null=True)
+    gender= models.CharField(max_length=10, choices=GENDER_CHOICES, blank=True, null=True)
     live_in = models.CharField(max_length=255, blank=True, null=True)
-    hobby = models.ForeignKey(Hobby, on_delete=models.SET_NULL, blank=True, null=True)
+    
+    hobby = models.CharField(max_length=255, choices=HOBB_CHOICES, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    google_id = models.CharField(max_length=255, unique=True, null=True, blank=True)
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
+
 
     class Meta:
         db_table = "users"

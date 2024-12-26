@@ -1,13 +1,14 @@
 from django.contrib.auth import authenticate, login
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
 
 from users.models import CustomUser
 
-from .forms import UserRegistrationForm
+from .forms import UserRegistrationForm, CustomUserChangeForm
 
 # Create your views here.
 
@@ -117,8 +118,8 @@ def login_view(request: HttpRequest):
 
     if user is not None:
         login(request, user)
-        dashboard_url = reverse("users:dashboard", args=[user.pk])
-        return HttpResponse("", headers={"HX-Redirect": dashboard_url})
+        account_url = reverse("users:account")
+        return HttpResponse("", headers={"HX-Redirect": account_url})
 
     return render(
         request,
@@ -136,7 +137,27 @@ def login_view(request: HttpRequest):
 def clear_errors(request):
     return HttpResponse("")
 
+@login_required
+def account_view(request: HttpRequest):
+    user = CustomUser.objects.get(pk=request.user.pk)
+    return render(request, "users/member.html", {"user": user})    
 
-def dashboard_view(request: HttpRequest, id):
-    user = CustomUser.objects.get(pk=id)
-    return render(request, "users/dashboard.html", {"user": user})
+@login_required
+def edit_view(request: HttpRequest):
+    # 獲取當前登入用戶
+    user = request.user
+
+    if request.method == "POST":
+        # 使用 POST 數據和用戶實例初始化表單
+        form = CustomUserChangeForm(request.POST, instance=user)
+        if form.is_valid():
+            # 如果表單數據有效，保存用戶資料
+            form.save()  
+    else:
+        # 如果是 GET 請求，顯示當前用戶數據
+        form = CustomUserChangeForm(instance=user)
+
+    return render(request, "users/components/user_form.html", {"form": form})
+
+    
+

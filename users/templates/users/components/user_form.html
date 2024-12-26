@@ -1,0 +1,36 @@
+<form hx-post="{% url 'users:edit' %}" hx-swap="none" class="bg-white rounded-lg shadow-lg p-4">
+    {% csrf_token %}
+
+    <h3 class="text-yellow-500 font-bold">個人資料</h3>
+
+    <label class="block mt-2 text-gray-700">
+        姓名：
+        {{ form.username }}
+    </label>ç
+
+    <label class="block mt-2 text-gray-700">
+        Gender:
+        {{ form.gender }}
+        
+    </label>
+
+    <label class="block mt-2 text-gray-700">
+        生日：
+        {{ form.birth_date }}
+    </label>
+
+    <label class="block mt-2 text-gray-700">
+        所在地區：
+        {{ form.live_in }}
+    </label>
+
+    <label class="block mt-2 text-gray-700">
+        興趣：
+        {{ form.hobby }}
+    </label>
+
+    <button class="mt-4 bg-yellow-400 text-white px-4 py-2 rounded-full hover:bg-yellow-500">
+        儲存
+    </button>
+</form>
+  
