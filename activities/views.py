@@ -140,18 +140,16 @@ def confirm_delete(request, activity_id):
 
 @login_required
 def join_activity(request, activity_id):
-    # 獲取活動對象
     activity = get_object_or_404(Activity, id=activity_id)
 
-    # 處理 POST 請求時加入活動的邏輯
     if request.method == "POST":
-        # 檢查活動是否已經滿員
+       
         if activity.participants.count() >= activity.max_participants:
             return render(request, "activities/detail.html", {
                 "activity": activity,
                 "error_message": "人數已滿！"
             })
-        # 如果用戶未參加過該活動，則加入活動
+      
         participation, created = MeetupPaticipat.objects.get_or_create(activity=activity, participant=request.user)
 
         if created:
@@ -164,7 +162,7 @@ def join_activity(request, activity_id):
             "message": message
         })
 
-    # 處理 GET 請求時展示活動的詳細資訊
+    
     return render(request, "activities/detail.html", {
         "activity": activity
     })
