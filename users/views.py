@@ -105,8 +105,8 @@ def login_view(request: HttpRequest):
 
     if user is not None:
         login(request, user)
-        account_url = reverse("users:account")
-        return HttpResponse("", headers={"HX-Redirect": account_url})
+        index_url = reverse("pages:index")
+        return HttpResponse("", headers={"HX-Redirect": index_url})
 
     return render(
         request,
@@ -137,6 +137,7 @@ def edit_view(request: HttpRequest):
     if request.method == "POST":
         form = CustomUserChangeForm(request.POST, instance=user)
         if form.is_valid():
+            # 如果表單數據有效，保存用戶資料
             form.save()
     else:
 
