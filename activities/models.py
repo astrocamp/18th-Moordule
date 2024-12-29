@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from datetime import timedelta
-
+from users.models import CustomUser  # 引入 User 模型
    
 class Category(models.Model):
     name = models.CharField(max_length=15, help_text="分類名稱")
@@ -22,6 +22,11 @@ class Activity(models.Model):
     max_participants = models.PositiveIntegerField(help_text="參加人數上限", default=10)
     created_at = models.DateTimeField(auto_now_add=True, help_text="活動建立時間")
     category = models.ForeignKey("Category", on_delete=models.SET_NULL, null=True, blank=True, help_text="活動分類")
+    owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='created_activities', help_text="活動建立者")
+    
+    
+    
+    
     # 活動結束時間是動態推算出來的
     @property
     def end_time(self):
@@ -39,3 +44,15 @@ class Activity(models.Model):
     @property
     def is_finished(self):
         return self.end_time < timezone.now()
+
+# 活動參與者中介模型
+class MeetupPaticipat(models.Model):
+    activity = models.ForeignKey("Activity", on_delete=models.CASCADE,related_name='participants', help_text="活動")
+    participant = models.ForeignKey(CustomUser, on_delete=models.CASCADE,related_name='meetups', help_text="參與者")
+    joined_at = models.DateTimeField(auto_now_add=True, help_text="加入時間")
+    
+    class Meta:
+        unique_together = ('activity', 'participant')
+    
+    def __str__(self):
+        return f"{self.activity.title} - {self.participant.username}（{self.joined_at.strftime('%Y-%m-%d %H:%M')})"

@@ -4,7 +4,11 @@ from .models import Activity, Category
 
 
 class ActivityForm(forms.ModelForm):
-    category = forms.ModelChoiceField(queryset=Category.objects.all(), empty_label="選擇興趣", required=True)
+    category = forms.ModelChoiceField(queryset=Category.objects.all(), 
+                                      empty_label="選擇興趣", 
+                                      required=True,
+                                      error_messages={'required': '必須選擇一個類別！'} 
+                                      )
 
     class Meta:
         model = Activity
@@ -15,6 +19,8 @@ class ActivityForm(forms.ModelForm):
         if start_time and start_time < timezone.now():
             raise forms.ValidationError('活動開始時間必須晚於當前時間！')
         return start_time
+    
+   
     
        
 class CategoryForm(forms.ModelForm):

@@ -13,6 +13,7 @@
         <button type="submit">建立</button>
     </form>
 
+<br>
     <h3>所有聚會類別</h3>
     <ul>
         {% for category in categories %}
@@ -23,4 +24,12 @@
     </ul>
 
 </div>
+<br>
+{% for category in categories %}
+    <div>
+        <span>{{ category.name }}</span>
+        <a href="{% url 'activities:delete_category' category.id %}">刪除</a>
+    </div>
+{% endfor %}
+
 {% endblock content %}

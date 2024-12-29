@@ -40,3 +40,6 @@ meetups:
 
 records:
 	python manage.py generate_fake_records --count 10 --force
+
+seed:
+	python manage.py seed_categories
