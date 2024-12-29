@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
@@ -20,6 +20,37 @@ class HtmxHttpRequest(HttpRequest):
 # Create your views here.
 
 
+@login_required
+def member_view(request: HttpRequest):
+    return render(request, "users/account.html")
+
+
+@login_required
+def password_change_view(request):
+    if request.method == "GET":
+        return render(request, "users/components/password_change_form.html")
+    else:
+        user = request.user
+        old_password = request.POST.get("old_password")
+        new_password = request.POST.get("new_password1")
+        confirm_password = request.POST.get("new_password2")
+
+        if not user.check_password(old_password):
+            return HttpResponse(
+                '<p class="text-red-500 text-sm mt-1">舊密碼輸入有誤</p>'
+            )
+
+        if new_password != confirm_password:
+            return HttpResponse('<p class="text-red-500 text-sm mt-1">密碼不一致</p>')
+
+        user.set_password(new_password)
+        user.save()
+
+        update_session_auth_hash(request, user)
+        account_url = reverse("users:account")
+        return HttpResponse("", headers={"HX-Redirect": account_url})
+
+
 def signup_view(request: HttpRequest):
 
     if request.POST:
@@ -29,17 +60,17 @@ def signup_view(request: HttpRequest):
             signin_url = reverse("users:signin")
             return HttpResponse("", headers={"HX-Redirect": signin_url})
 
-    meetups = Meetup.objects.filter(
-        start_time__gte=timezone.now()  # 只抓還沒開始的活動
-    ).order_by("start_time")[:2]
+    meetups = Meetup.objects.filter(start_time__gte=timezone.now()).order_by(
+        "start_time"
+    )[:2]
 
     return render(request, "users/signup.html", {"meetups": meetups})
 
 
 def signin_view(request: HttpRequest):
-    meetups = Meetup.objects.filter(
-        start_time__gte=timezone.now()  # 只抓還沒開始的活動
-    ).order_by("start_time")[:2]
+    meetups = Meetup.objects.filter(start_time__gte=timezone.now()).order_by(
+        "start_time"
+    )[:2]
 
     return render(request, "users/signin.html", {"meetups": meetups})
 
@@ -101,17 +132,14 @@ def account_view(request: HttpRequest):
 
 @login_required
 def edit_view(request: HttpRequest):
-    # 獲取當前登入用戶
     user = request.user
 
     if request.method == "POST":
-        # 使用 POST 數據和用戶實例初始化表單
         form = CustomUserChangeForm(request.POST, instance=user)
         if form.is_valid():
-            # 如果表單數據有效，保存用戶資料
             form.save()
     else:
-        # 如果是 GET 請求，顯示當前用戶數據
+
         form = CustomUserChangeForm(instance=user)
 
     return render(request, "users/components/user_form.html", {"form": form})

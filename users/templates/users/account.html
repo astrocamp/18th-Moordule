@@ -3,7 +3,7 @@
 
 {%block head%}
 <title>member</title>
-<!-- 引入 Flaticon 圖示庫 -->
+
 <link
   rel="stylesheet"
   href="https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css"
@@ -12,62 +12,7 @@
 
 {%block content%}
   <div class="bg-gray-100">
-    <!-- Navigation Bar -->
-    <nav class="space-x-5 flex justify-center items-center mt-5 mx-auto w-max">
-      <a href="#" class="text-yellow-500">
-        <button class="px-6 py-3 rounded-full hover:bg-yellow-500 text-white bg-yellow-300 text-xl">
-          我的頁面
-        </button>
-      </a>
-      <a href="#">
-        <button class="px-6 py-3 rounded-full hover:bg-yellow-500 text-white bg-yellow-400 text-xl">
-          我的帳號
-        </button>
-      </a>
-      <a href="#">
-        <button class="px-6 py-3 rounded-full hover:bg-yellow-500 text-white bg-yellow-300 text-xl">
-          我的活動
-        </button>
-      </a>
-      <a href="#">
-        <button class="px-6 py-3 rounded-full hover:bg-yellow-500 text-white bg-yellow-300 text-xl">
-          我的收藏
-        </button>
-      </a>
-      <a href="#">
-        <button class="px-6 py-3 rounded-full hover:bg-yellow-500 text-white bg-yellow-300 text-xl">
-          我的紀錄
-        </button>
-      </a>
-      <a href="#">
-        <button class="px-6 py-3 rounded-full hover:bg-yellow-500 text-white bg-yellow-300 text-xl">
-          創建活動
-        </button>
-      </a>
-      <a href="#">
-        <button class="px-6 py-3 rounded-full hover:bg-yellow-500 text-white bg-yellow-300 text-xl">
-          聊天室
-        </button>
-      </a>
-      <a href="#">
-        <div class="flex items-center space-x-2">
-          <!-- 系統通知 -->
-          <button class="px-6 py-3 rounded-full hover:bg-yellow-500 text-white bg-yellow-300 text-xl">
-            系統通知
-          </button>
-          <!-- 獨立的 X 按鈕 -->
-           FIXME: 改用Alpine js
-          <button
-            class="w-10 h-10 text-white hover:bg-yellow-500 focus:outline-none border bg-yellow-500 rounded-full flex items-center justify-center"
-            onclick="document.getElementById('notification-bar').style.display='none';"
-          >
-            <i class="fi fi-rr-cross"></i>
-          </button>
-        </div>
-      </a>
-    </nav>
-
-
+    
     <!-- Main Container -->
     <div class="max-w-screen-lg mx-auto mt-6 p-[30px] p-6 bg-yellow-300 rounded-[24px] grid grid-cols-3 gap-4">
       FIXME: p衝突
@@ -97,17 +42,28 @@
       
 
       <!-- 右側：帳號資料 -->
+
       <div class="bg-white rounded-lg shadow-lg p-4">
         <h3 class="text-yellow-500 font-bold">帳號資料</h3>
-        <p class="mt-2 text-gray-700">帳號：<span class="text-gray-500">用戶帳號</span></p>
-        <p class="mt-2 text-gray-700">密碼：<span class="text-gray-500">********</span></p>
-        {% comment %} 
-        FIXME:******要處理，現在是可以被檢視的但密碼不應該可以被檢視
-        <p class="mt-2 text-gray-700">雙重驗證：<span class="text-gray-500">已啟用</span></p> {% endcomment %}
-        <button class="mt-4 bg-yellow-400 text-white px-4 py-2 rounded-full hover:bg-yellow-500">變更密碼</button>
-        {% comment %} <button class="mt-4 bg-yellow-400 text-white px-4 py-2 rounded-full hover:bg-yellow-500">雙重驗證</button> {% endcomment %}
+      
+        <p class="mt-2 text-gray-700">
+          帳號：<span class="text-gray-500">用戶帳號</span>
+        </p>
+        <p class="mt-2 text-gray-700">
+          密碼：<span class="text-gray-500">********</span>
+        </p>
+        <button
+          hx-get="{% url 'users:password_change' %}"
+          hx-target="#password-change-modal"
+          hx-swap="innerHTML"
+          class="mt-4 bg-yellow-400 text-white px-4 py-2 rounded-full hover:bg-yellow-500"
+          hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+        >
+          變更密碼
+        </button>
+        <div id="password-change-modal"></div>
       </div>
-
+      </div>
       <!-- 下方：關於我 -->
       <div class="col-span-3 bg-white rounded-lg shadow-lg p-4">
         <h3 class="text-yellow-500 font-bold">關於我</h3>
@@ -117,3 +73,4 @@
     </div>
   </div>
   {%endblock content%}
+ 
