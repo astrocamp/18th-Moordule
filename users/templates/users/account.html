@@ -54,7 +54,7 @@
           我的頁面
         </button>
       </a>
-      <a href="#">
+      <a>
         <button class="px-6 py-3 rounded-full hover:bg-yellow-500 text-white bg-yellow-400 text-xl">
           我的帳號
         </button>
@@ -129,15 +129,28 @@
       
 
       <!-- 右側：帳號資料 -->
+
       <div class="bg-white rounded-lg shadow-lg p-4">
         <h3 class="text-yellow-500 font-bold">帳號資料</h3>
-        <p class="mt-2 text-gray-700">帳號：<span class="text-gray-500">用戶帳號</span></p>
-        <p class="mt-2 text-gray-700">密碼：<span class="text-gray-500">********</span></p>
-        {% comment %} <p class="mt-2 text-gray-700">雙重驗證：<span class="text-gray-500">已啟用</span></p> {% endcomment %}
-        <button class="mt-4 bg-yellow-400 text-white px-4 py-2 rounded-full hover:bg-yellow-500">變更密碼</button>
-        {% comment %} <button class="mt-4 bg-yellow-400 text-white px-4 py-2 rounded-full hover:bg-yellow-500">雙重驗證</button> {% endcomment %}
+      
+        <p class="mt-2 text-gray-700">
+          帳號：<span class="text-gray-500">用戶帳號</span>
+        </p>
+        <p class="mt-2 text-gray-700">
+          密碼：<span class="text-gray-500">********</span>
+        </p>
+        <button
+          hx-get="{% url 'users:password_change' %}"
+          hx-target="#password-change-modal"
+          hx-swap="innerHTML"
+          class="mt-4 bg-yellow-400 text-white px-4 py-2 rounded-full hover:bg-yellow-500"
+          hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+        >
+          變更密碼
+        </button>
+        <div id="password-change-modal"></div>
       </div>
-
+      </div>
       <!-- 下方：關於我 -->
       <div class="col-span-3 bg-white rounded-lg shadow-lg p-4">
         <h3 class="text-yellow-500 font-bold">關於我</h3>
@@ -147,3 +160,4 @@
     </main>
   </body>
   {%endblock content%}
+ 
