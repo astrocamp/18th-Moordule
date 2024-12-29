@@ -1,5 +1,5 @@
 # Create your models here.
-from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
 
 # Create your models here.
@@ -15,6 +15,19 @@ class Hobby(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class CustomUserManager(UserManager):
+    def create_superuser(self, email, password=None, **extra_fields):
+        extra_fields.setdefault("is_staff", True)
+        extra_fields.setdefault("is_superuser", True)
+        # 因為 AbstractUser 需要 username，所以我們用 email 當作 username
+        return super().create_user(
+            username=email,  # username 欄位還是需要值
+            email=email,
+            password=password,
+            **extra_fields
+        )
 
 
 class CustomUser(AbstractUser):
@@ -50,6 +63,7 @@ class CustomUser(AbstractUser):
     google_id = models.CharField(max_length=255, unique=True, null=True, blank=True)
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
+    objects = CustomUserManager()
 
     class Meta:
         db_table = "users"
