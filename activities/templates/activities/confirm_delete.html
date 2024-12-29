@@ -18,8 +18,9 @@
 <form method="POST">
     {% csrf_token %}
     <button type="submit">確定刪除</button>
-    <a href="{% url 'activities:index' %}">取消</a>
+    <br>
+    <a href="{% url 'activities:events' %}">取消</a>
 </form>
 
 </div>
-{% endblock %}
+{% endblock %}  

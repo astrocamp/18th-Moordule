@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from .forms import ActivityForm, CategoryForm
 from .models import Activity, Category, MeetupPaticipat
+from django.db.models import Q
 
 
 # 檢查活動的擁有者是否為當前用戶
@@ -123,7 +124,7 @@ def update(request, activity_id):
 def delete(request, activity_id):
     activity = get_activity_for_user(request, activity_id)
     activity.delete()
-    return redirect("activities:index")
+    return redirect("activities:events")
 
 
 @login_required
@@ -133,7 +134,7 @@ def confirm_delete(request, activity_id):
         raise PermissionDenied("您無權刪除此活動！")
     if request.method == "POST":
         activity.delete()
-        return redirect("activities:index")
+        return redirect("activities:events")
     return render(request, "activities/confirm_delete.html", {"activity": activity})
 
 
@@ -158,14 +159,7 @@ def join_activity(request, activity_id):
 
 
 def search(request):
-    return render(request,"activities/search.html")
-
-def information(request):
-    return render(request,"activities/information.html")
-
-
     activities = Activity.objects.all()
-
     if request.method == "POST":  # 確保處理 POST 請求
         keyword = request.POST.get("keyword", "").strip()  # 去除多餘的空白
         if keyword:
@@ -175,9 +169,10 @@ def information(request):
                 | Q(description__icontains=keyword)
                 | Q(address__icontains=keyword)
             )
-        return render(
-            request,
-            "activities/search.html",
+        return render(request,"activities/search.html",
             {"activities": activities, "keyword": keyword},
         )
     return render(request, "activities/search.html", {"activities": activities})
+
+def information(request):
+    return render(request,"activities/information.html")
