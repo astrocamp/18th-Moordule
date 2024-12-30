@@ -6,9 +6,7 @@ import hashlib
 import base64
 import requests
 # FIXME:這邊seeting有了不需要重複
-import os
-from dotenv import load_dotenv
-load_dotenv()
+from pydev import settings
 
 
 def index(request):
@@ -16,8 +14,8 @@ def index(request):
 
 #line pay API header
 def create_headers(body, uri):
-    channel_id = os.getenv('LINE_CHANNEL_ID')
-    secret_key = os.getenv('LINE_CHANNEL_SECRET_KEY')
+    channel_id = LINE_CHANNEL_ID
+    secret_key = LINE_CHANNEL_SECRET_KEY
     nonce = str(uuid.uuid4()) #TODO:確認使用nonc是用uuid?
     #header 轉換成json格式
     body_to_json = json.dumps(body)
@@ -63,8 +61,8 @@ def request_payment(request):
                 }]
             }],
             'redirectUrls': {
-                'confirmUrl': f"https://{os.getenv('HOSTNAME')}/payment/confirm",
-                'cancelUrl': f"https://{os.getenv('HOSTNAME')}/payment/cancel"
+                'confirmUrl': f"https://{HOSTNAME}/payment/confirm",
+                'cancelUrl': f"https://{HOSTNAME}/payment/cancel"
             }
         }
 
