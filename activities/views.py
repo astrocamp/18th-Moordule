@@ -7,16 +7,16 @@ from .models import Activity, Category, MeetupPaticipat
 from django.db.models import Q
 from django.views.decorators.http import require_http_methods
 
-# 檢查活動的擁有者是否為當前用戶
+
 def get_activity_for_user(request, activity_id):
     activity = get_object_or_404(Activity, id=activity_id)
     if activity.owner != request.user:
         raise PermissionDenied("您無權執行此操作！")
     return activity
 
-def custom_permission_denied_view(request, exception=None):
-    return render(request, '403.html', status=403)
-
+# def custom_permission_denied_view(request, exception=None):
+#     return render(request, '403.html', status=403)
+# TODO 後面設定好403再掛
 
 
 
@@ -46,11 +46,11 @@ def create(request):
             return render(request,"activities/create.html", {"form": form,  "categories": categories})
     else:
         form = ActivityForm()
-    return render(request, "activities/create.html",{
-        "form": form,
-        "categories": categories,
-         "form_data": form.cleaned_data if form.is_bound else None,
-        })
+        return render(request, "activities/create.html",{
+            "form": form,
+            "categories": categories,
+                "form_data": form.cleaned_data if form.is_bound else None,
+            })
 
 
 
@@ -58,14 +58,13 @@ def create(request):
 @login_required
 def created_events(request):
     # 只顯示當前用戶創建的活動
+    # FIXME: 為什麼這邊變成event
     events = Activity.objects.filter(owner=request.user)
     return render(request, 'activities/created_events.html', {'activities': events})
 
 
 
 @login_required
-# @user_passes_test(ambda user: user.is_superuser)
-# 目前超級使用者功能未完全,之後要管理者才能進入
 def create_category(request):
     if request.method == "POST":
         form = CategoryForm(request.POST)
@@ -75,18 +74,18 @@ def create_category(request):
     else:
         form = CategoryForm()
         
-    categories = Category.objects.all()
-    return render(request,"activities/create_category.html", {"form": form, "categories": categories})
+        categories = Category.objects.all()
+        return render(request,"activities/create_category.html", {"form": form, "categories": categories})
 
 @login_required
-# @user_passes_test(ambda user: user.is_superuser)
-# 目前超級使用者功能未完全,之後要管理者才能進入
+# FIXME: 有登入就可以刪？
 def delete_category(request, category_id):
     try:
         category = Category.objects.get(id=category_id)
         category.delete()
         return redirect("activities:category") 
     except Category.DoesNotExist:
+            # FIXME: 因該出現403，或是不用try,直接get or 404
         return redirect("activities:category")  
 
 
@@ -112,17 +111,17 @@ def update(request, activity_id):
                 }) 
     else:
         form = ActivityForm(instance=activity)      
-    return render(request, "activities/update.html", {
-        "form": form, 
-        "activity": activity,
-        "categories": categories,
-        })
-
+        return render(request, "activities/update.html", {
+            "form": form, 
+            "activity": activity,
+            "categories": categories,
+            })
 
 
 @login_required
 def delete(request, activity_id):
     activity = get_activity_for_user(request, activity_id)
+    # FIXME: get_activity_for_user這個自定義功能會重複用到嗎？
     activity.delete()
     return redirect("activities:index")
 
@@ -143,7 +142,7 @@ def join_activity(request, activity_id):
     activity = get_object_or_404(Activity, id=activity_id)
     is_participating = activity.participants.filter(id=request.user.id).exists()  # 檢查用戶是否已參加
     message = None
-
+    #  FIXME:is_participating在哪裡用到？
     if request.method == "POST":
         if "join" in request.POST:
             # 檢查活動是否已經滿員
@@ -182,6 +181,7 @@ def join_activity(request, activity_id):
 def search(request):
     activities = Activity.objects.all()
     if request.method == "POST":  # 確保處理 POST 請求
+        # FIXME: 用GET就好
         keyword = request.POST.get("keyword", "").strip()  # 去除多餘的空白
         if keyword:
             # 使用 Q 查詢條件比對所有欄位
@@ -197,3 +197,4 @@ def search(request):
 
 def information(request):
     return render(request,"activities/information.html")
+# FIXME:做了再加

@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from datetime import timedelta
-from users.models import CustomUser  # 引入 User 模型
+from users.models import CustomUser 
    
 class Category(models.Model):
     name = models.CharField(max_length=15, help_text="分類名稱")
@@ -11,8 +11,6 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-
-# 活動模型  
 class Activity(models.Model):
     title = models.CharField(max_length=15, help_text="活動標題")
     description = models.TextField(help_text="活動描述", blank=True)
@@ -25,9 +23,6 @@ class Activity(models.Model):
     owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='created_activities', help_text="活動建立者")
     
     
-    
-    
-    # 活動結束時間是動態推算出來的
     @property
     def end_time(self):
         return self.start_time + timedelta(hours=self.duration)
@@ -35,17 +30,17 @@ class Activity(models.Model):
     def __str__(self):
         return f"{self.title} ({self.start_time.strftime('%Y-%m-%d %H:%M')})"
     
-    # 判斷活動是否即將開始
+
     @property
     def is_upcoming(self):
         return self.start_time > timezone.now()
     
-    # 判斷活動是否已經結束
+
     @property
     def is_finished(self):
         return self.end_time < timezone.now()
 
-# 活動參與者中介模型
+
 class MeetupPaticipat(models.Model):
     activity = models.ForeignKey("Activity", on_delete=models.CASCADE,related_name='participants', help_text="活動")
     participant = models.ForeignKey(CustomUser, on_delete=models.CASCADE,related_name='meetups', help_text="參與者")

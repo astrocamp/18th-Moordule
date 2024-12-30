@@ -23,23 +23,14 @@ precommit:
 commit:
 	poetry run cz commit
 
-server:
-	python manage.py runserver
-
-migtion:
-	python manage.py makemigrations
-
-mig:
-	python manage.py migrate
-
 users:
-	python manage.py generate_fake_users --count 20
+	poetry run python manage.py generate_fake_users --count 20
 
 meetups:
-	python manage.py generate_fake_meetups --count 30
+	poetry run python manage.py generate_fake_meetups --count 30
 
 records:
-	python manage.py generate_fake_records --count 10 --force
+	poetry run python manage.py generate_fake_records --count 10 --force
 
 seed:
-	python manage.py seed_categories
+	poetry run python manage.py seed_categories

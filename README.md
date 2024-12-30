@@ -109,32 +109,24 @@ cd 18th-Moordule(進入專案目錄)
 ---
 
 🌟 鄧鈺馨 Cindy [GitHub](https://github.com/YuHsinTengCindy)  
-團隊負責：書記  
 - 聚會系統
 
 柳澤豐 RichardT [GitHub](https://github.com/richart-coder)  
-團隊負責：技術負責人
-
 - 資料庫
 - 會員系統
 
-🎀 雷衍辰 Joanna [GitHub](https://github.com/JoannaLei21)  
-團隊負責：小組長
-
+🎀 雷衍辰 Joanna [GitHub](https://github.com/JoannaLei21) 
 - logo 製作
 - 建立 flow chart
 - 設計頁面
 - 金流串接
 
 🌟 張家瑞 Gary [GitHub](https://github.com/Gary0306)  
-團隊負責：溝通員
 - 搜尋功能
 
 🌎 陳思妤 Emma [GitHub](https://github.com/Emma-EC)  
-團隊負責：書記
 - 頁面切版
 - Google 第三方登入
 
 王廷安 [GitHub](https://github.com/Tingan111)  
-團隊負責：測試負責人
 - 圖片上傳

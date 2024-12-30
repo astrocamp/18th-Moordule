@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect
-from pathlib import Path
 import uuid
 import json
 import hmac
 import hashlib
 import base64
 import requests
+# FIXME:這邊seeting有了不需要重複
 import os
 from dotenv import load_dotenv
 load_dotenv()
@@ -18,7 +18,7 @@ def index(request):
 def create_headers(body, uri):
     channel_id = os.getenv('LINE_CHANNEL_ID')
     secret_key = os.getenv('LINE_CHANNEL_SECRET_KEY')
-    nonce = str(uuid.uuid4())
+    nonce = str(uuid.uuid4()) #TODO:確認使用nonc是用uuid?
     #header 轉換成json格式
     body_to_json = json.dumps(body)
 
