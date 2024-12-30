@@ -5,6 +5,7 @@ from django.core.exceptions import PermissionDenied
 from .forms import ActivityForm, CategoryForm
 from .models import Activity, Category, MeetupPaticipat
 from django.db.models import Q
+from django.views.decorators.http import require_http_methods
 
 # 檢查活動的擁有者是否為當前用戶
 def get_activity_for_user(request, activity_id):

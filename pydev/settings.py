@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 db_url = os.getenv("DATABASE_URL")
 # AUTH_USER_MODEL = "users.CustomUser"
 # DEBUG = env.bool("DEBUG", default=False)
-
+LOGIN_URL = 'users:signin'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
