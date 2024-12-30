@@ -15,6 +15,7 @@ backend = [
     path("logout/", LogoutView.as_view(next_page="/"), name="logout"),
     path("login/", views.login_view, name="login"),
     path("password-change/", views.password_change_view, name="password_change"),
+    path("upload", views.upload_view, name="upload"),
 ]
 
 htmx = [

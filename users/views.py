@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils import timezone
@@ -51,6 +51,26 @@ def user_page_view(request, tag="member"):
         return render(request, "users/dashboard.html", context)
 
     return render(request, f"users/components/{tag}.html")
+
+
+@require_POST
+def upload_view(request: HttpRequest):
+    image = request.FILES.get("image")
+    print("uploading image")
+    if image:
+        # 處理圖片上傳邏輯
+        # 例如：儲存到媒體目錄 or 儲存到雲端
+        # image.save(f'media/uploads/{image.name}')
+
+        return JsonResponse(
+            {
+                "status": "success",
+                "message": "上傳成功",
+                "image_url": f"/media/uploads/{image.name}",
+            }
+        )
+
+    return JsonResponse({"status": "error", "message": "上傳失敗"}, status=400)
 
 
 def signup_view(request: HttpRequest):
@@ -133,6 +153,7 @@ def edit_view(request: HttpRequest):
     if request.method == "POST":
         form = CustomUserChangeForm(request.POST, instance=user)
         if form.is_valid():
+            # 如果表單數據有效，保存用戶資料
             form.save()
     else:
         form = CustomUserChangeForm(instance=user)
