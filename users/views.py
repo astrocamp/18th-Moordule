@@ -1,111 +1,67 @@
 from django.contrib.auth import authenticate, login
-from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render, redirect
-from django.urls import reverse
-from django.views.decorators.cache import never_cache
-from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
+from django.http import HttpRequest, HttpResponse
+from django.shortcuts import render
+from django.urls import reverse
+from django.utils import timezone
+from django.views.decorators.http import require_POST
+from django_htmx.middleware import HtmxDetails
 
+from activities.models import Activity as Meetup
 from users.models import CustomUser
 
-from .forms import UserRegistrationForm, CustomUserChangeForm
+from .forms import CustomUserChangeForm, UserRegistrationForm
+
+
+class HtmxHttpRequest(HttpRequest):
+    htmx: HtmxDetails
+
 
 # Create your views here.
 
 
 def signup_view(request: HttpRequest):
 
-    meetups = [
-        {
-            "title": "Js Meetup",
-            "category": "Programming",
-            "description": "Join us for a Js programming meetup",
-            "link": "https://www.meetup.com/python-meetup/",
-            "start_time": "2024-12-18",
-        },
-        {
-            "title": "Python Meetup",
-            "category": "Programming",
-            "description": "Join us for a Python programming meetup",
-            "link": "https://www.meetup.com/python-meetup/",
-            "start_time": "2024-12-18",
-        },
-    ]
-    form = UserRegistrationForm()
-    return render(request, "users/signup.html", {"meetups": meetups, "form": form})
+    if request.POST:
+        form = UserRegistrationForm()
+        if form.is_valid():
+            form.save()
+            signin_url = reverse("users:signin")
+            return HttpResponse("", headers={"HX-Redirect": signin_url})
+
+    meetups = Meetup.objects.filter(
+        start_time__gte=timezone.now()  # 只抓還沒開始的活動
+    ).order_by("start_time")[:2]
+
+    return render(request, "users/signup.html", {"meetups": meetups})
 
 
-@never_cache
 def signin_view(request: HttpRequest):
-    meetups = [
-        {
-            "title": "Js Meetup",
-            "category": "Programming",
-            "description": "Join us for a Js programming meetup",
-            "link": "https://www.meetup.com/python-meetup/",
-            "start_time": "2024-12-18",
-        },
-        {
-            "title": "Python Meetup",
-            "category": "Programming",
-            "description": "Join us for a Python programming meetup",
-            "link": "https://www.meetup.com/python-meetup/",
-            "start_time": "2024-12-18",
-        },
-    ]
+    meetups = Meetup.objects.filter(
+        start_time__gte=timezone.now()  # 只抓還沒開始的活動
+    ).order_by("start_time")[:2]
+
     return render(request, "users/signin.html", {"meetups": meetups})
 
 
 @require_POST
-def user_create_view(request: HttpRequest):
-
-    meetups = [
-        {
-            "title": "Js Meetup",
-            "category": "Programming",
-            "description": "Join us for a Js programming meetup",
-            "link": "https://www.meetup.com/python-meetup/",
-            "start_time": "2024-12-18",
-        },
-        {
-            "title": "Python Meetup",
-            "category": "Programming",
-            "description": "Join us for a Python programming meetup",
-            "link": "https://www.meetup.com/python-meetup/",
-            "start_time": "2024-12-18",
-        },
-    ]
+def user_create_view(request: HtmxHttpRequest):
     form = UserRegistrationForm(request.POST)
-    if form.is_valid():
-        form.save()
-        signin_url = reverse("users:signin")
-        return HttpResponse("", headers={"HX-Redirect": signin_url})
+    if request.POST:
+        if form.is_valid():
+            form.save()
+            signin_url = reverse("users:signin")
+            return HttpResponse("", headers={"HX-Redirect": signin_url})
 
     return render(
         request,
         "users/components/signup_form.html",
-        {"meetups": meetups, "form": form},
+        {"form": form},
     )
 
 
 @require_POST
 def login_view(request: HttpRequest):
-    meetups = [
-        {
-            "title": "Js Meetup",
-            "category": "Programming",
-            "description": "Join us for a Js programming meetup",
-            "link": "https://www.meetup.com/python-meetup/",
-            "start_time": "2024-12-18",
-        },
-        {
-            "title": "Python Meetup",
-            "category": "Programming",
-            "description": "Join us for a Python programming meetup",
-            "link": "https://www.meetup.com/python-meetup/",
-            "start_time": "2024-12-18",
-        },
-    ]
 
     email = request.POST.get("email")
     password = request.POST.get("password")
@@ -125,7 +81,6 @@ def login_view(request: HttpRequest):
         request,
         "users/components/signin_form.html",
         {
-            "meetups": meetups,
             "form": {
                 "errors": ["電子郵件或密碼錯誤"],
                 "data": {"email": email},  # 保留用戶輸入的 email
@@ -134,13 +89,15 @@ def login_view(request: HttpRequest):
     )
 
 
-def clear_errors(request):
+def clear_errors(request: HtmxHttpRequest):
     return HttpResponse("")
+
 
 @login_required
 def account_view(request: HttpRequest):
     user = CustomUser.objects.get(pk=request.user.pk)
-    return render(request, "users/member.html", {"user": user})    
+    return render(request, "users/member.html", {"user": user})
+
 
 @login_required
 def edit_view(request: HttpRequest):
@@ -152,12 +109,9 @@ def edit_view(request: HttpRequest):
         form = CustomUserChangeForm(request.POST, instance=user)
         if form.is_valid():
             # 如果表單數據有效，保存用戶資料
-            form.save()  
+            form.save()
     else:
         # 如果是 GET 請求，顯示當前用戶數據
         form = CustomUserChangeForm(instance=user)
 
     return render(request, "users/components/user_form.html", {"form": form})
-
-    
-
