@@ -1,40 +1,42 @@
 {% extends "base/layout.html" %}
 {% block content %}
-
+  
     <div class="activity-detail">
         <h1>{{ activity.name }}</h1>
         <p><strong>時間：</strong>{{ activity.start_time|date:"Y-m-d H:i" }}</p>
         <p><strong>地點：</strong>{{ activity.address }}</p>
         <p><strong>活動簡介：</strong>{{ activity.description }}</p>
         <p><strong>已參加人數：</strong>{{ activity.participants.count }} / {{ activity.max_participants }}</p>
-        
-        {% if error_message %}
-            <div class="error-message">
-                <p>{{ error_message }}</p>
-            </div>
-        {% elif message %}
-            <div class="success-message">
-                <p>{{ message }}</p>
-            </div>
+
+      
+        {% if message %}
+            <p class="message alert alert-success">{{ message }}</p>
         {% endif %}
+
+        {% if error_message %}
+            <p class="error alert alert-danger">{{ error_message }}</p>
+        {% endif %}
+                {% comment "" %}
+                顯示加入或退出活動的按鈕
+                {% endcomment %}
+        {% if request.user.is_authenticated %}
+            
+            <form method="post" class="d-inline">
+                {% csrf_token %}
+                <button type="submit" name="join" class="btn btn-success">加入活動</button>
+            </form>
+
            
-        <div class="activity-buttons">
-            {% if user.is_authenticated %}
-                {% if activity.participants.count < activity.max_participants %}
-                    <form action="{% url 'activities:join' activity_id=activity.id %}" method="post">
-                        {% csrf_token %}
-                        <button type="submit" class="join-button">加入活動</button>
-                    </form>
-                {% else %}
-                    <p>活動已經滿員，無法加入。</p>
-                {% endif %}
-            {% else %}
-                <p>請先登入以參加活動。</p>
-            {% endif %}
-        </div>
+            <form method="post" class="d-inline">
+                {% csrf_token %}
+                <button type="submit" name="leave" class="btn btn-danger">退出活動</button>
+            </form>
 
-        <a href="{% url 'activities:index' %}">返回活動列表</a>
+        {% else %}
+            <p>請先登入以參加活動</p>
+        {% endif %}
+
+        <a href="{% url 'activities:index' %}" class="btn btn-secondary mt-3">返回活動列表</a>
     </div>
-
 
 {% endblock %}

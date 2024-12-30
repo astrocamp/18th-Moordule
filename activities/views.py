@@ -6,7 +6,6 @@ from .forms import ActivityForm, CategoryForm
 from .models import Activity, Category, MeetupPaticipat
 from django.db.models import Q
 
-
 # 檢查活動的擁有者是否為當前用戶
 def get_activity_for_user(request, activity_id):
     activity = get_object_or_404(Activity, id=activity_id)
@@ -55,11 +54,11 @@ def create(request):
 
 
 
+@login_required
 def created_events(request):
-    # 只顯示使用者建立的活動
-    events = Activity.objects.all()
+    # 只顯示當前用戶創建的活動
+    events = Activity.objects.filter(owner=request.user)
     return render(request, 'activities/created_events.html', {'activities': events})
-
 
 
 
@@ -124,7 +123,7 @@ def update(request, activity_id):
 def delete(request, activity_id):
     activity = get_activity_for_user(request, activity_id)
     activity.delete()
-    return redirect("activities:events")
+    return redirect("activities:index")
 
 
 @login_required
@@ -134,40 +133,49 @@ def confirm_delete(request, activity_id):
         raise PermissionDenied("您無權刪除此活動！")
     if request.method == "POST":
         activity.delete()
-        return redirect("activities:events")
+        return redirect("activities:index")
     return render(request, "activities/confirm_delete.html", {"activity": activity})
 
 
 @login_required
 def join_activity(request, activity_id):
-
     activity = get_object_or_404(Activity, id=activity_id)
-        
-    if request.method == "POST":
-        
-        if activity.participants.count() >= activity.max_participants:
-            return render(request, "activities/detail.html", {
-                "activity": activity,
-                "error_message": "人數已滿！"
-            })
-       
-        participation, created = MeetupPaticipat.objects.get_or_create(activity=activity, participant=request.user)
+    is_participating = activity.participants.filter(id=request.user.id).exists()  # 檢查用戶是否已參加
+    message = None
 
-        if created:
-            message = "您已成功參加活動！"
-        else:
-            message = "您已經參加過此活動！"
+    if request.method == "POST":
+        if "join" in request.POST:
+            # 檢查活動是否已經滿員
+            if activity.participants.count() >= activity.max_participants:
+                return render(request, "activities/detail.html", {
+                    "activity": activity,
+                    "error_message": "人數已滿！",
+                })
+           
+            # 加入活動
+            participation, created = MeetupPaticipat.objects.get_or_create(activity=activity, participant=request.user)
+            message = "您已成功參加活動！"  if created else "您已經參加過此活動！"
+
+        elif "leave" in request.POST:
+            participation = MeetupPaticipat.objects.filter(activity=activity, participant=request.user).first()
+            if participation:
+                participation.delete()
+                message = "您已成功退出活動！"
+            else:
+                message = "您未參加此活動，無法退出！"
 
         return render(request, "activities/detail.html", {
             "activity": activity,
-            "message": message
+            "message": message,
         })
 
-    # 處理 GET 請求時展示活動的詳細資訊
+    # 預設展示活動詳情
     return render(request, "activities/detail.html", {
-        "activity": activity
+        "activity": activity,
     })
 
+
+  
 
 
 def search(request):
