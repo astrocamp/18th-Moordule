@@ -17,7 +17,7 @@
                 <p>{{ message }}</p>
             </div>
         {% endif %}
-
+           
         <div class="activity-buttons">
             {% if user.is_authenticated %}
                 {% if activity.participants.count < activity.max_participants %}
