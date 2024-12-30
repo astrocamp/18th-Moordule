@@ -5,8 +5,7 @@ import hmac
 import hashlib
 import base64
 import requests
-# FIXME:這邊seeting有了不需要重複
-from pydev import settings
+from pydev.settings import LINE_CHANNEL_ID, LINE_CHANNEL_SECRET_KEY, HOSTNAME, LINE_REQUEST_URL, LINE_SANDBOX_URL
 
 
 def index(request):
@@ -67,9 +66,9 @@ def request_payment(request):
         }
 
     # 發送 API 請求
-        uri = os.getenv('LINE_REQUEST_URL')
+        uri = LINE_REQUEST_URL
         headers = create_headers(payload, uri)
-        url = f"{os.getenv('LINE_SANDBOX_URL')}{uri}"
+        url = f"{LINE_SANDBOX_URL}{uri}"
         response = requests.post(url, headers=headers, data=json.dumps(payload))
 
         # 根據狀態，處理回應
