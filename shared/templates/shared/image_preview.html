@@ -1,0 +1,183 @@
+{% load static %}
+<link
+	rel="stylesheet"
+	href="https://cdn-uicons.flaticon.com/2.6.0/uicons-bold-rounded/css/uicons-bold-rounded.css"
+/>
+
+<div class="max-w-md mx-auto p-6">
+	<div class="bg-white rounded-lg shadow-md p-6">
+		<div class="flex items-center mb-4">
+			<h2 class="text-xl font-semibold text-gray-800">圖片預覽上傳</h2>
+		</div>
+
+		<div
+			x-data="{
+				uploadUrl: '{% url 'users:upload' %}',
+				csrfToken: '{{ csrf_token }}'
+			}"
+		>
+			<div
+				id="uploadArea"
+				x-data="{
+					isDragging: false,
+					previewing: false,
+					isUploading: false,
+					currentFile: null,
+					refs: null,
+					init() {
+						this.refs = {
+							previewImage: this.$refs.previewImageRef,
+							removeBtn: this.$refs.removeBtnRef,
+							helpText: this.$refs.helpTextRef,
+							fileInput: this.$refs.fileInputRef
+						}
+					},
+					handleFiles(files) {
+						const file = files[0];
+						if (file.type.startsWith('image/')) {
+							this.currentFile = file;
+							this.previewFile(file);
+							this.refs.fileInput.value = '';
+						}
+					},
+					uploadFile() {
+						if (!this.currentFile || this.isUploading) return;
+						
+						const formData = new FormData();
+						formData.append('image', this.currentFile);
+						formData.append('csrfmiddlewaretoken', this.csrfToken);
+						
+						const xhr = new XMLHttpRequest();
+						this.isUploading = true;
+						
+						xhr.onload = () => {
+							this.isUploading = false;
+							if (xhr.status === 200) {
+								console.log('上傳成功');
+								const response = JSON.parse(xhr.responseText);
+								console.log(response);
+							} else {
+								console.error('上傳失敗');
+							}
+						};
+						
+						xhr.onerror = () => {
+							this.isUploading = false;
+							console.error('上傳錯誤');
+						};
+						
+						xhr.open('POST', this.uploadUrl, true);
+						xhr.setRequestHeader('X-CSRFToken', this.csrfToken);
+						xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+						xhr.send(formData);
+					},
+					previewFile(file) {
+						const reader = new FileReader();
+						reader.readAsDataURL(file);
+						reader.onloadend = () => {
+							this.refs.previewImage.src = reader.result;
+							this.refs.previewImage.classList.remove('hidden');
+							this.refs.removeBtn.classList.remove('hidden');
+							this.refs.helpText.classList.add('hidden');
+							this.previewing = true;
+						};
+					},
+					handleClick(event) {
+						if(this.previewing) return;
+						this.refs.fileInput.click();
+					},
+					removeImage() {
+						this.refs.previewImage.src = '';
+						this.refs.previewImage.classList.add('hidden');
+						this.refs.removeBtn.classList.add('hidden');
+						this.refs.helpText.classList.remove('hidden');
+						this.previewing = false;
+						this.isUploading = false;
+						this.currentFile = null;
+					},
+					handleDrop(event) {
+						this.isDragging = false;
+						const files = event.dataTransfer.files;
+						this.handleFiles(files);
+					}
+				}"
+				@dragenter.prevent
+				@dragover.prevent="isDragging = true"
+				@dragleave.prevent="isDragging = false"
+				@drop.prevent="handleDrop"
+				@click.stop="handleClick"
+				class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer transition-all duration-200 hover:border-blue-500"
+			>
+				<input
+					type="file"
+					x-ref="fileInputRef"
+					accept="image/*"
+					class="hidden"
+					@change="handleFiles($event.target.files)"
+				/>
+
+				<div id="preview-area" class="space-y-4">
+					<div class="relative min-h-[200px] flex items-center justify-center">
+						<img
+							x-ref="previewImageRef"
+							class="hidden max-h-64 mx-auto object-cover rounded-lg"
+							src=""
+							alt="預覽"
+						/>
+
+						<div
+							x-ref="helpTextRef"
+							class="absolute inset-0 flex flex-col items-center justify-center"
+						>
+							<i class="fi fi-br-add-image text-3xl text-gray-400 mb-2"></i>
+							<p
+								class="text-gray-500"
+								x-text="isDragging ? '正在拖曳...可以釋放' : '點擊或拖曳圖片至此處'"
+							></p>
+							<p class="text-sm text-gray-400 mt-1">
+								支援: JPG, PNG, GIF 等格式
+							</p>
+						</div>
+					</div>
+
+					<!-- 按鈕列表 -->
+					<div x-show="previewing" class="flex justify-end gap-2 pt-2">
+						<div class="flex rounded-lg overflow-hidden shadow-lg">
+							<!-- 移除按鈕 -->
+							<button
+								x-ref="removeBtnRef"
+								class="px-4 h-10 bg-gray-100 hover:bg-gray-200 transition-colors flex items-center justify-center"
+								@click.prevent.stop="removeImage"
+								:disabled="isUploading"
+								title="移除圖片"
+							>
+								<i class="fi fi-br-trash text-gray-600"></i>
+							</button>
+
+							<!-- 上傳按鈕 -->
+							<button
+								@click.stop="uploadFile"
+								:class="{
+									'px-4 h-10 transition-colors flex items-center justify-center border-l border-gray-200': true,
+									'bg-gray-100 hover:bg-gray-200': !isUploading,
+									'bg-gray-100': isUploading
+								}"
+								:disabled="isUploading"
+								title="上傳圖片"
+							>
+								<template x-if="isUploading">
+									<div
+										class="w-5 h-5 border-2 border-gray-300 border-t-gray-600 rounded-full animate-spin"
+									></div>
+								</template>
+								<template x-if="!isUploading">
+									<i class="fi fi-br-upload text-gray-600"></i>
+								</template>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
