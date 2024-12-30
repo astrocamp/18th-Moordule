@@ -1,39 +1,32 @@
 {% extends "base/layout.html" %} {% block content %}
 <div class="min-h-screen flex items-center justify-center">
-	<div class="flex gap-8 w-full max-w-6xl px-6">
-		<div class="w-1/2">
-			<div class="recommended-panel space-y-6">
-				<!-- Logo 區塊 -->
-				<div class="space-y-2">
-					<div>
-						<img
-							src="https://fakeimg.pl/500x125/"
-							alt="moordule-left-face"
-							class="w-full"
-						/>
-					</div>
-					<div>
-						<img
-							src="https://fakeimg.pl/500x125/"
-							alt="moordule-right-face"
-							class="w-full"
-						/>
-					</div>
-				</div>
-				<div class="grid grid-cols-2 gap-4 h-[200px]">
-					{% for meetup in meetups %}
-					<!--prettier-ignore-->
-					{% meetup_recommended_card meetup=meetup %}
+  <div class="flex gap-8 w-full max-w-6xl px-6">
+    <div class="w-1/2">
+      <div class="recommended-panel space-y-6">
+        <!-- Logo 區塊 -->
+        <div class="space-y-2">
+          <div>
+            <img
+              src="https://miro.medium.com/v2/resize:fit:1400/format:webp/1*6ZwQRYRaqm19xh11PlFsQw.jpeg"
+              alt="moordule-left-face"
+              class="w-full h-full"
+            />
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4 h-[200px]">
+          {% for meetup in meetups %}
+          <!--prettier-ignore-->
+          {% meetup_recommended_card meetup=meetup %}
 					{% endfor %}
-				</div>
-			</div>
-		</div>
-		<div class="w-1/2 flex flex-col items-center">
-			<h1 class="text-center text-3xl font-semibold mb-6">好朋友歡迎加入</h1>
-			<div class="register-form w-full flex justify-center">
-				{% include "users/components/signup_form.html" %}
-			</div>
-		</div>
-	</div>
+        </div>
+      </div>
+    </div>
+    <div class="w-1/2 flex flex-col items-center">
+      <h1 class="text-center text-3xl font-semibold mb-6">好朋友歡迎加入</h1>
+      <div class="register-form w-full flex justify-center">
+        {% include "users/components/signup_form.html" %}
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}
