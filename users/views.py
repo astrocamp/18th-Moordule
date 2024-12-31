@@ -50,10 +50,6 @@ def user_page_view(request, tag="member"):
         context = {"tag": tag}
         return render(request, "users/dashboard.html", context)
 
-    allowed_tags = ["member", "account", "activities", "activity_form"]
-    if tag not in allowed_tags:
-        return redirect("users:signin")
-
     return render(request, f"users/components/{tag}.html")
 
 

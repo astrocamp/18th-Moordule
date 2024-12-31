@@ -1,5 +1,5 @@
 from django.contrib.auth.views import LogoutView
-from django.urls import path
+from django.urls import path, re_path
 
 from . import views
 
@@ -22,7 +22,11 @@ htmx = [
     path("new/", views.user_create_view, name="new"),
     path("edit/", views.edit_view, name="edit"),
     path("clear-errors/", views.clear_errors, name="clear_errors"),
-    path("<str:tag>/", views.user_page_view, name="user_page"),
+    re_path(
+        r"^(member|account|activities|activity_form)/$",
+        views.user_page_view,
+        name="user_page",
+    ),
 ]
 
 urlpatterns = frontend + backend + htmx
