@@ -102,15 +102,25 @@ WSGI_APPLICATION = "pydev.wsgi.application"
 
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
-        "APP": {
-            "client_id": os.getenv("GMAIL_CLIENT_ID"),
-            "secret": os.getenv("GMAIL_API_SECRET"),
-        },
-        "SCOPE": ["profile", "email"],
-        "AUTH_PARAMS": {"access_type": "online"},
+        "APPS": [
+            {
+                "client_id": os.getenv("SOCIAL_AUTH_GOOGLE_CLIENT_ID"),
+                "secret": os.getenv("SOCIAL_AUTH_GOOGLE_SECRET"),
+                "settings": {
+                    "scope": [
+                        "profile",
+                        "email",
+                    ],
+                    "auth_params": {
+                        "access_type": "online",
+                    },
+                },
+            },
+        ],
     }
 }
 
+SOCIALACCOUNT_LOGIN_ON_GET = True
 
 DATABASES = {
     "default": {
@@ -152,8 +162,6 @@ STATICFILES_DIRS = [
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
 
 LINE_CHANNEL_ID = os.getenv('LINE_CHANNEL_ID')
 LINE_CHANNEL_SECRET_KEY = os.getenv('LINE_CHANNEL_SECRET_KEY')

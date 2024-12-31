@@ -52,13 +52,16 @@
 	</div>
 	<div class="text-center">OR</div>
 	<!--prettier-ignore-->
+	{% load socialaccount %}
+
 	<div class="flex justify-center">
         <button 
             type="button"
             class="flex items-center justify-center w-[52%] py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-white hover:brightness-110 bg-moordule-deep-blue"
         >
 				    {% include 'shared/icon.html' %}
-            <span class="ml-1">Google 登入</span>
+					<a href="{% provider_login_url 'google' method='oauth2' %}">Google登入</a>
+            {% comment %} <span class="ml-1">Google 登入</span> {% endcomment %}
         </button>
     </div>
 
