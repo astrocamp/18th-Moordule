@@ -1,0 +1,43 @@
+<nav
+	class="space-x-5 flex justify-center items-center mt-5 mx-auto w-max pt-20"
+	x-data="{ activeButton: '{{ current_tag }}' }"
+>
+	{% for item in nav_items %}
+	<!-- prettier-ignore -->
+	<a
+        {% if item.url %}
+        hx-get="{% url 'users:user_page' item.url %}"
+        {% else %}
+        hx-get="{% url 'users:account' %}"
+        {% endif %}
+        hx-target="#main-content"
+        hx-push-url="true"
+    >
+        <button
+            @click="activeButton = '{{ item.name }}'"
+            class="px-6 py-3 rounded-full hover:bg-yellow-500 text-white text-xl"
+            :class="activeButton === '{{ item.name }}' ? 'bg-yellow-500' : 'bg-yellow-300'"
+        >
+            {{ item.title }}
+        </button>
+    </a>
+	{% endfor %}
+</nav>
+
+{% comment %}
+<a href="#">
+	<div class="flex items-center space-x-2">
+		<!-- 系統通知 -->
+		<button
+			class="px-6 py-3 rounded-full hover:bg-yellow-500 text-white bg-yellow-300 text-xl"
+		>
+			系統通知
+		</button>
+		<!-- 獨立的 X 按鈕 -->
+		<button
+			class="w-10 h-10 text-white hover:bg-yellow-500 focus:outline-none border bg-yellow-500 rounded-full flex items-center justify-center"
+			onclick="document.getElementById('notification-bar').style.display='none';"
+		></button>
+	</div>
+</a>
+{% endcomment %}

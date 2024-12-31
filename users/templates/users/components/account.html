@@ -1,0 +1,77 @@
+{%block content%}
+
+<div class="max-w-screen-lg mx-auto p-6 mt-6">
+	<div class="bg-yellow-300 rounded-[24px] p-6">
+		<div class="grid grid-cols-3 gap-4">
+			<div class="bg-white rounded-lg shadow-lg p-4 flex flex-col items-center">
+				<div
+					class="w-48 h-48 bg-gray-300 rounded-lg flex items-center justify-center"
+				>
+					<span class="text-gray-500">顯示用戶上傳的 photo</span>
+				</div>
+				<h3 class="text-gray-700 font-bold mt-4">顯示名稱</h3>
+				<button
+					class="mt-4 bg-yellow-400 text-white px-4 py-2 rounded-full hover:bg-yellow-500"
+				>
+					編輯
+				</button>
+			</div>
+
+			<div
+				hx-get="{% url 'users:edit' %}"
+				hx-swap="outerHTML"
+				class="bg-white rounded-lg shadow-lg p-4"
+			>
+				<div id="user-fields">
+					<h3 class="text-yellow-500 font-bold">個人資料</h3>
+					<p class="mt-2 text-gray-700">
+						姓名：<span class="text-gray-500">用戶姓名</span>
+					</p>
+					<p class="mt-2 text-gray-700">
+						性別：<span class="text-gray-500">用戶性別</span>
+					</p>
+					<p class="mt-2 text-gray-700">
+						生日：<span class="text-gray-500">用戶生日</span>
+					</p>
+					<p class="mt-2 text-gray-700">
+						所在地區：<span class="text-gray-500">用戶地區</span>
+					</p>
+					<p>興趣：<span class="text-gray-500">用戶興趣</span></p>
+				</div>
+				<button
+					class="mt-4 bg-yellow-400 text-white px-4 py-2 rounded-full hover:bg-yellow-500"
+				>
+					編輯
+				</button>
+			</div>
+
+			<div class="bg-white rounded-lg shadow-lg p-4">
+				<h3 class="text-yellow-500 font-bold">帳號資料</h3>
+				<p class="mt-2 text-gray-700">
+					帳號：<span class="text-gray-500">用戶帳號</span>
+				</p>
+				<p class="mt-2 text-gray-700">
+					密碼：<span class="text-gray-500">********</span>
+				</p>
+				<button
+					class="mt-4 bg-yellow-400 text-white px-4 py-2 rounded-full hover:bg-yellow-500"
+				>
+					變更密碼
+				</button>
+			</div>
+
+			<div class="col-span-3 bg-white rounded-lg shadow-lg p-4">
+				<h3 class="text-yellow-500 font-bold">關於我</h3>
+				<p class="mt-2 text-gray-700">
+					用戶輸入自我介紹 {% lorem 1 b random %}
+				</p>
+				<button
+					class="mt-4 bg-yellow-400 text-white px-4 py-2 rounded-full hover:bg-yellow-500"
+				>
+					編輯
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

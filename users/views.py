@@ -1,14 +1,13 @@
 from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils import timezone
 from django.views.decorators.http import require_POST
 from django_htmx.middleware import HtmxDetails
 
 from activities.models import Activity as Meetup
-from users.models import CustomUser
 
 from .forms import CustomUserChangeForm, UserRegistrationForm
 
@@ -18,11 +17,6 @@ class HtmxHttpRequest(HttpRequest):
 
 
 # Create your views here.
-
-
-@login_required
-def member_view(request: HttpRequest):
-    return render(request, "users/account.html")
 
 
 @login_required
@@ -49,6 +43,18 @@ def password_change_view(request):
         update_session_auth_hash(request, user)
         account_url = reverse("users:account")
         return HttpResponse("", headers={"HX-Redirect": account_url})
+
+
+def user_page_view(request, tag="member"):
+    if not request.headers.get("HX-Request"):
+        context = {"tag": tag}
+        return render(request, "users/dashboard.html", context)
+
+    allowed_tags = ["member", "account", "activities", "activity_form"]
+    if tag not in allowed_tags:
+        return redirect("users:signin")
+
+    return render(request, f"users/components/{tag}.html")
 
 
 def signup_view(request: HttpRequest):
@@ -114,7 +120,7 @@ def login_view(request: HttpRequest):
         {
             "form": {
                 "errors": ["電子郵件或密碼錯誤"],
-                "data": {"email": email},  # 保留用戶輸入的 email
+                "data": {"email": email},
             },
         },
     )
@@ -125,22 +131,14 @@ def clear_errors(request: HtmxHttpRequest):
 
 
 @login_required
-def account_view(request: HttpRequest):
-    user = CustomUser.objects.get(pk=request.user.pk)
-    return render(request, "users/member.html", {"user": user})
-
-
-@login_required
 def edit_view(request: HttpRequest):
-    user = request.user
 
+    user = request.user
     if request.method == "POST":
         form = CustomUserChangeForm(request.POST, instance=user)
         if form.is_valid():
-            # 如果表單數據有效，保存用戶資料
             form.save()
     else:
-
         form = CustomUserChangeForm(instance=user)
 
     return render(request, "users/components/user_form.html", {"form": form})

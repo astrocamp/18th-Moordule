@@ -1,0 +1,15 @@
+{% extends "base/layout.html" %}
+<!-- prettier-ignore -->
+{%block head%}
+<link
+	rel="stylesheet"
+	href="https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css"
+/>
+{% endblock head %}
+<!-- prettier-ignore -->
+{% block content %}
+{% navigator %}
+<div id="main-content">
+	{% include 'users/components/'|add:tag|add:'.html' %}
+</div>
+{% endblock %}
