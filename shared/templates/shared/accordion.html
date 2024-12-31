@@ -1,0 +1,6 @@
+<div x-data="{ activeItem: null }" class="accordion">
+  {% for item in items %}
+  <!-- prettier-ignore -->
+  {% include "shared/accordion/item.html" with id=item.id label=item.label content=item.content %}
+      {% endfor %}
+</div>

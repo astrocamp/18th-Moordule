@@ -1,0 +1,27 @@
+<div class="accordion-item border border-gray-200 rounded-md">
+  <button
+    @click="activeItem = (activeItem === '{{ id }}') ? null : '{{ id }}'"
+    class="flex items-center justify-between w-full px-4 py-3 text-left rounded-t-md text-lg font-medium"
+    :class="activeItem === '{{ id }}' ? 'bg-[#90CCF4]/10 text-[#5DA2D5]' : 'bg-white hover:bg-gray-50 text-black'"
+  >
+    {{ label }}
+    <span
+      class="relative w-[8px] h-[8px] rotate-45 transition-transform duration-300 border-r-2 border-b-2"
+      :class="{
+        '-rotate-[135deg] border-[#5DA2D5]': activeItem === '{{ id }}',
+        'border-gray-500': activeItem !== '{{ id }}'
+      }"
+    ></span>
+  </button>
+
+  <div
+    class="grid grid-rows-[0fr] transition-all duration-300"
+    :class="activeItem === '{{ id }}' ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'"
+  >
+    <div class="overflow-hidden">
+      <div class="p-4 bg-white border-t border-gray-200 text-sm">
+        {{ content }}
+      </div>
+    </div>
+  </div>
+</div>
