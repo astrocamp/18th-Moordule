@@ -1,13 +1,9 @@
-{% load auth_components %}
+<!-- prettier-ignore -->
+{% load auth_components %} 
+{% load static %}
 <meta name="htmx-config" content='{"includeIndicatorStyles": false}' />
-<style>
-	.htmx-indicator {
-		display: none;
-	}
-	.htmx-request .htmx-indicator {
-		display: flex;
-	}
-</style>
+<link rel="stylesheet" href="{% static 'src/css/htmx.css' %}" />
+
 <form
 	class="w-[70%] mx-auto text-center"
 	hx-post="{% url 'users:new' %}"
