@@ -1,0 +1,21 @@
+html {
+    scroll-behavior: smooth;
+  }
+
+gmp-map {
+  height: 50%;
+}
+
+.rounded-card {
+  border-radius: 21px;
+  padding: 21px;
+}
+
+.nav-button {
+  border-radius: 21px;
+  padding: 12px 24px;
+  font-size: 18px;
+  color: white;
+}
+
+

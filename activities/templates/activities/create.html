@@ -4,27 +4,6 @@
     <title>聚會聚會建立</title>
 
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
-    <style>
-        :root {
-            --moordule-yellow: #F6D246;
-            --moordule-gray: #ECECEC;
-            --moordule-light-blue: #90CCF4;
-            --moordule-deep-blue: #5DA2D5;
-            --moordule-pink: #F78888;
-        }
-
-        .nav-button {
-            border-radius: 21px;
-            padding: 12px 24px;
-            font-size: 18px;
-            color: white;
-        }
-
-        .rounded-card {
-            border-radius: 21px;
-            padding: 21px;
-        }
-    </style>
 {% endblock head %}
 
 
@@ -34,61 +13,6 @@
         建立聚會
     </header>
 </div>
-
-
- 
-<!-- Navigation Bar -->
-    <nav class="space-x-5 flex justify-center items-center mt-5 mx-auto w-max">
-      <a href="#" class="text-yellow-500">
-        <button class="px-6 py-3 rounded-full hover:bg-yellow-500 text-white bg-yellow-400 text-xl">
-          我的頁面
-        </button>
-      </a>
-      <a href="#">
-        <button class="px-6 py-3 rounded-full hover:bg-yellow-500 text-white bg-yellow-300 text-xl">
-          我的帳號
-        </button>
-      </a>
-      <a href="#">
-        <button class="px-6 py-3 rounded-full hover:bg-yellow-500 text-white bg-yellow-300 text-xl">
-          我的活動
-        </button>
-      </a>
-      <a href="#">
-        <button class="px-6 py-3 rounded-full hover:bg-yellow-500 text-white bg-yellow-300 text-xl">
-          我的收藏
-        </button>
-      </a>
-      <a href="#">
-        <button class="px-6 py-3 rounded-full hover:bg-yellow-500 text-white bg-yellow-300 text-xl">
-          我的紀錄
-        </button>
-      </a>
-      <a href="{% url 'activities:create' %}">
-        <button class="px-6 py-3 rounded-full hover:bg-yellow-500 text-white bg-yellow-300 text-xl">
-          創建活動
-        </button>
-      </a>
-      <a href="#">
-        <button class="px-6 py-3 rounded-full hover:bg-yellow-500 text-white bg-yellow-300 text-xl">
-          聊天室
-        </button>
-      </a>
-      <a href="#">
-        <div class="flex items-center space-x-2">
-          <!-- 系統通知 -->
-          <button class="px-6 py-3 rounded-full hover:bg-yellow-500 text-white bg-yellow-300 text-xl">
-            系統通知
-          </button>
-          <!-- 獨立的 X 按鈕 -->
-          <button
-            class="w-10 h-10 text-white hover:bg-yellow-500 focus:outline-none border bg-yellow-500 rounded-full flex items-center justify-center"
-            onclick="document.getElementById('notification-bar').style.display='none';"
-          >
-          </button>
-        </div>
-      </a>
-    </nav>
 
 
     {%comment "" %}建立聚會表單{% endcomment %}
@@ -115,12 +39,18 @@
                     class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-yellow-500">
                 
                     <label class="block font-bold text-gray-800 mb-2">類別：</label>
+                    
                     <select name="category" id="category" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-yellow-500">
                         <option value="" disabled selected>選擇類別</option>
                         {% for category in categories %}
-                            <option value="{{ category.id }}" {% if form.category.value == category.id %}selected{% endif %}>{{ category.name }}</option>
+                            <option value="{{ category.id }}" 
+                                {% if form_data and form_data.category == category.id %}selected{% endif %}>
+                                {{ category.name }}
+                            </option>
                         {% endfor %}
                     </select>
+
+
                 </div>
             </div>
 {% comment "" %}第二區：時間、地點、人數等{% endcomment %}

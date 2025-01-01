@@ -4,15 +4,19 @@
 {% endblock head %}
 
 {% block content %} 
-<div>
+
+<div class=" bg-gray-100 pt-20" >
+
+ <div class="grid grid-cols-3 gap-6 p-5 m-2">
+<div class="pt-20">
     <h2>建立聚會類別</h2>
     <form method="POST" action="{% url 'activities:category' %}">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">建立</button>
     </form>
-
-<br>
+</div>
+ <div class="bg-gray-400 rounded-card space-y-6 p-5 m-2">
     <h3>所有聚會類別</h3>
     <ul>
         {% for category in categories %}
@@ -23,12 +27,14 @@
     </ul>
 
 </div>
-<br>
+<div class="bg-white rounded-card space-y-6 p-5 m-2">
 {% for category in categories %}
     <div>
         <span>{{ category.name }}</span>
         <a href="{% url 'activities:delete_category' category.id %}">刪除</a>
     </div>
 {% endfor %}
+</div>
+</div>
 
 {% endblock content %}

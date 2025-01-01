@@ -2,80 +2,15 @@
 
 {% block head %} 
     <title>聚會列表</title>
-    <style>
-        /* 自訂主色系 */
-        :root {
-            --moordule-pink: #F78888;
-            --moordule-yellow: #F6D246;
-            --moordule-gray: #ECECEC;
-            --moordule-light-blue: #90CCF4;
-            --moordule-deep-blue: #5DA2D5;
-        }
-
-        .rounded-card {
-            border-radius: 21px;
-            padding: 21px;
-        }
-    </style>
-   FIXME:應該要拔出去
+    <script src="https://cdn.tailwindcss.com"></script>
+   
 {% endblock head %}
 {% block content %}
 <body class="bg-gray-100">
     <header class="bg-yellow-500 text-white text-center py-4 text-2xl font-bold">
         聚會列表
     </header>
-<!-- Navigation Bar -->
-    <nav class="space-x-5 flex justify-center items-center mt-5 mx-auto w-max">
-      <a href="#" class="text-yellow-500">
-        <button class="px-6 py-3 rounded-full hover:bg-yellow-500 text-white bg-yellow-400 text-xl">
-          我的頁面
-        </button>
-      </a>
-      <a href="#">
-        <button class="px-6 py-3 rounded-full hover:bg-yellow-500 text-white bg-yellow-300 text-xl">
-          我的帳號
-        </button>
-      </a>
-      <a href="#">
-        <button class="px-6 py-3 rounded-full hover:bg-yellow-500 text-white bg-yellow-300 text-xl">
-          我的活動
-        </button>
-      </a>
-      <a href="#">
-        <button class="px-6 py-3 rounded-full hover:bg-yellow-500 text-white bg-yellow-300 text-xl">
-          我的收藏
-        </button>
-      </a>
-      <a href="#">
-        <button class="px-6 py-3 rounded-full hover:bg-yellow-500 text-white bg-yellow-300 text-xl">
-          我的紀錄
-        </button>
-      </a>
-      <a href="{% url 'activities:create' %}">
-        <button class="px-6 py-3 rounded-full hover:bg-yellow-500 text-white bg-yellow-300 text-xl">
-          創建活動
-        </button>
-      </a>
-      <a href="#">
-        <button class="px-6 py-3 rounded-full hover:bg-yellow-500 text-white bg-yellow-300 text-xl">
-          聊天室
-        </button>
-      </a>
-      <a href="#">
-        <div class="flex items-center space-x-2">
-          <!-- 系統通知 -->
-          <button class="px-6 py-3 rounded-full hover:bg-yellow-500 text-white bg-yellow-300 text-xl">
-            系統通知
-          </button>
-          <!-- 獨立的 X 按鈕 -->
-          <button
-            class="w-10 h-10 text-white hover:bg-yellow-500 focus:outline-none border bg-yellow-500 rounded-full flex items-center justify-center"
-            onclick="document.getElementById('notification-bar').style.display='none';"
-          >
-          </button>
-        </div>
-      </a>
-    </nav>
+
 
 
 <div class="space-y-4">
@@ -124,8 +59,8 @@
                                         {{ activity.description }}
                                     </p>
                         <div lass="mt-4 flex justify-end space-x-2">
-                            <a href="{% url 'activities:update' activity.id %}" class="bg-[var(--moordule-yellow)] text-white px-4 py-2 rounded hover:bg-[var(--moordule-light-blue)]">更新聚會</a>
-                            <a href="{% url 'activities:confirm_delete' activity.id %}" class="bg-[var(--moordule-pink)] text-white px-4 py-2 rounded hover:bg-red-600">刪除</a>
+                            <a href="{% url 'activities:update' activity.id %}" class="bg-moordule-yellow text-white px-4 py-2 rounded hover:bg-moordule-light-blue">更新聚會</a>
+                            <a href="{% url 'activities:confirm_delete' activity.id %}" class="bg-moordule-pink  text-white px-4 py-2 rounded hover:bg-red-600">刪除</a>
                 </div>  
     </div>
                         </div>
@@ -150,11 +85,11 @@
             {% if activities|length < 4 %}
             <div class="flex justify-center mb-6">
                 <a href="{% url 'activities:create' %}" class="inline-block">
-                                <button class="bg-[var(--moordule-light-blue)] text-white px-6 py-2 rounded hover:bg-[var(--moordule-deep-blue)]">新增聚會</button>
+                                <button class="bg-moordule-light-blue text-white px-6 py-2 rounded hover:bg-moordule-deep-blue">新增聚會</button>
                 </a>
             </div>
             {% else %}
-                <div class="text-center text-[var(--moordule-pink)]">您進行中的聚會,已達到最多4個活動額。</div>
+                <div class="text-center text-moordule-pink">您進行中的聚會,已達到最多4個活動額。</div>
             {% endif %}
         </div>
 

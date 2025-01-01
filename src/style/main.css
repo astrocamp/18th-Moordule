@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+@import url('./activites.css');
 :root {
 	scroll-behavior: smooth;
 }
