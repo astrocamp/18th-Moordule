@@ -18,7 +18,7 @@ class UserRegistrationForm(UserCreationForm):
         widget=forms.EmailInput(
             attrs={
                 "type": "email",
-                "pattern": "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}",
+                "pattern": r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}",
                 "title": "請輸入有效的電子郵件地址",
             }
         ),
@@ -34,4 +34,4 @@ class CustomUserChangeForm(forms.ModelForm):
 
     class Meta:
         model = CustomUser
-        fields = ("username", "gender", "birth_date",  "live_in", "hobby")
+        fields = ("username", "gender", "birth_date", "live_in", "hobbies")

@@ -30,7 +30,12 @@ meetups:
 	poetry run python manage.py generate_fake_meetups --count 30
 
 records:
-	poetry run python manage.py generate_fake_records --count 10 --force
+	poetry run python manage.py generate_fake_records --count 10
+
+seed_a:
+   poetry run python manage.py generate_fake_users --count 20
+   poetry run python manage.py generate_fake_meetups --count 30
+   poetry run python manage.py generate_fake_records --count 10
 
 seed:
 	poetry run python manage.py seed_categories

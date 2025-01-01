@@ -2,18 +2,19 @@ import os
 from pathlib import Path
 
 from dotenv import load_dotenv
+
 load_dotenv()
 
-allowed_hosts_env = os.getenv('ALLOWED_HOSTS', '*').split(',')
-line_pay_hostname =  os.getenv('HOSTNAME')
+allowed_hosts_env = os.getenv("ALLOWED_HOSTS", "*").split(",")
+line_pay_hostname = os.getenv("HOSTNAME")
 ALLOWED_HOSTS = allowed_hosts_env + [line_pay_hostname]
 
 CSRF_TRUSTED_ORIGINS = [f"https://{os.getenv('HOSTNAME')}"]
 
- 
+
 AUTH_USER_MODEL = "users.CustomUser"
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-DEBUG = os.getenv('DEBUG', 'True') == 'True'
+DEBUG = os.getenv("DEBUG", "True") == "True"
 
 # 初始化環境變數
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,13 +23,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 db_url = os.getenv("DATABASE_URL")
 # AUTH_USER_MODEL = "users.CustomUser"
 # DEBUG = env.bool("DEBUG", default=False)
-LOGIN_URL = 'users:signin'
+LOGIN_URL = "users:signin"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY =  os.getenv("SECRET_KEY")
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 ALLOWED_HOSTS = []
 
@@ -42,21 +43,21 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'django.contrib.sites',
+    "django.contrib.sites",
     "pages",
     "users",
     "shared",
     "activities",
     "cashflows",
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google', 
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
 ]
 
 AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',  # allauth 認證
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",  # allauth 認證
 ]
 
 SITE_ID = 1
@@ -69,11 +70,11 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "allauth.account.middleware.AccountMiddleware", # Add the account middleware:
+    "allauth.account.middleware.AccountMiddleware",  # Add the account middleware:
 ]
 
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
 
 ROOT_URLCONF = "pydev.urls"
 
@@ -91,6 +92,7 @@ TEMPLATES = [
             ],
             "builtins": [
                 "shared.templatetags.common_components",
+                "shared.templatetags.navigation",
                 # "shared.templatetags.meetup_components",
             ],
         },
@@ -153,5 +155,3 @@ STATICFILES_DIRS = [
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-

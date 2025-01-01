@@ -6,108 +6,91 @@ from django.core.management.base import BaseCommand
 from django.utils import timezone
 from faker import Faker
 
-from activities.models import Activity as Meetups
+from activities.models import Activity, Category, MeetupPaticipat
 
 User = get_user_model()
 
 
 class Command(BaseCommand):
-    help = "生成假活動資料"
+    help = "產生活動相關假資料"
 
     def add_arguments(self, parser):
         parser.add_argument(
-            "--count", type=int, default=20, help="要生成的活動數量(預設: 20)"
-        )
-        parser.add_argument(
-            "--force", action="store_true", help="強制重新生成（會刪除現有活動）"
+            "--count", type=int, default=20, help="每個分類要產生的活動數量"
         )
 
-    def format_datetime(self, dt):
-        """格式化日期時間，並處理 None 的情況"""
-        if dt is None:
-            return "未設定時間"
-        return dt.strftime("%Y-%m-%d %H:%M")
+    def handle(self, *args, **options):
+        fake = Faker(["zh_TW"])
+        activity_count = options["count"]
 
-    def format_time(self, dt):
-        """格式化時間，並處理 None 的情況"""
-        if dt is None:
-            return "未設定時間"
-        return dt.strftime("%H:%M")
-
-    def handle(self, *args, **kwargs):
-        count = kwargs["count"]
-        force = kwargs.get("force", False)
-        fake = Faker("zh_TW")
-
-        # 檢查是否有用戶
+        # 先檢查是否有使用者
         users = User.objects.all()
         if not users.exists():
-            self.stdout.write(self.style.ERROR("找不到用戶，請先建立用戶"))
+            self.stdout.write(self.style.ERROR("請先創建使用者"))
             return
 
-        # 如果是強制模式，先刪除現有活動
-        if force:
-            deleted_count = Meetups.objects.all().delete()[0]
-            self.stdout.write(f"已刪除 {deleted_count} 個現有活動")
+        # 創建分類
+        activity_types = ["吃飯", "喝酒", "唱歌", "運動", "電影", "討論"]
+        categories = []
 
-        # 定義常用值
-        activity_types = [
-            "聚餐",
-            "電影",
-            "運動",
-            "讀書會",
-            "桌遊",
-            "爬山",
-            "烤肉",
-            "唱歌",
+        for i, type_name in enumerate(activity_types):
+            category, created = Category.objects.get_or_create(
+                name=type_name,
+                defaults={"description": fake.text(max_nb_chars=100), "order": i},
+            )
+            categories.append(category)
+            if created:
+                self.stdout.write(self.style.SUCCESS(f"Created category: {type_name}"))
+
+        # 創建活動
+        locations = [
+            "台北市信義區市府路1號",
+            "台北市大安區忠孝東路四段",
+            "新北市板橋區文化路一段",
+            "台北市中山區林森北路",
+            "台北市大安區師大路",
         ]
-        areas = ["信義區", "大安區", "中山區", "內湖區", "松山區", "南港區"]
 
-        # 批次創建活動
-        meetups = []
-        try:
-            for i in range(count):
-                activity_type = random.choice(activity_types)
-                area = random.choice(areas)
-
+        # 為每個分類創建活動
+        for category in categories:
+            for _ in range(activity_count):
+                # 隨機選擇開始時間（未來 30 天內）
                 start_time = timezone.now() + timedelta(
                     days=random.randint(1, 30),
                     hours=random.randint(0, 23),
                     minutes=random.randint(0, 59),
                 )
-                end_time = start_time + timedelta(hours=random.randint(1, 4))
 
-                meetup = Meetups(
-                    title=f"{activity_type}：{fake.catch_phrase()}",
-                    description=fake.text(max_nb_chars=200),
-                    address=f"台北市{area}{fake.street_address()}",
-                    start_time=start_time,
-                    end_time=end_time,
-                    max_participants=random.randint(2, 20),
-                    creator=random.choice(users),
-                )
-                meetups.append(meetup)
-                self.stdout.write(f"準備第 {i+1} 個活動")
+                try:
+                    activity = Activity.objects.create(
+                        title=f"{category.name}-{fake.word()}",
+                        description=fake.text(max_nb_chars=200),
+                        address=random.choice(locations),
+                        start_time=start_time,
+                        duration=random.randint(1, 4),
+                        max_participants=random.randint(2, 15),
+                        category=category,
+                        owner=random.choice(users),
+                    )
 
-            # 批次創建
-            created_meetups = Meetups.objects.bulk_create(meetups)
+                    participant_count = random.randint(1, activity.max_participants)
+                    random_users = random.sample(list(users), participant_count)
 
-            self.stdout.write(
-                self.style.SUCCESS(f"成功創建 {len(created_meetups)} 個活動")
-            )
+                    for user in random_users:
+                        try:
+                            MeetupPaticipat.objects.create(
+                                activity=activity, participant=user
+                            )
+                        except Exception as e:
+                            continue
 
-            # 列出創建的活動資訊
-            self.stdout.write("\n創建的活動列表:")
-            for meetup in created_meetups:
-                start_time_str = self.format_datetime(meetup.start_time)
-                end_time_str = self.format_time(meetup.end_time)
+                    self.stdout.write(
+                        self.style.SUCCESS(
+                            f"Created activity: {activity.title} with {participant_count} participants"
+                        )
+                    )
 
-                self.stdout.write(
-                    f"活動: {meetup.title}\n"
-                    f"時間: {start_time_str} - {end_time_str}\n"
-                    f"地點: {meetup.address}\n"
-                    f"建立者: {meetup.creator.username}\n"
-                )
-
-        except Exception as e:
-            self.stdout.write(self.style.ERROR(f"創建活動時發生錯誤: {str(e)}"))
+                except Exception as e:
+                    self.stdout.write(
+                        self.style.ERROR(f"Failed to create activity: {str(e)}")
+                    )
