@@ -7,7 +7,9 @@ from django.utils import timezone
 from django.views.decorators.http import require_POST
 from django_htmx.middleware import HtmxDetails
 
+from activities.forms import ActivityForm
 from activities.models import Activity as Meetup
+from activities.models import Category
 
 from .forms import CustomUserChangeForm, UserRegistrationForm
 
@@ -46,11 +48,29 @@ def password_change_view(request):
 
 
 def user_page_view(request, tag="member"):
+
+    categories = [
+        {id: 1, "name": "吃飯"},
+        {id: 2, "name": "看電影"},
+        {id: 3, "name": "唱歌"},
+        {id: 4, "name": "喝酒"},
+        {id: 5, "name": "運動"},
+    ]
+
+    context = None
+    if tag == "activity_form":
+        form = ActivityForm()
+        context = {
+            "tag": tag,
+            "form": form,
+            "categories": categories,
+            "form_data": form.cleaned_data if form.is_bound else None,
+        }
+
     if not request.headers.get("HX-Request"):
-        context = {"tag": tag}
         return render(request, "users/dashboard.html", context)
 
-    return render(request, f"users/components/{tag}.html")
+    return render(request, f"users/components/{tag}.html", context)
 
 
 @require_POST

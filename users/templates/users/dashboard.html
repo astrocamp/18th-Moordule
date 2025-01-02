@@ -10,6 +10,9 @@
 {% block content %}
 {% navigator %}
 <div id="main-content">
-	{% include 'users/components/'|add:tag|add:'.html' %}
+	<!-- prettier-ignore -->
+
+	{% include 'users/components/'|add:tag|add:'.html' with form=form categories=categories form_data=form_data %}
 </div>
+
 {% endblock %}
