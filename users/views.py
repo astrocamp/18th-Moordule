@@ -50,11 +50,12 @@ def password_change_view(request):
 def user_page_view(request, tag="member"):
 
     categories = [
-        {id: 1, "name": "吃飯"},
-        {id: 2, "name": "看電影"},
-        {id: 3, "name": "唱歌"},
-        {id: 4, "name": "喝酒"},
-        {id: 5, "name": "運動"},
+        {id: 1, "name": "看電影"},
+        {id: 2, "name": "唱歌"},
+        {id: 3, "name": "喝酒"},
+        {id: 4, "name": "運動"},
+        {id: 5, "name": "討論"},
+        {id: 6, "name": "吃飯"},
     ]
 
     context = None
