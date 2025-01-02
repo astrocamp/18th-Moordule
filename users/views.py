@@ -9,6 +9,7 @@ from django_htmx.middleware import HtmxDetails
 
 from activities.models import Activity as Meetup
 
+from .decorators import anonymous_required
 from .forms import AboutMeForm, CustomUserChangeForm, UserRegistrationForm
 
 
@@ -55,6 +56,7 @@ def password_change_view(request):
 
     return render(request, "users/components/password.html", {"user": user})
 
+
 @login_required
 def user_page_view(request, tag="member"):
     form = CustomUserChangeForm()
@@ -86,6 +88,7 @@ def upload_view(request: HttpRequest):
     return JsonResponse({"status": "error", "message": "上傳失敗"}, status=400)
 
 
+@anonymous_required
 def signup_view(request: HttpRequest):
 
     if request.POST:
@@ -102,6 +105,7 @@ def signup_view(request: HttpRequest):
     return render(request, "users/signup.html", {"meetups": meetups})
 
 
+@anonymous_required
 def signin_view(request: HttpRequest):
     meetups = Meetup.objects.filter(start_time__gte=timezone.now()).order_by(
         "start_time"

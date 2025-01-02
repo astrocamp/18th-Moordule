@@ -1,25 +1,36 @@
 <nav
+	id="user-navigator"
 	class="space-x-5 flex justify-center items-center mt-5 mx-auto w-max pt-20"
-	x-data="{ activeButton: '{{ current_tag }}' }"
+	x-data="{ 
+        active: window.location.pathname.split('/')[2] || 'member',
+        init() {
+            window.addEventListener('popstate', () => {
+                this.active = window.location.pathname.split('/')[2] || 'member';
+            });
+        }
+    }"
+	x-init="init()"
 >
 	{% for item in nav_items %}
 	<!-- prettier-ignore -->
 	<a
+        :key="{{ item.name }}"
         {% if item.url %}
         hx-get="{% url 'users:user_page' item.url %}"
-        {% else %}
+        {% else %}  
         hx-get="{% url 'users:account' %}"
         {% endif %}
         hx-target="#main-content"
         hx-push-url="true"
     >
         <button
-            @click="activeButton = '{{ item.name }}'"
+            x-data="{ itemName: '{{ item.name }}' }"
+            @click="active = itemName"
             class="px-6 py-3 rounded-full hover:bg-yellow-500 text-white text-xl"
-            :class="activeButton === '{{ item.name }}' ? 'bg-yellow-500' : 'bg-yellow-300'"
+            :class="{ 'bg-yellow-500': active === itemName, 'bg-yellow-300': active !== itemName }"
         >
             {{ item.title }}
         </button>
-   </a>
+    </a>
 	{% endfor %}
 </nav>
