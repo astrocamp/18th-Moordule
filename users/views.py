@@ -45,7 +45,9 @@ def password_change_view(request):
         return HttpResponse("", headers={"HX-Redirect": account_url})
 
 
+@login_required(redirect_field_name="")
 def user_page_view(request, tag="member"):
+
     if not request.headers.get("HX-Request"):
         context = {"tag": tag}
         return render(request, "users/dashboard.html", context)
