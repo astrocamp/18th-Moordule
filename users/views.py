@@ -120,29 +120,13 @@ def login_view(request: HttpRequest):
 
 @require_POST
 def register_view(request: HttpRequest):
-    form = UserRegistrationForm()
+    form = UserRegistrationForm(request.POST)
     if form.is_valid():
         form.save()
         signin_url = reverse("users:signin")
         return HttpResponse("", headers={"HX-Redirect": signin_url})
 
     return render(request, "users/components/signup_form.html", {"form": form})
-
-
-@require_POST
-def user_create_view(request: HtmxHttpRequest):
-    form = UserRegistrationForm(request.POST)
-    if request.POST:
-        if form.is_valid():
-            form.save()
-            signin_url = reverse("users:signin")
-            return HttpResponse("", headers={"HX-Redirect": signin_url})
-
-    return render(
-        request,
-        "users/components/signup_form.html",
-        {"form": form},
-    )
 
 
 def clear_errors(request: HtmxHttpRequest):
