@@ -13,15 +13,16 @@ frontend = [
 
 backend = [
     path("logout/", LogoutView.as_view(next_page="/"), name="logout"),
+    path("register/", views.register_view, name="register"),
     path("login/", views.login_view, name="login"),
+    path("new/", views.user_create_view, name="new"),
+    path("edit/", views.edit_view, name="edit"),
     path("password-change/", views.password_change_view, name="password_change"),
     path("upload", views.upload_view, name="upload"),
 ]
 
 htmx = [
     path("", views.user_page_view, {"tag": "member"}, name="account"),
-    path("new/", views.user_create_view, name="new"),
-    path("edit/", views.edit_view, name="edit"),
     path("clear-errors/", views.clear_errors, name="clear_errors"),
     re_path(
         r"^(member|account|activities|activity_form)/$",

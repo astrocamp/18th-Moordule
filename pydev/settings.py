@@ -92,7 +92,6 @@ TEMPLATES = [
             ],
             "builtins": [
                 "shared.templatetags.common_components",
-                "shared.templatetags.navigation",
                 # "shared.templatetags.meetup_components",
             ],
         },

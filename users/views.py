@@ -74,14 +74,6 @@ def upload_view(request: HttpRequest):
 
 
 def signup_view(request: HttpRequest):
-
-    if request.POST:
-        form = UserRegistrationForm()
-        if form.is_valid():
-            form.save()
-            signin_url = reverse("users:signin")
-            return HttpResponse("", headers={"HX-Redirect": signin_url})
-
     meetups = Meetup.objects.filter(start_time__gte=timezone.now()).order_by(
         "start_time"
     )[:2]
@@ -95,22 +87,6 @@ def signin_view(request: HttpRequest):
     )[:2]
 
     return render(request, "users/signin.html", {"meetups": meetups})
-
-
-@require_POST
-def user_create_view(request: HtmxHttpRequest):
-    form = UserRegistrationForm(request.POST)
-    if request.POST:
-        if form.is_valid():
-            form.save()
-            signin_url = reverse("users:signin")
-            return HttpResponse("", headers={"HX-Redirect": signin_url})
-
-    return render(
-        request,
-        "users/components/signup_form.html",
-        {"form": form},
-    )
 
 
 @require_POST
@@ -142,20 +118,44 @@ def login_view(request: HttpRequest):
     )
 
 
+@require_POST
+def register_view(request: HttpRequest):
+    form = UserRegistrationForm()
+    if form.is_valid():
+        form.save()
+        signin_url = reverse("users:signin")
+        return HttpResponse("", headers={"HX-Redirect": signin_url})
+
+    return render(request, "users/components/signup_form.html", {"form": form})
+
+
+@require_POST
+def user_create_view(request: HtmxHttpRequest):
+    form = UserRegistrationForm(request.POST)
+    if request.POST:
+        if form.is_valid():
+            form.save()
+            signin_url = reverse("users:signin")
+            return HttpResponse("", headers={"HX-Redirect": signin_url})
+
+    return render(
+        request,
+        "users/components/signup_form.html",
+        {"form": form},
+    )
+
+
 def clear_errors(request: HtmxHttpRequest):
     return HttpResponse("")
 
 
 @login_required
-def edit_view(request: HttpRequest):
+@require_POST
+def edit_view(request: HtmxHttpRequest):
 
     user = request.user
-    if request.method == "POST":
-        form = CustomUserChangeForm(request.POST, instance=user)
-        if form.is_valid():
-            # 如果表單數據有效，保存用戶資料
-            form.save()
-    else:
-        form = CustomUserChangeForm(instance=user)
+    form = CustomUserChangeForm(request.POST, instance=user)
+    if form.is_valid():
+        form.save()
 
     return render(request, "users/components/user_form.html", {"form": form})
