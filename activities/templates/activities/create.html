@@ -1,116 +1,172 @@
 {% extends "base/layout.html" %}
-
+{% load static %}
  {% block head %}
     <title>聚會聚會建立</title>
+    <script type="module" src="{% static 'dist/activities.js' %}"></script>
 
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
 {% endblock head %}
 
 
 {% block content %}
-<div class="bg-gray-100">
-    <header class="bg-yellow-500 text-white text-center py-4 text-2xl font-bold">
-        建立聚會
-    </header>
-</div>
+<div class="pt-20">
+
+ 
+<!-- Navigation Bar -->
+    <nav class="space-x-5 flex justify-center items-center mt-5 mx-auto w-max">
+       <a href="{% url 'users:user_page' tag='member' %}">  
+    <button class="px-4 sm:px-6 py-2 sm:py-3 rounded-full hover:bg-yellow-500 text-white bg-yellow-300 text-xl">
+      我的頁面
+    </button>
+  </a>
+
+  <a href="{% url 'users:user_page' tag='account' %}">  
+    <button class="px-4 sm:px-6 py-2 sm:py-3 rounded-full hover:bg-yellow-500 text-white bg-yellow-300 text-xl">
+      我的帳號
+    </button>
+  </a>
+
+  <a href="{% url 'users:user_page' tag='activities' %}">  
+    <button class="px-4 sm:px-6 py-2 sm:py-3 rounded-full hover:bg-yellow-500 text-white bg-yellow-300 text-xl">
+      我的聚會
+    </button>
+  </a>
+  {% comment %} <!-- 以上更新為 user_page 的 URL --> {% endcomment %}
+
+      
+      <a href="{% url 'activities:create' %}">
+        <button class="px-4 sm:px-6 py-2 sm:py-3  rounded-full hover:bg-yellow-500 text-white bg-yellow-400 text-xl">
+          創建聚會
+        </button>
+      </a>
+    </nav>
 
 
     {%comment "" %}建立聚會表單{% endcomment %}
- <form method="POST" class="space-y-4">
-            {% csrf_token %}
+ <form method="POST" class="mt-12 max-w-screen-lg mx-auto">
+  {% csrf_token %}
+
+<div class="max-w-7xl mx-auto mt-8 bg-yellow-300 p-8 rounded-[24px]  shadow-md space-y-8">
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+   <div>
+   <div class="bg-white rounded-card p-6">
+      <div class="bg-gray-200 rounded-card flex flex-col items-center p-6">
+          <p class="text-center text-gray-700">聚會 photo</p>
+          <i class="fi fi-br-add-image"></i>
+          <div class="bg-gray-300 w-32 h-32 flex items-center justify-center rounded-full mt-4">
+              <i class="fi fi-rr-camera text-gray-600 text-3xl"></i>
+          </div>
+      </div>     
+  </div>
+      <div class="bg-white rounded-card mt-6 p-6">
+          <label class="block font-bold text-gray-800 mb-2">聚會名稱：</label>
+          <input type="text" id="title" name="title" value="{{ form_data.title|default:'' }}" required 
+          class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-yellow-500">
+      
+          <label class="block font-bold text-gray-800 mb-2 mt-4">類別：</label>
+          <select name="category" id="category" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-yellow-500">
+              <option value="" disabled selected>選擇類別</option>
+              {% for category in categories %}
+                  <option value="{{ category.id }}" {% if form.category.value == category.id %}selected{% endif %}>{{ category.name }}</option>
+              {% endfor %}
+          </select>
+      </div>
+  </div>
+
+<!-- 第二區：時間、地點、人數等 -->
+<div class="bg-white rounded-card p-6 space-y-6">
+  <h2 class="text-lg font-bold text-gray-800 mb-4">聚會設定</h2>
   
-    <div class="max-w-7xl mx-auto mt-8 bg-yellow-300 p-8 rounded-lg shadow-md space-y-8">
-     {% comment "" %}分成三等份區域 {% endcomment %}
-        <div class="grid grid-cols-3 gap-6">
-          {% comment "" %}第一區：照片、聚會名稱、興趣 {% endcomment %}
-             <div>
-             <div class="bg-white rounded-card">
-                <div class="bg-gray-200 rounded-card flex flex-col items-center">
-                    <p class="text-center text-gray-700">聚會 photo</p>
-                    <i class="fi fi-br-add-image"></i>
-                    <div class="bg-gray-300 w-32 h-32 flex items-center justify-center rounded-full mt-4">
-                        <i class="fi fi-rr-camera text-gray-600 text-3xl"></i>
-                    </div>
-                </div>     
-            </div>
-                <div class="bg-white rounded-card mt-6">
-                    <label class="block font-bold text-gray-800 mb-2">聚會名稱：</label>
-                    <input type="text" id="title" name="title" value="{{ form_data.title|default:'' }}" required 
-                    class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-yellow-500">
-                
-                    <label class="block font-bold text-gray-800 mb-2">類別：</label>
-                    
-                    <select name="category" id="category" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-yellow-500">
-                        <option value="" disabled selected>選擇類別</option>
-                        {% for category in categories %}
-                            <option value="{{ category.id }}" 
-                                {% if form_data and form_data.category == category.id %}selected{% endif %}>
-                                {{ category.name }}
-                            </option>
-                        {% endfor %}
-                    </select>
-
-
-                </div>
-            </div>
-{% comment "" %}第二區：時間、地點、人數等{% endcomment %}
-    
-        <div class="bg-white rounded-card space-y-6">
-            <h2 class="text-lg font-bold text-gray-800 mb-4">聚會設定</h2>
-            
-            <p class="text-gray-700">開始時間：</p>
-            <input type="datetime-local" id="start_time" name="start_time" value="{{ form_data.start_time|default:'' }}" required
-                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500">
-                {% if form.start_time.errors %}
-                <ul class="errorlist">
-                    {% for error in form.start_time.errors %}
-                        <li class="text-red-600">{{ error }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-
-            <p class="text-gray-700">聚會地點（地址）：</p>
-            <input type="text" id="address" name="address" value="{{ form_data.address|default:'' }}" required
-                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500">
-            
-            <p class="text-gray-700">聚會時長（小時）：</p>
-            <input type="number" id="duration" name="duration" value="{{ form_data.duration|default:1 }}" min="1" required
+  <div class="space-y-3">
+    <p class="text-gray-700">開始時間：</p>
+    <input type="datetime-local" id="start_time" name="start_time" value="{{ form_data.start_time|default:'' }}" required
             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500">
+    {% if form.start_time.errors %}
+        <ul class="errorlist">
+            {% for error in form.start_time.errors %}
+                <li class="text-red-600">{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+  </div>
+
+  <div class="space-y-3">
+    <p class="text-gray-700">聚會地點（地址）：</p>
+    <input type="text" id="address" name="address" value="{{ form_data.address|default:'' }}" required
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500">
+  </div>
+  
+  <div class="space-y-3">
+    <p class="text-gray-700">聚會時長（小時）：</p>
+    <input type="number" id="duration" name="duration" value="{{ form_data.duration|default:1 }}" min="1" required
+    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500">
+  </div>
+
+  <div class="space-y-3">
+    <p class="text-gray-700">參加人數：</p>
+    <input type="number" id="max_participants" name="max_participants" value="{{ form_data.max_participants|default:10 }}" min="1" required
+        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500">
+  </div>
+</div>
 
 
-
-            <p class="text-gray-700">參加人數：</p>
-            <input type="number" id="max_participants" name="max_participants" value="{{ form_data.max_participants|default:10 }}" min="1" required
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500">   
-        </div>
-{% comment "" %}第三區：聚會描述、創建規則與扣錢規則{% endcomment %}
-           
-    <div>
-        <div class="bg-white rounded-card space-y-6">
-            <h2 class="text-lg font-bold text-gray-800 mb-4">聚會詳細</h2>
-            <p class="text-gray-700">內容描述：</p>
-            <textarea id="description" name="description" required
-                class="w-full px-4 py-2 mt-2 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-yellow-500">
-                {{ form_data.description|default:'' }}
-            </textarea>
-            </div>
-            <br>
-            <div class="bg-white rounded-card text-center py-4">
-            <p class="text-gray-800 mb-4">創建聚會規則與扣 $ 規則</p>
-            <p class="text-gray-700">聚會規則內容：**待更新** Lorem ipsum dolor sit amet consectetur,
-            adipisicing elit. Reprehenderit sapiente eius provident eos obcaecati, quibusdam possimus tempora
-                sit laborum amet dolorum quae facilis tempore dolorem vitae! Vero laborum dolor vel? </p>
-        <input type="checkbox" id="agree" name="agree"  required>
-        <label for="agree" class="text-gray-800">我已詳細閱讀並了解規則</label>
-        <br>
-        
-        <button class="mt-4 w-full py-3 bg-yellow-500 text-white rounded-full hover:bg-yellow-600">
-            建立
-        </button>
-        </div>
-       </div>
+<div>
+  <div class="bg-white rounded-card p-6 space-y-6">
+    <h2 class="text-lg font-bold text-gray-800 mb-4">聚會詳細</h2>
+    <div class="space-y-3">
+      <p class="text-gray-700">內容描述：</p>
+      <textarea id="description" name="description" required
+          class="w-full px-4 py-2 mt-2 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-yellow-500 min-h-[120px]">{{ form_data.description|default:'' }}</textarea>
     </div>
-</form>
+  </div>
+
+            <!-- 聚會規則 -->
+            <div class="bg-white rounded-card mt-6 p-6 text-center">
+                <p class="text-gray-800 mb-4">創建聚會規則 與 扣點規則</p>
+                <p class="text-gray-700">聚會規則內容請詳盡閱讀</p>
+                <p class="text-moordule-pink text-sm mb-4">請詳閱聚會規則內容並勾選確認，否則無法建立聚會。</p>
+                <p id="openMeetingRulesModal" class=" bg-moordule-pink text-white rounded-full hover:bg-yellow-500">閱讀規則</p>
+
+                <!-- 遮罩層模態彈窗 -->
+                <div id="meetingRulesModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 hidden justify-center items-center flex z-50">
+                    <div class="bg-white rounded-card p-6 text-center w-auto sm:w-1/3">
+                        <p class="text-gray-800 mb-4">創建聚會規則 與 扣點規則</p>
+                        <p class="text-gray-700 mb-4">聚會規則內容請詳盡閱讀</p>
+                        <p>聚會創建兌換完成後，恕不接受退還點數。
+                         您同意遵守本公司網站之服務規則，本公司就您的行為是否符合本規範，有最終決定權。若本公司判斷您的行為重大違反本規範或任何法令，本公司得立即停止您使用本公司的服務，
+                         並立即終止您與本公司之契約關係若您的行為因此致本公司、本公司關係企業、受僱人、受託人、代理人及其他相關履行輔助人因此而受有損害或支出費用（包括且不限於因進行民事、刑事及行政程序所支出之費用及律師費）時，
+                         您應負擔所有損害賠償責任並填補所有因而產生之費用。若本公司無法收到您經由本服務購買品服務項之費用時，本公司有權請您給付相關費用，
+                         並保留隨時終止您會員資格及各項會員服務之權利，包括停止或刪除您開啟的聚會或服務之帳號，因此請妥善保存您付款之證明。
+                        同意書之效力
+                          當您勾選「我同意」並簽署本同意書時，即表示您已閱讀、瞭解並同意本同意書之所有內容，
+                          您如違反下列條款時，本公司得隨時終止對您所提供之所有權益或服務。
+                          本人擔保本同意書所聲明事項，如有違反，本人願負一切民事、刑事責
+                        任，若因此至moordule或第三人受有損害，其有權向本人求償，本人願賠償
+                        其因此所受之一切損害。 本規範若有任何一部無效，不影響其他部分之效力。</p>
+                        
+                        <div class="mt-4">
+                            <input type="checkbox" id="agree" name="agree" required>
+                            <label for="agree" class="text-gray-800 ml-2">「我同意」我已詳細閱讀並了解規則</label>
+                        </div>
+
+                        
+                    </div>
+                </div>
+
+                <button class="mt-6 w-full py-3 bg-yellow-500 text-white rounded-full hover:bg-yellow-600">
+                    建立
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
 
 {% endblock content %}
+
+
+
+
+
+
 

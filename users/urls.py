@@ -24,7 +24,7 @@ htmx = [
     path("edit/", views.edit_view, name="edit"),
     path("clear-errors/", views.clear_errors, name="clear_errors"),
     re_path(
-        r"^(member|account|activities|activity_form)/$",
+        r"^(?P<tag>member|account|activities|activity_form)/$",  # 修改使用正則表達式捕捉 tag
         views.user_page_view,
         name="user_page",
     ),
