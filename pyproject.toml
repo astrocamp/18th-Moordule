@@ -20,6 +20,9 @@ faker = "^33.1.0"
 channels = "^4.2.0"
 daphne = "^4.1.2"
 pillow = "^11.0.0"
+django-google-maps = "^0.13.0"
+django-storages = "^1.14.4"
+boto3 = "^1.35.91"
 
 
 [tool.poetry.group.dev.dependencies]
