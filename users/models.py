@@ -1,12 +1,9 @@
-# Create your models here.
 from decimal import Decimal
 
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
-
-# Create your models here.
 
 
 class Record(models.Model):
@@ -50,12 +47,12 @@ class CustomUserManager(UserManager):
     def create_superuser(self, email, password=None, **extra_fields):
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
-        # 因為 AbstractUser 需要 username，所以我們用 email 當作 username
+
         return super().create_user(
-            username=email,  # username 欄位還是需要值
+            username=email,
             email=email,
             password=password,
-            **extra_fields
+            **extra_fields,
         )
 
 

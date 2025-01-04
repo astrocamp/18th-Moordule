@@ -3,7 +3,6 @@ from django.contrib.auth.forms import UserCreationForm
 
 from .models import CustomUser
 
-# 共用的表單樣式和屬性
 FORM_WIDGETS = {
     "base": {
         "class": "mt-1 w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-yellow-400",
@@ -32,7 +31,7 @@ FORM_WIDGETS = {
     },
 }
 
-# 共用的錯誤訊息
+
 ERROR_MESSAGES = {
     "email": {
         "unique": "電子郵件已經被使用",

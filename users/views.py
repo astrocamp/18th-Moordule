@@ -177,7 +177,6 @@ def info_edit_view(request: HtmxHttpRequest):
 
         form = CustomUserChangeForm(request.POST, instance=user)
         if form.is_valid():
-            print("有效")
             form.save()
             return render(request, "users/components/info.html", {"user": user})
         print(form.errors)
