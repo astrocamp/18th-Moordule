@@ -1,3 +1,4 @@
+# Create your models here.
 from decimal import Decimal
 
 from django.conf import settings

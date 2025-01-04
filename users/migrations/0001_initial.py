@@ -14,56 +14,245 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('auth', '0012_alter_user_first_name_max_length'),
+        ("auth", "0012_alter_user_first_name_max_length"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='CustomUser',
+            name="CustomUser",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('password', models.CharField(max_length=128, verbose_name='password')),
-                ('last_login', models.DateTimeField(blank=True, null=True, verbose_name='last login')),
-                ('is_superuser', models.BooleanField(default=False, help_text='Designates that this user has all permissions without explicitly assigning them.', verbose_name='superuser status')),
-                ('first_name', models.CharField(blank=True, max_length=150, verbose_name='first name')),
-                ('last_name', models.CharField(blank=True, max_length=150, verbose_name='last name')),
-                ('is_staff', models.BooleanField(default=False, help_text='Designates whether the user can log into this admin site.', verbose_name='staff status')),
-                ('is_active', models.BooleanField(default=True, help_text='Designates whether this user should be treated as active. Unselect this instead of deleting accounts.', verbose_name='active')),
-                ('date_joined', models.DateTimeField(default=django.utils.timezone.now, verbose_name='date joined')),
-                ('bio', models.TextField(blank=True, help_text='介紹一下你自己', null=True, verbose_name='自我介紹')),
-                ('password_changed_at', models.DateTimeField(blank=True, null=True)),
-                ('username', models.CharField(blank=True, max_length=150, null=True, verbose_name='站內用戶名稱')),
-                ('email', models.EmailField(max_length=255, unique=True, verbose_name='電子郵件')),
-                ('birth_date', models.DateField(blank=True, null=True)),
-                ('gender', models.CharField(blank=True, choices=[('male', 'Male'), ('female', 'Female'), ('other', 'Other')], max_length=10, null=True)),
-                ('avatar', models.ImageField(blank=True, null=True, upload_to='media/', verbose_name='頭像')),
-                ('live_in', models.CharField(blank=True, choices=[('Taipei', '臺北市'), ('NewTaipei', '新北市'), ('Keelung', '基隆市'), ('Taoyuan', '桃園市'), ('Hsinchu_City', '新竹市'), ('Hsinchu', '新竹縣'), ('Miaoli', '苗栗縣'), ('Taichung', '臺中市'), ('Changhua', '彰化縣'), ('Nantou', '南投縣'), ('Yunlin', '雲林縣'), ('Chiayi_City', '嘉義市'), ('Chiayi', '嘉義縣'), ('Tainan', '臺南市'), ('Kaohsiung', '高雄市'), ('Pingtung', '屏東縣'), ('Yilan', '宜蘭縣'), ('Hualien', '花蓮縣'), ('Taitung', '臺東縣'), ('Penghu', '澎湖縣'), ('Kinmen', '金門縣'), ('Lienchiang', '連江縣')], max_length=100, null=True, verbose_name='居住地')),
-                ('hobbies', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(choices=[('eating', '吃飯'), ('drinking', '喝酒'), ('singing', '唱歌'), ('sports', '運動'), ('movies', '電影'), ('discussion', '討論')], max_length=100), blank=True, default=list, size=None, verbose_name='興趣')),
-                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='創建日期')),
-                ('updated_at', models.DateTimeField(auto_now=True, verbose_name='更新日期')),
-                ('groups', models.ManyToManyField(blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.', related_name='user_set', related_query_name='user', to='auth.group', verbose_name='groups')),
-                ('user_permissions', models.ManyToManyField(blank=True, help_text='Specific permissions for this user.', related_name='user_set', related_query_name='user', to='auth.permission', verbose_name='user permissions')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("password", models.CharField(max_length=128, verbose_name="password")),
+                (
+                    "last_login",
+                    models.DateTimeField(
+                        blank=True, null=True, verbose_name="last login"
+                    ),
+                ),
+                (
+                    "is_superuser",
+                    models.BooleanField(
+                        default=False,
+                        help_text="Designates that this user has all permissions without explicitly assigning them.",
+                        verbose_name="superuser status",
+                    ),
+                ),
+                (
+                    "first_name",
+                    models.CharField(
+                        blank=True, max_length=150, verbose_name="first name"
+                    ),
+                ),
+                (
+                    "last_name",
+                    models.CharField(
+                        blank=True, max_length=150, verbose_name="last name"
+                    ),
+                ),
+                (
+                    "is_staff",
+                    models.BooleanField(
+                        default=False,
+                        help_text="Designates whether the user can log into this admin site.",
+                        verbose_name="staff status",
+                    ),
+                ),
+                (
+                    "is_active",
+                    models.BooleanField(
+                        default=True,
+                        help_text="Designates whether this user should be treated as active. Unselect this instead of deleting accounts.",
+                        verbose_name="active",
+                    ),
+                ),
+                (
+                    "date_joined",
+                    models.DateTimeField(
+                        default=django.utils.timezone.now, verbose_name="date joined"
+                    ),
+                ),
+                (
+                    "bio",
+                    models.TextField(
+                        blank=True,
+                        help_text="介紹一下你自己",
+                        null=True,
+                        verbose_name="自我介紹",
+                    ),
+                ),
+                ("password_changed_at", models.DateTimeField(blank=True, null=True)),
+                (
+                    "username",
+                    models.CharField(
+                        blank=True,
+                        max_length=150,
+                        null=True,
+                        verbose_name="站內用戶名稱",
+                    ),
+                ),
+                (
+                    "email",
+                    models.EmailField(
+                        max_length=255, unique=True, verbose_name="電子郵件"
+                    ),
+                ),
+                ("birth_date", models.DateField(blank=True, null=True)),
+                (
+                    "gender",
+                    models.CharField(
+                        blank=True,
+                        choices=[
+                            ("male", "Male"),
+                            ("female", "Female"),
+                            ("other", "Other"),
+                        ],
+                        max_length=10,
+                        null=True,
+                    ),
+                ),
+                (
+                    "avatar",
+                    models.ImageField(
+                        blank=True, null=True, upload_to="media/", verbose_name="頭像"
+                    ),
+                ),
+                (
+                    "live_in",
+                    models.CharField(
+                        blank=True,
+                        choices=[
+                            ("Taipei", "臺北市"),
+                            ("NewTaipei", "新北市"),
+                            ("Keelung", "基隆市"),
+                            ("Taoyuan", "桃園市"),
+                            ("Hsinchu_City", "新竹市"),
+                            ("Hsinchu", "新竹縣"),
+                            ("Miaoli", "苗栗縣"),
+                            ("Taichung", "臺中市"),
+                            ("Changhua", "彰化縣"),
+                            ("Nantou", "南投縣"),
+                            ("Yunlin", "雲林縣"),
+                            ("Chiayi_City", "嘉義市"),
+                            ("Chiayi", "嘉義縣"),
+                            ("Tainan", "臺南市"),
+                            ("Kaohsiung", "高雄市"),
+                            ("Pingtung", "屏東縣"),
+                            ("Yilan", "宜蘭縣"),
+                            ("Hualien", "花蓮縣"),
+                            ("Taitung", "臺東縣"),
+                            ("Penghu", "澎湖縣"),
+                            ("Kinmen", "金門縣"),
+                            ("Lienchiang", "連江縣"),
+                        ],
+                        max_length=100,
+                        null=True,
+                        verbose_name="居住地",
+                    ),
+                ),
+                (
+                    "hobbies",
+                    django.contrib.postgres.fields.ArrayField(
+                        base_field=models.CharField(
+                            choices=[
+                                ("eating", "吃飯"),
+                                ("drinking", "喝酒"),
+                                ("singing", "唱歌"),
+                                ("sports", "運動"),
+                                ("movies", "電影"),
+                                ("discussion", "討論"),
+                            ],
+                            max_length=100,
+                        ),
+                        blank=True,
+                        default=list,
+                        size=None,
+                        verbose_name="興趣",
+                    ),
+                ),
+                (
+                    "created_at",
+                    models.DateTimeField(auto_now_add=True, verbose_name="創建日期"),
+                ),
+                (
+                    "updated_at",
+                    models.DateTimeField(auto_now=True, verbose_name="更新日期"),
+                ),
+                (
+                    "groups",
+                    models.ManyToManyField(
+                        blank=True,
+                        help_text="The groups this user belongs to. A user will get all permissions granted to each of their groups.",
+                        related_name="user_set",
+                        related_query_name="user",
+                        to="auth.group",
+                        verbose_name="groups",
+                    ),
+                ),
+                (
+                    "user_permissions",
+                    models.ManyToManyField(
+                        blank=True,
+                        help_text="Specific permissions for this user.",
+                        related_name="user_set",
+                        related_query_name="user",
+                        to="auth.permission",
+                        verbose_name="user permissions",
+                    ),
+                ),
             ],
             options={
-                'db_table': 'users',
+                "db_table": "users",
             },
             managers=[
-                ('objects', users.models.CustomUserManager()),
+                ("objects", users.models.CustomUserManager()),
             ],
         ),
         migrations.CreateModel(
-            name='Record',
+            name="Record",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('amount', models.DecimalField(decimal_places=2, default=Decimal('0'), max_digits=10)),
-                ('type', models.CharField(choices=[('meetup', '聚會'), ('topup', '儲值')], max_length=10)),
-                ('notes', models.JSONField(default=dict)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='records', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "amount",
+                    models.DecimalField(
+                        decimal_places=2, default=Decimal("0"), max_digits=10
+                    ),
+                ),
+                (
+                    "type",
+                    models.CharField(
+                        choices=[("meetup", "聚會"), ("topup", "儲值")], max_length=10
+                    ),
+                ),
+                ("notes", models.JSONField(default=dict)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="records",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'verbose_name': '記錄',
-                'db_table': 'records',
+                "verbose_name": "記錄",
+                "db_table": "records",
             },
         ),
     ]
