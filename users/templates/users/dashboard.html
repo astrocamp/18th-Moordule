@@ -1,4 +1,5 @@
 {% extends "base/layout.html" %}
+
 <!-- prettier-ignore -->
 {%block head%}
 <link
@@ -8,8 +9,17 @@
 {% endblock head %}
 <!-- prettier-ignore -->
 {% block content %}
-{% navigator %}
+
+<div class="relative">
+	<div class="absolute left-40 top-16">
+		{% include 'shared/image_preview.html' %}
+	</div>
+
+	{% navigator %}
+</div>
+
 <div id="main-content">
+	<!-- prettier-ignore -->
 	{% include 'users/components/'|add:tag|add:'.html' %}
 </div>
 {% endblock %}

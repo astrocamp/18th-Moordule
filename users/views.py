@@ -1,15 +1,15 @@
 from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse, JsonResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from django.urls import reverse
 from django.utils import timezone
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_GET, require_POST
 from django_htmx.middleware import HtmxDetails
 
 from activities.models import Activity as Meetup
 
-from .forms import CustomUserChangeForm, UserRegistrationForm
+from .forms import AboutMeForm, CustomUserChangeForm, UserRegistrationForm
 
 
 class HtmxHttpRequest(HttpRequest):
@@ -20,37 +20,50 @@ class HtmxHttpRequest(HttpRequest):
 
 
 @login_required
+def password_view(request):
+    return render(request, "users/components/password.html")
+
+
+@login_required
 def password_change_view(request):
     if request.method == "GET":
         return render(request, "users/components/password_change_form.html")
-    else:
-        user = request.user
-        old_password = request.POST.get("old_password")
-        new_password = request.POST.get("new_password1")
-        confirm_password = request.POST.get("new_password2")
 
-        if not user.check_password(old_password):
-            return HttpResponse(
-                '<p class="text-red-500 text-sm mt-1">舊密碼輸入有誤</p>'
-            )
+    user = request.user
+    old_password = request.POST.get("old_password")
+    new_password = request.POST.get("new_password1")
+    confirm_password = request.POST.get("new_password2")
 
-        if new_password != confirm_password:
-            return HttpResponse('<p class="text-red-500 text-sm mt-1">密碼不一致</p>')
+    if not user.check_password(old_password):
+        return render(
+            request,
+            "users/components/password_change_form.html",
+            {"error": {"code": 0, "message": "舊密碼輸入有誤"}},
+        )
 
-        user.set_password(new_password)
-        user.save()
+    if new_password != confirm_password:
+        return render(
+            request,
+            "users/components/password_change_form.html",
+            {"error": {"code": 1, "message": "密碼不一致"}},
+        )
 
-        update_session_auth_hash(request, user)
-        account_url = reverse("users:account")
-        return HttpResponse("", headers={"HX-Redirect": account_url})
+    user.set_password(new_password)
+    user.password_changed_at = timezone.now()
+    user.save()
+    update_session_auth_hash(request, user)
+
+    return render(request, "users/components/password.html", {"user": user})
 
 
 def user_page_view(request, tag="member"):
+    form = CustomUserChangeForm()
+    context = {"tag": tag, "form": form}
+
     if not request.headers.get("HX-Request"):
-        context = {"tag": tag}
         return render(request, "users/dashboard.html", context)
 
-    return render(request, f"users/components/{tag}.html")
+    return render(request, f"users/components/{tag}.html", context)
 
 
 @require_POST
@@ -146,16 +159,49 @@ def clear_errors(request: HtmxHttpRequest):
     return HttpResponse("")
 
 
-@login_required
-def edit_view(request: HttpRequest):
+@require_GET
+def info_view(request: HtmxHttpRequest):
+    print("hobbies:", request.user)
+    print("get_hobbies_display:", request.user)
+    return render(request, "users/components/info.html")
 
+
+def info_form_view(request: HtmxHttpRequest):
+    return render(request, "users/components/info_form.html")
+
+
+@login_required
+def info_edit_view(request: HtmxHttpRequest):
     user = request.user
     if request.method == "POST":
+
         form = CustomUserChangeForm(request.POST, instance=user)
         if form.is_valid():
-            # 如果表單數據有效，保存用戶資料
+            print("有效")
             form.save()
-    else:
-        form = CustomUserChangeForm(instance=user)
+            return render(request, "users/components/info.html", {"user": user})
+        print(form.errors)
+        return render(request, "users/components/info_form.html", {"form": form})
 
-    return render(request, "users/components/user_form.html", {"form": form})
+    # 處理 GET 請求
+    form = CustomUserChangeForm(instance=user)
+    return render(request, "users/components/info_form.html", {"form": form})
+
+
+@require_GET
+def about_me_view(request: HtmxHttpRequest):
+    return render(request, "users/components/about_me.html")
+
+
+@login_required
+def about_me_edit_view(request: HtmxHttpRequest):
+    user = request.user
+    if request.method == "POST":
+        form = AboutMeForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return render(request, "users/components/about_me.html", {"user": user})
+        return render(request, "users/components/about_me_form.html", {"form": form})
+
+    form = AboutMeForm(instance=user)
+    return render(request, "users/components/about_me_form.html", {"form": form})

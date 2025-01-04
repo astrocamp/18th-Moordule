@@ -1,0 +1,19 @@
+<div id="about-me" class="bg-white rounded-lg shadow-lg p-6 col-span-2">
+	<h3 class="text-yellow-500 font-bold text-lg mb-6">關於我</h3>
+
+	<div class="space-y-6">
+		<div>
+			<span class="text-gray-700 block mb-2">自我介紹</span>
+			<p class="block">{{ user.bio|default:'尚未設定' }}</p>
+		</div>
+	</div>
+
+	<button
+		hx-get="{% url 'users:about_me_edit' %}"
+		hx-target="#about-me"
+		hx-swap="outerHTML"
+		class="bg-yellow-400 text-white px-4 py-2 rounded hover:bg-yellow-500 mt-8"
+	>
+		編輯
+	</button>
+</div>

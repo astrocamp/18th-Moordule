@@ -1,0 +1,67 @@
+<form
+	id="user-info"
+	hx-post="{% url 'users:info_edit' %}"
+	hx-target="#user-info"
+	hx-swap="outerHTML"
+>
+	{% csrf_token %}
+	<div class="bg-white rounded-lg shadow-lg p-6">
+		<h3 class="text-yellow-500 font-bold text-lg mb-4">個人資料</h3>
+		<div class="mt-2">
+			<label for="{{ form.username.auto_id }}" class="text-gray-700 block">
+				姓名
+			</label>
+			{{ form.username }}
+		</div>
+
+		<div class="mt-2">
+			<label for="{{ form.birth_date.auto_id }}" class="text-gray-700 block">
+				生日
+			</label>
+			{{ form.birth_date }}
+		</div>
+		<div class="mt-2">
+			<label for="{{ form.gender.auto_id }}" class="text-gray-700 block">
+				性別
+			</label>
+			{{ form.gender }}
+		</div>
+		<div class="mt-2">
+			<label for="{{ form.live_in.auto_id }}" class="text-gray-700 block">
+				所在地區
+			</label>
+			{{ form.live_in }}
+		</div>
+		<div class="mt-2">
+			<fieldset>
+				<legend class="text-gray-700">興趣</legend>
+				<div class="grid grid-cols-3">
+					{% for checkbox in form.hobbies %}
+					<div class="flex items-center gap-2">
+						{{ checkbox.tag }}
+						<label for="{{ checkbox.id_for_label }}">
+							{{ checkbox.choice_label }}
+						</label>
+					</div>
+					{% endfor %}
+				</div>
+			</fieldset>
+		</div>
+		<div class="flex gap-6 items-center mt-2">
+			<a
+				class="underline cursor-pointer"
+				hx-get="{% url 'users:info' %}"
+				hx-target="#user-info"
+				hx-swap="outerHTML"
+			>
+				取消
+			</a>
+			<button
+				type="submit"
+				class="bg-yellow-400 text-white px-4 py-2 rounded hover:bg-yellow-500"
+			>
+				提交
+			</button>
+		</divclas>
+	</div>
+</form>

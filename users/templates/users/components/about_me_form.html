@@ -1,0 +1,38 @@
+<form
+	id="about-me"
+	hx-post="{% url 'users:about_me_edit' %}"
+	hx-target="#about-me"
+	hx-swap="outerHTML"
+	class="col-span-2"
+>
+	{% csrf_token %}
+	<div class="bg-white rounded-lg shadow-lg p-6">
+		<h3 class="text-yellow-500 font-bold text-lg mb-6">關於我</h3>
+
+		<div class="space-y-6">
+			<div>
+				<label for="{{ form.bio.auto_id }}" class="text-gray-700 block mb-2">
+					自我介紹
+				</label>
+				{{ form.bio }}
+			</div>
+		</div>
+
+		<div class="flex items-center gap-4 mt-8">
+			<a
+				class="underline cursor-pointer"
+				hx-get="{% url 'users:about_me' %}"
+				hx-target="#about-me"
+				hx-swap="outerHTML"
+			>
+				取消
+			</a>
+			<button
+				type="submit"
+				class="bg-yellow-400 text-white px-4 py-2 rounded hover:bg-yellow-500"
+			>
+				提交
+			</button>
+		</div>
+	</div>
+</form>

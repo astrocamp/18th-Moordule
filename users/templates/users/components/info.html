@@ -1,0 +1,59 @@
+<!-- prettier-ignore -->
+<div id="user-info" class="bg-white rounded-lg shadow-lg p-6">
+  <h3 class="text-yellow-500 font-bold text-lg mb-4">個人資料</h3>
+
+  <div class="space-y-6">
+      <div class="">
+          <span class="text-gray-700 block mb-1">姓名</span>
+          <span class="block">{{ user.username|default:'尚未設定' }}</span>
+      </div>
+
+      <div class="">
+          <span class="text-gray-700 block mb-1">生日</span>
+          <span class="block">
+              {% if user.birth_date %} {{ user.birth_date|date:"Y-m-d" }} {% else %}
+              尚未設定 {% endif %}
+          </span>
+      </div>
+
+      <div class="">
+          <span class="text-gray-700 block mb-1">性別</span>
+          <span class="block">
+              {{ user.get_gender_display|default:'尚未設定' }}
+          </span>
+      </div>
+
+      <div class="">
+          <span class="text-gray-700 block mb-1">所在地區</span>
+          <span class="block">
+              {{ user.get_live_in_display|default:'尚未設定' }}
+          </span>
+      </div>
+
+      <div class="">
+          <span class="text-gray-700 block mb-1">興趣</span>
+          {% if user.hobbies %}
+          <ul class="flex gap-4 flex-wrap">
+              {% for hobby in user.hobbies %}
+                  {% for choice in user.HOBBY_CHOICES %}
+                      {% if choice.0 == hobby %}
+                          <li class="block">{{ choice.1 }}</li>
+                      {% endif %}
+                  {% endfor %}
+              {% endfor %}  
+          </ul>
+          {% else %}
+          <span class="block">尚未設定</span>
+          {% endif %}
+      </div>
+  </div>
+
+  <button
+      hx-get="{% url 'users:info_edit' %}"
+      hx-target="#user-info"
+      hx-swap="outerHTML"
+      class="bg-yellow-400 text-white px-4 py-2 rounded hover:bg-yellow-500 mt-8"
+  >
+      編輯
+  </button>
+</div>
