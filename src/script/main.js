@@ -6,5 +6,4 @@ import initMap from './map';
 
 initMap(); 
 
-
 Alpine.start();
