@@ -6,6 +6,7 @@ from .forms import ActivityForm, CategoryForm
 from .models import Activity, Category, MeetupPaticipat
 from django.utils import timezone
 from django.db.models import Q
+from pydev import settings
 
 
 def get_activity_for_user(request, activity_id):
@@ -155,7 +156,7 @@ def join_activity(request, activity_id):
     activity = get_object_or_404(Activity, id=activity_id)
     is_participating = activity.participants.filter(id=request.user.id).exists()
     message = None
-
+    google_maps_api_key = settings.GOOGLE_MAPS_API_KEY
     if request.method == "POST":
         if "join" in request.POST:
             if activity.participants.count() >= activity.max_participants:
@@ -165,6 +166,7 @@ def join_activity(request, activity_id):
                     {
                         "activity": activity,
                         "error_message": "聚會人數已滿！",
+                        'google_maps_api_key': google_maps_api_key,
                     },
                 )
 
@@ -190,6 +192,7 @@ def join_activity(request, activity_id):
                 "activity": activity,
                 "message": message,
                 "is_participating": is_participating,
+                'google_maps_api_key': google_maps_api_key,
             },
         )
 
@@ -199,6 +202,7 @@ def join_activity(request, activity_id):
         {
             "activity": activity,
             "is_participating": is_participating,
+            'google_maps_api_key': google_maps_api_key,
         },
     )
 

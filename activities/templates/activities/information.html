@@ -2,7 +2,7 @@
 {% load static %}
 {% block head %}
     <title>activities</title>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB71u-jT0rI7EFpQWQIPmE3mh2EltnUnvo&callback=initMap&loading=async" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{google_maps_api_key}}&callback=initMap&loading=async" async defer></script>
     <script src="{% static 'src/map.js' %}"></script>
 {% endblock head %}
 
