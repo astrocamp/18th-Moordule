@@ -4,7 +4,9 @@
 	<div class="space-y-6">
 		<div>
 			<span class="text-gray-700 block mb-2">自我介紹</span>
-			<p class="block">{{ user.bio|default:'尚未設定' }}</p>
+			<p class="block min-h-[124px]">
+				{{ user.bio|default:'我有酒你有故事?' }}
+			</p>
 		</div>
 	</div>
 
