@@ -6,7 +6,7 @@ from .forms import ActivityForm, CategoryForm
 from .models import Activity, Category, MeetupPaticipat
 from django.utils import timezone
 from django.db.models import Q
-from pydev import settings
+from moordule import settings
 
 
 def get_activity_for_user(request, activity_id):

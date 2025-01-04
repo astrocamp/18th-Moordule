@@ -5,7 +5,7 @@ import hmac
 import hashlib
 import base64
 import requests
-from pydev import settings
+from moordule import settings
 
 def index(request):
     return render(request,"index.html")
