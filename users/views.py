@@ -24,6 +24,11 @@ def password_view(request):
 
 
 @login_required
+def password_view(request):
+    return render(request, "users/components/password.html")
+
+
+@login_required
 def password_change_view(request):
     if request.method == "GET":
         return render(request, "users/components/password_change_form.html")

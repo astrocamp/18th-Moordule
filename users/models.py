@@ -96,7 +96,6 @@ class CustomUser(AbstractUser):
         ("Kinmen", "金門縣"),
         ("Lienchiang", "連江縣"),
     ]
-
     bio = models.TextField(
         verbose_name="自我介紹", blank=True, null=True, help_text="介紹一下你自己"
     )

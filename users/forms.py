@@ -32,7 +32,6 @@ FORM_WIDGETS = {
     },
 }
 
-# 共用的錯誤訊息
 ERROR_MESSAGES = {
     "email": {
         "unique": "電子郵件已經被使用",
