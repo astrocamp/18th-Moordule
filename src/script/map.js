@@ -1,11 +1,3 @@
-import Alpine from "alpinejs";
-import htmx from "htmx.org";
-import zxcvbn from "zxcvbn";
-window.zxcvbn = zxcvbn;
-
-
-Alpine.start();
-
 window.initMap = function() {
     const address = document.getElementById('address').value;
     const geocoder = new google.maps.Geocoder();

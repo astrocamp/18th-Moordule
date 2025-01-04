@@ -164,14 +164,14 @@ def join_activity(request, activity_id):
                     "activities/information.html",
                     {
                         "activity": activity,
-                        "error_message": "人數已滿！",
+                        "error_message": "聚會人數已滿！",
                     },
                 )
 
             participation, created = MeetupPaticipat.objects.get_or_create(
                 activity=activity, participant=request.user
             )
-            message = "您已成功參加活動！" if created else "您已經參加過此活動！"
+            message = "您已成功報名聚會！" if created else "您已經報名此聚會！"
 
         elif "leave" in request.POST:
             participation = MeetupPaticipat.objects.filter(
@@ -179,9 +179,9 @@ def join_activity(request, activity_id):
             ).first()
             if participation:
                 participation.delete()
-                message = "您已成功退出活動！"
+                message = "您已成功退出聚會！"
             else:
-                message = "您未參加此活動，無法退出！"
+                message = "您未參加此聚會，無法退出！"
 
         return render(
             request,

@@ -2,7 +2,8 @@
 {% load static %}
 {% block head %}
     <title>activities</title>
-    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB71u-jT0rI7EFpQWQIPmE3mh2EltnUnvo&libraries=maps,marker&v=beta"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB71u-jT0rI7EFpQWQIPmE3mh2EltnUnvo&callback=initMap&loading=async" async defer></script>
+    <script src="{% static 'src/map.js' %}"></script>
 {% endblock head %}
 
 {% block content %}
@@ -93,9 +94,8 @@
                         <p class="text-sm mb-4 text-lg">{{ activity.description }}</p>
                     </div>
                     <div class="basis-1/2">
-                        <gmp-map class="bg-blue-300" center="25.042600631713867,121.51366424560547" zoom="14" map-id="DEMO_MAP_ID">
-                            <gmp-advanced-marker position="25.042600631713867,121.51366424560547" title="My location"></gmp-advanced-marker>
-                        </gmp-map>
+                      <div id="map" style="height: 300px; width: 100%;"></div>
+                      <input type="hidden" id="address" value="{{ activity.address|escapejs }}">
                     </div>
                 </div>
 
