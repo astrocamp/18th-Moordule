@@ -7,15 +7,10 @@
 >
 	{% csrf_token %}
 	<div class="bg-white rounded-lg shadow-lg p-6">
-		<h3 class="text-yellow-500 font-bold text-lg mb-6">關於我</h3>
+		<h3 class="text-yellow-500 font-bold text-lg mb-4">關於我</h3>
 
 		<div class="space-y-6">
-			<div>
-				<label for="{{ form.bio.auto_id }}" class="text-gray-700 block mb-2">
-					自我介紹
-				</label>
-				{{ form.bio }}
-			</div>
+			<div>{{ form.bio }}</div>
 		</div>
 
 		<div class="flex items-center gap-6 mt-8">
