@@ -4,7 +4,7 @@ from django.utils import timezone
 from activities.models import MeetupPaticipat
 
 
-class UpcomingMeetupParticipate(MeetupPaticipat):
+class UpcomingMeetupParticipant(MeetupPaticipat):
     class Meta:
         proxy = True
         app_label = "users"

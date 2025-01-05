@@ -10,7 +10,7 @@ from activities.models import Activity as Meetup
 from .activity_proxies import UpcomingMeetupParticipant
 
 from .decorators import anonymous_required
-from .activity_proxies import UpcomingMeetupParticipate
+from .activity_proxies import UpcomingMeetupParticipant
 from .forms import AboutMeForm, CustomUserChangeForm, UserRegistrationForm
 
 
@@ -63,7 +63,7 @@ def user_page_view(request, tag="member"):
         form = CustomUserChangeForm()
         context = {"tag": tag, "form": form}
     elif tag == "meetups":
-        meetups = UpcomingMeetupParticipate.list(user)
+        meetups = UpcomingMeetupParticipant.list(user)
         context = {"tag": tag, "meetups": meetups}
     else:
         context = {"tag": tag}
