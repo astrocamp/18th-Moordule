@@ -8,7 +8,7 @@ window.initMap = function() {
                 zoom: 15,
                 center: results[0].geometry.location
             });
-            new google.maps.Marker({
+            new google.maps.marker.AdvancedMarkerElement({
                 position: results[0].geometry.location,
                 map: map
             });
