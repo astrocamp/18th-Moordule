@@ -1,5 +1,5 @@
 {% extends "base/layout.html" %} {% block content %}
-<div class="min-h-screen flex items-center justify-center">
+<div class="min-h-screen flex items-center justify-center pt-20">
   <div class="flex gap-8 w-full max-w-6xl px-6">
     <div class="w-1/2">
       <div class="recommended-panel space-y-6">
@@ -21,7 +21,7 @@
         </div>
       </div>
     </div>
-    <div class="w-1/2 flex flex-col items-center">
+    <div class="w-1/2 flex flex-col items-center justify-center">
       <h1 class="text-center text-3xl font-semibold mb-6">好朋友歡迎加入</h1>
       <div class="register-form w-full flex justify-center">
         {% include "users/components/signup_form.html" %}

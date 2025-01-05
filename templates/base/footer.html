@@ -51,56 +51,108 @@
     <div
     class="container mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-center bg-[#90CCF4]"
     >
-    <!-- 活動相關 -->
-        <div>
-            <h3 class="font-bold text-lg mb-2">活動相關</h3>
-            <ul class="space-y-1">
-            <li>特別活動</li>
-            <li>今日聚會</li>
-            <a href="{% url 'activities:index' %}#eat">
-                <li>揪要吃飯</li>
+    <!-- 聚會相關 -->
+    <div>
+        <h3 class="font-bold text-2xl mb-2 text-gray-900">聚會相關</h3>
+        <ul class="space-y-4">
+          <li class="flex justify-center">
+            <a href="" class="bg-white rounded-3xl text-gray-900 text-xl w-1/2 text-center block">
+              今日聚會
             </a>
-            <li>揪要運動</li>
-            <li>揪要喝酒</li>
-            <li>揪要電影</li>
-            <li>揪要唱歌</li>
-            <li>揪要討論</li>
-            </ul>
-        </div>
+          </li>
+          <li class="flex justify-center">
+            <a href="{% url 'activities:index' %}#eat" class="bg-white rounded-3xl text-gray-900 text-xl w-1/2 text-center block">
+              揪要吃飯
+            </a>
+          </li>
+          <li class="flex justify-center ">
+            <a href="{% url 'activities:index' %}#drinking" class="bg-white rounded-3xl text-gray-900 text-xl w-1/2 text-center block">
+              揪要喝酒
+            </a>
+          </li>
+          <li class="flex justify-center">
+            <a href="{% url 'activities:index' %}#sports" class="bg-white rounded-3xl text-gray-900 text-xl w-1/2 text-center block">
+              揪要運動
+            </a>
+          </li>
+          <li class="flex justify-center ">
+              <a href="{% url 'activities:index' %}#singing" class="bg-white rounded-3xl text-gray-900 text-xl w-1/2 text-center block">
+                  揪要唱歌
+                </a>
+            </li>
+            <li class="flex justify-center">
+                <a href="{% url 'activities:index' %}#movies" class="bg-white rounded-3xl text-gray-900 text-xl w-1/2 text-center block">
+                    揪要電影
+                </a>
+            </li>
+            <li class="flex justify-center">
+              <a href="{% url 'activities:index' %}#discussion" class="bg-white rounded-3xl text-gray-900 text-xl w-1/2 text-center block">
+                揪要討論
+              </a>
+            </li>
+        </ul>
+    </div>
 
         <!-- 服務相關 -->
         <div>
-            <h3 class="font-bold text-lg mb-2">服務相關</h3>
-            <ul class="space-y-1">
-            <li>F & Q</li>
-            <li>收費方式</li>
-            <li>隱私政策</li>
-            <li>使用條款</li>
+            <h3 class="font-bold text-2xl mb-2 text-gray-900">服務相關</h3>
+            <ul class="space-y-4">
+              <li class="flex justify-center">
+                <a href="{% url 'pages:index' %}#FAQ" class="bg-white rounded-3xl text-gray-900 text-xl w-1/2 text-center block">
+                  F & Q
+                </a>
+              </li>
+              <li class="flex justify-center">
+                <a href="{% url 'cashflows:index' %}" class="bg-white rounded-3xl text-gray-900 text-xl w-1/2 text-center block">
+                  收費方式
+                </a>
+              </li>
+              <li class="flex justify-center ">
+                <a href="" class="bg-white rounded-3xl text-gray-900 text-xl w-1/2 text-center block">
+                  隱私政策
+                </a>
+              </li>
+              <li class="flex justify-center">
+                <a href="" class="bg-white rounded-3xl text-gray-900 text-xl w-1/2 text-center block">
+                  創使用條款
+                </a>
+              </li>
             </ul>
         </div>
 
-        <!-- 會員相關 -->
+        <!-- 會員相關 FIXME: 連結目前無法指定到正確的tag-->
         <div>
-            <h3 class="font-bold text-lg mb-2">會員相關</h3>
-            <ul class="space-y-1">
-            <li>我的頁面</li>
-            <li>我的紀錄</li>
-            <li>我要揪團</li>
-            <li>我的聚會</li>
-            <li>我的錢包</li>
-            <li>我的通知</li>
+            <h3 class="font-bold text-2xl mb-2 text-gray-900">會員相關</h3>
+            <ul class="space-y-4">
+              <li class="flex justify-center">
+                <a href="{% url 'users:account' %}" class="bg-white rounded-3xl text-gray-900 text-xl w-1/2 text-center block">
+                  我的頁面
+                </a>
+              </li>
+              <li class="flex justify-center">
+                <a href="{% url 'users:user_page' tag='account' %}" class="bg-white rounded-3xl text-gray-900 text-xl w-1/2 text-center block">
+                  我的帳號
+                </a>
+              </li>
+              <li class="flex justify-center ">
+                <a href="{% url 'users:user_page' tag='activities' %}" class="bg-white rounded-3xl text-gray-900 text-xl w-1/2 text-center block">
+                  我的聚會
+                </a>
+              </li>
+              <li class="flex justify-center">
+                <a href="{% url 'users:user_page' tag='activity_form' %}" class="bg-white rounded-3xl text-gray-900 text-xl w-1/2 text-center block">
+                  創立聚會
+                </a>
+              </li>
             </ul>
-        </div>
+          </div>
 
         <!-- 社群媒體 -->
         <div>
-            <h3 class="font-bold text-lg mb-2">社群媒體</h3>
-            <ul class="space-y-1">
-            <li>Facebook</li>
-            <li>Instagram</li>
-            <li>Discord</li>
-            <a href="https://github.com/astrocamp/18th-Moordule">
-                <li>GitHub</li>
+            <h3 class="font-bold text-2xl mb-2 text-gray-900">社群媒體</h3>
+            <ul class="flex justify-center space-y-1">
+            <a href="https://github.com/astrocamp/18th-Moordule" class="text-gray-900 w-28 text-xl text-center">
+                <li class="bg-white rounded-3xl ">GitHub</li>
             </a>
             </ul>
         </div>
@@ -108,10 +160,10 @@
 </section>
 
 <!-- Footer -->
-<footer class="bg-[#5DA2D5] text-center text-white text-sm py-4">
+<footer class="bg-[#5DA2D5] text-center text-white text-lg py-4">
     <p>公司：中文名字還沒確定股份有限公司</p>
     <p>統編：13145200</p>
-    <p>地址：168 衡陽路7號5樓, 台北市, 台灣</p>
+    <p>地址：台灣168台北市衡陽路7號5樓</p>
     <p>客服信箱：service@moordule.com</p>
     <p>© 2024 ALL RIGHTS RESERVED ReCharm Internation Match Ltd.</p>
 </footer>

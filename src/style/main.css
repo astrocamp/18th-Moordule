@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 @import url('./activites.css');
+
 :root {
-	scroll-behavior: smooth;
-}
+    --moordule-yellow: #f6d246;
+    --moordule-gray: #ececec;
+    --moordule-light-blue: #90ccf4;
+    --moordule-deep-blue: #5da2d5;
+    --moordule-pink: #f78888;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }

@@ -44,7 +44,7 @@ def password_change_view(request):
         account_url = reverse("users:account")
         return HttpResponse("", headers={"HX-Redirect": account_url})
 
-
+@login_required
 def user_page_view(request, tag="member"):
     if not request.headers.get("HX-Request"):
         context = {"tag": tag}

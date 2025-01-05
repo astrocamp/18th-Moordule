@@ -2,20 +2,6 @@
 <!---->
 {% block head %}
 <style>
-  /* 自訂主色系 */
-  :root {
-    --moordule-yellow: #f6d246;
-    --moordule-gray: #ececec;
-    --moordule-light-blue: #90ccf4;
-    --moordule-deep-blue: #5da2d5;
-    --moordule-pink: #f78888;
-  }
-  FIXME:應該要拔出去
-
-  html {
-    scroll-behavior: smooth;
-  }
-
   /* 自定義動畫效果 */
   @keyframes moveDown {
     0% {
@@ -59,7 +45,7 @@
 </style>
 {% endblock head %} {% block content %}
 <div class="bg-white text-gray-900">
-  <!-- 頂部導航欄 -->
+
   <!-- 主頁內容 -->
   <section
     id="top"
@@ -383,7 +369,7 @@
       </div>
       <!-- 更多-> -->
       <a href="">
-        <div class="flex justify-end items-center gap-4">
+        <div class="flex justify-center items-center gap-4">
           <h3 class="my-10 text-2xl">更多今天揪</h3>
           <svg
             width="24px"
@@ -447,7 +433,9 @@
           class="h-48 w-full object-cover"
         />
         </div>
+        <a href="{% url 'activities:index' %}#eat">
         <div class="bg-[#5DA2D5] py-2 text-center text-white">揪吃飯</div>
+        </a>
       </div>
 
       <!-- Card 2 -->
@@ -459,7 +447,9 @@
           class="h-48 w-full object-cover"
         />
         </div>
+        <a href="{% url 'activities:index' %}#singing">
         <div class="bg-[#F78888] py-2 text-center text-white">揪唱歌</div>
+        </a>
       </div>
 
       <!-- Card 3 -->
@@ -471,7 +461,9 @@
           class="h-48 w-full object-cover"
         />
         </div>
+        <a href="{% url 'activities:index' %}#drinking">
         <div class="bg-yellow-300 py-2 text-center text-white">揪喝酒</div>
+        </a>
       </div>
 
       <!-- Card 4 -->
@@ -483,7 +475,9 @@
           class="h-48 w-full object-cover"
         />
         </div>
+        <a href="{% url 'activities:index' %}#sports">
         <div class="bg-[#F78888] py-2 text-center text-white">揪運動</div>
+        </a>
       </div>
 
       <!-- Card 5 -->
@@ -495,7 +489,9 @@
           class="h-48 w-full object-cover"
         />
         </div>
+        <a href="{% url 'activities:index' %}#movies">
         <div class="bg-yellow-300 py-2 text-center text-white">揪電影</div>
+        </a>
       </div>
 
       <!-- Card 6 -->
@@ -507,16 +503,18 @@
           class="h-48 w-full object-cover"
         />
         </div>
+        <a href="{% url 'activities:index' %}#discussion">
         <div class="bg-[#5DA2D5] py-2 text-center text-white">揪討論</div>
+        </a>
       </div>
     </div>
   </section>
 
   <!-- FAQ Section -->
-<section class="container mx-auto px-4 py-8 pt-12">
+<section class="container mx-auto px-4 py-8 pt-12" id="FAQ">
   <h1 class="text-3xl font-bold text-center mb-8">常見問題F&Q</h1>
   <!-- FAQ Accordion -->
-  <div class="max-w-3xl mx-auto space-y-4">
+  <div class="max-w-3xl mx-auto space-y-4 text-2xl ">
     {% accordion %} 
   </div>
           
@@ -524,7 +522,7 @@
 
   <!-- Pricing -->
   <section class="container mx-auto px-4 py-12 pt-12">
-    <h2 class="text-3xl font-bold text-center mb-12">收費方式</h2>
+    <h2 class="text-3xl font-bold text-center mb-12">聚會收費方式</h2>
     <div
       class="flex flex-col md:flex-row justify-center items-center gap-8 max-w-5xl mx-auto"
     >
@@ -534,7 +532,7 @@
           <p class="text-lg mb-2">初來乍到 想試揪</p>
           <div class="flex justify-center items-baseline">
             <span class="text-sm align-top mt-2">NTD</span>
-            <span class="text-5xl font-bold">149</span>
+            <span class="text-5xl font-bold">199</span>
           </div>
           <div class="mt-2">
             <span class="text-sm">for</span>
@@ -544,11 +542,11 @@
         <div class="space-y-2">
           <div class="flex items-center">
             <span class="mr-2">✓</span>
-            <span>包含內容A</span>
+            <span>站內點數共2</span>
           </div>
           <div class="flex items-center">
             <span class="mr-2">✓</span>
-            <span>包含內容B</span>
+            <span>贈站內點數共1</span>
           </div>
         </div>
       </div>
@@ -559,7 +557,7 @@
             <p class="text-lg mb-2">三五成群 長長久久</p>
             <div class="flex justify-center items-baseline">
               <span class="text-sm align-top mt-2">NTD</span>
-              <span class="text-5xl font-bold">399</span>
+              <span class="text-5xl font-bold">699</span>
             </div>
             <div class="mt-2">
               <span class="text-sm">for</span>
@@ -573,11 +571,11 @@
             </div>
             <div class="flex items-center">
               <span class="mr-2">✓</span>
-              <span>包含內容B</span>
+              <span>站內點數共6</span>
             </div>
             <div class="flex items-center">
               <span class="mr-2">✓</span>
-              <span>包含內容C</span>
+              <span>贈站內點數共2</span>
             </div>
           </div>
         </div>
@@ -589,7 +587,7 @@
           <p class="text-lg mb-2">好揪就要 一直揪</p>
           <div class="flex justify-center items-baseline">
             <span class="text-sm align-top mt-2">NTD</span>
-            <span class="text-5xl font-bold">999</span>
+            <span class="text-5xl font-bold">1399</span>
           </div>
           <div class="mt-2">
             <span class="text-sm">for</span>
@@ -599,11 +597,15 @@
         <div class="space-y-2">
           <div class="flex items-center">
             <span class="mr-2">✓</span>
-            <span>包含內容A</span>
+            <span>站內點數共18</span>
           </div>
           <div class="flex items-center">
             <span class="mr-2">✓</span>
-            <span>包含內容B</span>
+            <span>贈站內點數3</span>
+          </div>
+          <div class="flex items-center">
+            <span class="mr-2">✓</span>
+            <span>含免費創建活動*1次</span>
           </div>
         </div>
       </div>

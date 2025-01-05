@@ -1,5 +1,5 @@
 {% extends "base/layout.html" %} {% block content %}
-<div class="min-h-screen flex items-center justify-center">
+<div class="min-h-screen flex items-center justify-center pt-20">
 	<div class="flex gap-8 w-full max-w-6xl px-6">
 		<!-- 左側推薦區塊 -->
 		<div class="w-1/2">
@@ -24,7 +24,7 @@
 		</div>
 
 		<!-- 右側登入區塊 -->
-		<div class="w-1/2 flex flex-col items-center">
+		<div class="w-1/2 flex flex-col items-center justify-center">
 			<h1 class="text-center text-3xl font-semibold">好朋友歡迎回來</h1>
 			<div id="signup-form" class="w-full flex justify-center relative">
 				{% include "users/components/signin_form.html" %}
