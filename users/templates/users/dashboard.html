@@ -11,8 +11,10 @@
 {% block content %}
 
 <div class="relative">
-	<div class="absolute left-40 top-16">
+	<div class="absolute left-28 top-16 flex">
+		<!-- prettier-ignore -->
 		{% include 'shared/image_preview.html' %}
+		{% include 'users/components/dialog.html' %}
 	</div>
 
 	{% navigator %}

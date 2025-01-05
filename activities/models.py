@@ -18,13 +18,21 @@ class Category(models.Model):
 class Activity(models.Model):
     title = models.CharField(max_length=15, help_text="聚會標題")
     description = models.TextField(help_text="聚會描述", blank=True)
-    address = models.CharField(max_length=255, help_text="聚會地址，例：台北市信義區市府路1號")
+    address = models.CharField(
+        max_length=255, help_text="聚會地址，例：台北市信義區市府路1號"
+    )
     start_time = models.DateTimeField(help_text="聚會開始時間")
-    duration = models.PositiveIntegerField(help_text="預估聚會持續時間（小時）", default=1)
+    duration = models.PositiveIntegerField(
+        help_text="預估聚會持續時間（小時）", default=1
+    )
     max_participants = models.PositiveIntegerField(help_text="參加人數上限", default=10)
     created_at = models.DateTimeField(auto_now_add=True, help_text="聚會建立時間")
     category = models.ForeignKey(
-        "Category", on_delete=models.SET_NULL, null=True, blank=True, help_text="聚會分類"
+        "Category",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        help_text="聚會分類",
     )
     owner = models.ForeignKey(
         CustomUser,

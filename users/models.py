@@ -96,6 +96,7 @@ class CustomUser(AbstractUser):
         ("Kinmen", "金門縣"),
         ("Lienchiang", "連江縣"),
     ]
+
     bio = models.TextField(
         verbose_name="自我介紹", blank=True, null=True, help_text="介紹一下你自己"
     )
@@ -125,6 +126,10 @@ class CustomUser(AbstractUser):
 
     class Meta:
         db_table = "users"
+
+    def get_hobbies_display(self):
+        hobby_list = [value for key, value in self.HOBBY_CHOICES if key in self.hobbies]
+        return ", ".join(hobby_list) if hobby_list else "未設定"
 
     def __str__(self):
         return self.email
