@@ -29,7 +29,7 @@ htmx = [
     path("about_me/", views.about_me_view, name="about_me"),
     path("about_me/edit/", views.about_me_edit_view, name="about_me_edit"),
     re_path(
-        r"^(member|account|activities|activity_form)/$",
+        r"^(member|account|meetups|activity_form)/$",
         views.user_page_view,
         name="user_page",
     ),

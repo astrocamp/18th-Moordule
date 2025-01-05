@@ -58,9 +58,9 @@ class CustomUserManager(UserManager):
 
 class CustomUser(AbstractUser):
     GENDER_CHOICES = [
-        ("male", "Male"),
-        ("female", "Female"),
-        ("other", "Other"),
+        ("male", "男性"),
+        ("female", "女性"),
+        ("other", "其他"),
     ]
 
     HOBBY_CHOICES = [

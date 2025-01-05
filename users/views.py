@@ -9,14 +9,12 @@ from django_htmx.middleware import HtmxDetails
 
 from activities.models import Activity as Meetup
 
+from .activity_proxies import UpcomingMeetupParticipate
 from .forms import AboutMeForm, CustomUserChangeForm, UserRegistrationForm
 
 
 class HtmxHttpRequest(HttpRequest):
     htmx: HtmxDetails
-
-
-# Create your views here.
 
 
 @login_required
@@ -57,8 +55,16 @@ def password_change_view(request):
 
 
 def user_page_view(request, tag="member"):
-    form = CustomUserChangeForm()
-    context = {"tag": tag, "form": form}
+    context = {}
+    user = request.user
+    if tag == "account":
+        form = CustomUserChangeForm()
+        context = {"tag": tag, "form": form}
+    elif tag == "meetups":
+        meetups = UpcomingMeetupParticipate.list(user)
+        context = {"tag": tag, "meetups": meetups}
+    else:
+        context = {"tag": tag}
 
     if not request.headers.get("HX-Request"):
         return render(request, "users/dashboard.html", context)

@@ -10,7 +10,7 @@ FORM_WIDGETS = {
     "email": {
         "class": "mt-1 w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-yellow-400",
         "type": "email",
-        "pattern": r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}",
+        "pattern": r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}",
         "title": "請輸入有效的電子郵件地址",
         "placeholder": "請輸入電子郵件",
     },
