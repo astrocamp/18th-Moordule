@@ -1,0 +1,58 @@
+<!-- prettier-ignore -->
+<div class="rounded-lg bg-white shadow-md p-4 border border-gray-100">
+    <h3 class="font-bold text-lg mb-2 text-gray-800">{{ meetup.activity.title }}</h3>
+    
+    <div class="relative mb-4">
+        <div class="aspect-video bg-gray-100 rounded-lg overflow-hidden p-4">
+            <p class="text-gray-600 line-clamp-4">{{ meetup.activity.description }}</p>
+        </div>
+    </div>
+
+    <div class="flex items-center space-x-2">
+        <div class="relative">
+            <div class="h-8 w-8 rounded-full ring-2 ring-yellow-400 overflow-hidden">
+                {% if meetup.activity.owner.avatar %}
+                    <img 
+                        class="w-full h-full object-cover" 
+                        src="{{ meetup.activity.owner.avatar.url }}" 
+                        alt="{{ meetup.activity.owner.username }}"
+                        title="{{ meetup.activity.owner.username }} (主辦人)"
+                    >
+                {% else %}
+                    <div class="w-full h-full bg-gray-200 flex items-center justify-center">
+                        <span class="text-xs text-gray-600 font-medium" title="{{ meetup.activity.owner.username }} (主辦人)">
+                            {{ meetup.activity.owner.username|first }}
+                        </span>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="flex -space-x-2">
+            {% for participation in meetup.activity.participants.all|slice:":2" %}
+                <div class="h-8 w-8 rounded-full ring-2 ring-white overflow-hidden">
+                    {% if participation.participant.avatar %}
+                        <img 
+                            class="w-full h-full object-cover" 
+                            src="{{ participation.participant.avatar.url }}" 
+                            alt="{{ participation.participant.username }}"
+                            title="{{ participation.participant.username }}"
+                        >
+                    {% else %}
+                        <div class="w-full h-full bg-gray-200 flex items-center justify-center">
+                            <span class="text-xs text-gray-600 font-medium" title="{{ participation.participant.username }}">
+                                {{ participation.participant.username|first }}
+                            </span>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            {% if meetup.total_count > 3 %}
+                <div class="flex items-center justify-center h-8 w-8 rounded-full ring-2 ring-white bg-gray-200 text-xs text-gray-600 font-medium">
+                    +{{ meetup.total_count|add:"-3" }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
