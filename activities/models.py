@@ -2,7 +2,6 @@ from django.db import models
 from django.utils import timezone
 from datetime import timedelta
 from users.models import CustomUser
-from django_google_maps import fields as map_fields
    
 class Category(models.Model):
     name = models.CharField(max_length=15, help_text="分類名稱")
