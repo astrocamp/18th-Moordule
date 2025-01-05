@@ -1,0 +1,15 @@
+<!-- prettier-ignore -->
+<div class="relative bg-white rounded-lg p-3 border border-gray-200 w-48 ml-2 before:absolute before:left-1 before:top-4 before:-ml-2 before:w-2 before:h-2 before:rotate-45 before:bg-white before:border-l before:border-b before:border-gray-200">
+  <div class="space-y-2">
+      <div>
+          <span class="font-semibold text-gray-700 text-sm">用戶名稱：</span>
+          <span class="text-gray-600 text-sm">{{ user.username|default:'未設定' }}</span>
+      </div>
+      <div>
+        <span class="font-semibold text-gray-700 text-sm">興趣：</span>
+        <span class="text-gray-600 text-sm">
+           {{ user.get_hobbies_display }}
+         </span>
+      </div>
+  </div>
+</div>
