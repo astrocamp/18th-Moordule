@@ -14,3 +14,57 @@
   html {
     scroll-behavior: smooth;
   }
+
+gmp-map {
+  height: 50%;
+}
+
+.rounded-card {
+  border-radius: 21px;
+  padding: 21px;
+}
+
+.nav-button {
+  border-radius: 21px;
+  padding: 12px 24px;
+  font-size: 18px;
+  color: white;
+}
+
+@keyframes slide-up {
+  0% {
+      transform: translateY(100%);
+      opacity: 1;
+  }
+  50% {
+      transform: translateY(0);
+      opacity: 1;
+  }
+  100% {
+      transform: translateY(-100%);
+      opacity: 1;
+  }
+}
+
+@keyframes slide-down {
+  0% {
+      transform: translateY(-100%);
+      opacity: 1;
+  }
+  50% {
+      transform: translateY(0);
+      opacity: 1;
+  }
+  100% {
+      transform: translateY(100%);
+      opacity: 1;
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 8s linear infinite;
+}
+
+.animate-slide-down {
+  animation: slide-down 8s linear infinite;
+}
