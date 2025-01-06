@@ -55,6 +55,7 @@ def password_change_view(request):
 
     return render(request, "users/components/password.html", {"user": user})
 
+
 @login_required
 def user_page_view(request, tag="member"):
     form = CustomUserChangeForm()

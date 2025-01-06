@@ -12,15 +12,11 @@ User = get_user_model()
 
 
 class Command(BaseCommand):
-    help = "生成假活動資料"
+    help = "生成假聚會資料"
 
     def add_arguments(self, parser):
-        parser.add_argument(
-            "--count", type=int, default=20, help="要生成的活動數量(預設: 20)"
-        )
-        parser.add_argument(
-            "--force", action="store_true", help="強制重新生成（會刪除現有活動）"
-        )
+        parser.add_argument("--count", type=int, default=20, help="要生成的聚會數量(預設: 20)")
+        parser.add_argument("--force", action="store_true", help="強制重新生成（會刪除現有聚會）")
 
     def format_datetime(self, dt):
         """格式化日期時間，並處理 None 的情況"""
@@ -45,10 +41,10 @@ class Command(BaseCommand):
             self.stdout.write(self.style.ERROR("找不到用戶，請先建立用戶"))
             return
 
-        # 如果是強制模式，先刪除現有活動
+        # 如果是強制模式，先刪除現有聚會
         if force:
             deleted_count = Meetups.objects.all().delete()[0]
-            self.stdout.write(f"已刪除 {deleted_count} 個現有活動")
+            self.stdout.write(f"已刪除 {deleted_count} 個現有聚會")
 
         # 定義常用值
         activity_types = [
@@ -63,7 +59,7 @@ class Command(BaseCommand):
         ]
         areas = ["信義區", "大安區", "中山區", "內湖區", "松山區", "南港區"]
 
-        # 批次創建活動
+        # 批次創建聚會
         meetups = []
         try:
             for i in range(count):
@@ -87,27 +83,25 @@ class Command(BaseCommand):
                     creator=random.choice(users),
                 )
                 meetups.append(meetup)
-                self.stdout.write(f"準備第 {i+1} 個活動")
+                self.stdout.write(f"準備第 {i+1} 個聚會")
 
             # 批次創建
             created_meetups = Meetups.objects.bulk_create(meetups)
 
-            self.stdout.write(
-                self.style.SUCCESS(f"成功創建 {len(created_meetups)} 個活動")
-            )
+            self.stdout.write(self.style.SUCCESS(f"成功創建 {len(created_meetups)} 個聚會"))
 
-            # 列出創建的活動資訊
-            self.stdout.write("\n創建的活動列表:")
+            # 列出創建的聚會資訊
+            self.stdout.write("\n創建的聚會列表:")
             for meetup in created_meetups:
                 start_time_str = self.format_datetime(meetup.start_time)
                 end_time_str = self.format_time(meetup.end_time)
 
                 self.stdout.write(
-                    f"活動: {meetup.title}\n"
+                    f"聚會: {meetup.title}\n"
                     f"時間: {start_time_str} - {end_time_str}\n"
                     f"地點: {meetup.address}\n"
                     f"建立者: {meetup.creator.username}\n"
                 )
 
         except Exception as e:
-            self.stdout.write(self.style.ERROR(f"創建活動時發生錯誤: {str(e)}"))
+            self.stdout.write(self.style.ERROR(f"創建聚會時發生錯誤: {str(e)}"))

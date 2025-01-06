@@ -1,8 +1,8 @@
 {% extends "base/layout.html" %}
 
-{% block head %} 
+{% block head %}
     <title>聚會列表</title>
-   
+
 {% endblock head %}
 {% block content %}
 <body class="bg-gray-100">
@@ -18,7 +18,7 @@
      <!-- 所有聚會 (已審核和未審核共用同一區塊) -->
 
         <div class="max-w-7xl  mx-auto mt-8 bg-yellow-300 p-8 rounded-lg shadow-md space-y-8">
-      
+
     <div class="p-4 rounded-lg shadow-inner border-2 border-white">
      <!-- 顯示已審核的聚會 -->
       <!-- 聚會列表 -->
@@ -53,34 +53,34 @@
                                         </div>
                                         <span class="text-lg">{{ activity.start_time|date:"Y-m-d H:i" }}</span>
                                     </div>
-                                    <span class="text-lg font-medium ">活動內容：</span>
+                                    <span class="text-lg font-medium ">聚會內容：</span>
                                     <p class="text-sm mb-4 text-lg">
                                         {{ activity.description }}
                                     </p>
                         <div lass="mt-4 flex justify-end space-x-2">
                             <a href="{% url 'activities:update' activity.id %}" class="bg-moordule-yellow text-white px-4 py-2 rounded hover:bg-moordule-light-blue">更新聚會</a>
                             <a href="{% url 'activities:confirm_delete' activity.id %}" class="bg-moordule-pink  text-white px-4 py-2 rounded hover:bg-red-600">刪除</a>
-                </div>  
+                </div>
     </div>
                         </div>
                 {% endfor %}
             </div>
         {% else %}
-            <p class="text-center text-gray-500 text-lg mt-12">目前沒有活動。</p>
+            <p class="text-center text-gray-500 text-lg mt-12">目前沒有聚會。</p>
         {% endif %}
     </div>
-    
+
     <div class="p-4 rounded-lg shadow-inner border-2 border-white">
      <!-- 顯示未審核的聚會 -->
                     <p class="text-center text-gray-500 text-lg mt-12">目前沒有未審核的聚會。</p>
-               
+
      </div>
 
 
 
 {% comment "" %}
 新增聚會按鈕
-{% endcomment %}         
+{% endcomment %}
             {% if activities|length < 4 %}
             <div class="flex justify-center mb-6">
                 <a href="{% url 'activities:create' %}" class="inline-block">
@@ -88,7 +88,7 @@
                 </a>
             </div>
             {% else %}
-                <div class="text-center text-moordule-pink">您進行中的聚會,已達到最多4個活動額。</div>
+                <div class="text-center text-moordule-pink">您進行中的聚會,已達到最多4個聚會額。</div>
             {% endif %}
         </div>
 
@@ -96,7 +96,7 @@
 
 
 
-                 
+
     </div>
 </div>
 </body>

@@ -10,9 +10,7 @@ class Command(BaseCommand):
     help = "生成假用戶資料"
 
     def add_arguments(self, parser):
-        parser.add_argument(
-            "--count", type=int, default=10, help="要生成的用戶數量(預設: 10)"
-        )
+        parser.add_argument("--count", type=int, default=10, help="要生成的用戶數量(預設: 10)")
         parser.add_argument(
             "--force",
             action="store_true",
@@ -57,9 +55,7 @@ class Command(BaseCommand):
                 # 批次創建
                 created_users = User.objects.bulk_create(users)
 
-                self.stdout.write(
-                    self.style.SUCCESS(f"成功創建 {len(created_users)} 個用戶")
-                )
+                self.stdout.write(self.style.SUCCESS(f"成功創建 {len(created_users)} 個用戶"))
 
                 # 列出創建的用戶資訊
                 self.stdout.write("\n創建的用戶列表:")

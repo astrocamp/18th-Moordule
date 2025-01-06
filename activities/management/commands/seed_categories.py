@@ -1,6 +1,8 @@
 # your_app/management/commands/seed_categories.py
 from django.core.management.base import BaseCommand
-from activities.models  import Category
+
+from activities.models import Category
+
 
 class Command(BaseCommand):
     help = "Seeds the database with categories"
@@ -19,14 +21,18 @@ class Command(BaseCommand):
             category, created = Category.objects.get_or_create(
                 name=category_data["name"],
                 description=category_data["description"],
-                order=category_data["order"]
+                order=category_data["order"],
             )
 
             # 輸出結果，告訴我們是創建了新分類還是已經存在
             if created:
-                self.stdout.write(self.style.SUCCESS(f"Category '{category.name}' created"))
+                self.stdout.write(
+                    self.style.SUCCESS(f"Category '{category.name}' created")
+                )
             else:
-                self.stdout.write(self.style.WARNING(f"Category '{category.name}' already exists"))
+                self.stdout.write(
+                    self.style.WARNING(f"Category '{category.name}' already exists")
+                )
 
 
 # 請執行python manage.py seed_categories 來執行這個命令Makefile有設定seed

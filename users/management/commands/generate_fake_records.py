@@ -21,9 +21,7 @@ class Command(BaseCommand):
         parser.add_argument(
             "--count", type=int, default=20, help="每個用戶要生成的記錄數量(預設: 20)"
         )
-        parser.add_argument(
-            "--force", action="store_true", help="強制重新生成（會刪除現有記錄）"
-        )
+        parser.add_argument("--force", action="store_true", help="強制重新生成（會刪除現有記錄）")
 
     def handle(self, *args, **kwargs):
         count = kwargs["count"]
@@ -35,13 +33,11 @@ class Command(BaseCommand):
         self.stdout.write(f"\n系統現況:")
         self.stdout.write(f"- 用戶總數: {users.count()}")
         self.stdout.write(f"- 記錄總數: {Record.objects.count()}")
-        self.stdout.write(f"- 活動總數: {Meetups.objects.count()}")
+        self.stdout.write(f"- 聚會總數: {Meetups.objects.count()}")
 
         if not users.exists():
             self.stdout.write(
-                self.style.ERROR(
-                    "找不到任何用戶，請先執行 python manage.py generate_fake_users"
-                )
+                self.style.ERROR("找不到任何用戶，請先執行 python manage.py generate_fake_users")
             )
             return
 
@@ -95,9 +91,7 @@ class Command(BaseCommand):
                         records.append(record)
 
                     total_records.extend(records)
-                    self.stdout.write(
-                        f"已準備用戶 {user.username} 的 {len(records)} 筆記錄"
-                    )
+                    self.stdout.write(f"已準備用戶 {user.username} 的 {len(records)} 筆記錄")
 
                 # 批次創建所有記錄
                 created_records = Record.objects.bulk_create(total_records)

@@ -1,0 +1,133 @@
+{% extends "base/layout.html" %} {% block head %}
+<title>聚會：揪唱歌</title>
+<link
+  rel="stylesheet"
+  href="https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css"
+/>
+{% endblock head %} {% block content %}
+<div class="bg-white text-gray-900">
+  {% comment %} <!-- 特別聚會 banner --> {% endcomment %}
+
+  <section id="top">
+    <img
+      src="https://images.unsplash.com/photo-1541379889336-70f26e4c4617?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2hpbmVzZSUyMG5ldyUyMHllYXJ8ZW58MHx8MHx8fDA%3D"
+      alt="chinese new year"
+      class="w-full h-[70vh] object-cover"
+    />
+  </section>
+  
+  {% comment %} <!-- 按鈕去各區 --> {% endcomment %}
+
+  <div class="flex justify-center space-x-10 my-10">
+    <a href="#eat"
+      ><button
+        class="text-xl px-4 py-1 rounded-full bg-[#F78888] text-white hover:bg-pink-500"
+      >
+        揪吃飯
+      </button></a
+    >
+    <a href="#drink"
+      ><button
+        class="text-xl px-4 py-1 rounded-full bg-yellow-300 text-white hover:bg-yellow-500"
+      >
+        揪喝酒
+      </button></a
+    >
+    <a href="#sports"
+      ><button
+        class="text-xl px-4 py-1 rounded-full bg-[#5DA2D5] text-white hover:bg-blue-500"
+      >
+        揪運動
+      </button></a
+    >
+    <a href="#sing"
+      ><button
+        class="text-xl px-4 py-1 rounded-full bg-yellow-300 text-white hover:bg-yellow-500"
+      >
+        揪唱歌
+      </button></a
+    >
+    <a href="#movies"
+      ><button
+        class="text-xl px-4 py-1 rounded-full bg-[#F78888] text-white hover:bg-pink-500"
+      >
+        揪電影
+      </button></a
+    >
+    <a href="#seminer"
+      ><button
+        class="text-xl px-4 py-1 rounded-full bg-[#5DA2D5] text-white hover:bg-blue-500"
+      >
+        揪討論
+      </button></a
+    >
+  </div>
+
+  <section>
+    <h1 class="flex justify-center my-10 text-4xl">ㄧ起揪唱歌</h1>
+
+    <div class="justify-center mx-2 pt-8">
+      {% for category, activities in activities_by_category.items %}
+        {% if category.name == '揪唱歌' %}
+          <div class="flex flex-wrap justify-center gap-6 mx-2 pt-8">
+            {% for activity in activities %}
+              <div class="w-1/5 rounded-3xl overflow-hidden shadow-lg">
+                <img src="https://picsum.photos/200/300" alt="{{ activity.title }}" class="h-48 w-full object-cover" />
+                <div class="bg-moordule-yellow p-4">
+                  <div class="flex justify-between items-center mb-2">
+                    <h3>{{ activity.title }}</h3>
+                    <div class="flex items-center gap-1">
+                      <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"/>
+                      </svg>
+                        <span>已參加{{ activity.participants.count }} / {{ activity.max_participants }}人</span>
+                    </div>
+                  </div>
+                  <div class="flex justify-between gap-2 text-sm mb-2">
+                    <div class="flex">
+                      <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                      </svg>
+                      <p>地點: {{ activity.address }}</p>
+                    </div>
+                    <p>時間: {{ activity.start_time|date:"Y-m-d H:i" }}</p>
+                  </div>
+                  <span class="text-lg font-medium">聚會內容：</span>
+                  <p class="text-sm mb-4 text-lg">
+                    {{ activity.description }}
+                  </p>
+                  <a href="{% url 'activities:join' activity.id %}">
+                <button class="w-full py-2 rounded-full bg-white text-moordule-yellow font-bold">馬上揪</button>
+                </a>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+
+          <!-- 分頁導航 -->
+          <div class="pagination mt-8 mb-4 flex justify-center">
+            <span class="step-links">
+                {% if activities.has_previous %}
+                    <a href="?page_{{ category.id }}={{ activities.previous_page_number }}" class="mx-2 font-bold text-2xl "> < </a>
+                {% endif %}
+
+                {% for num in activities.paginator.page_range %}
+                    {% if num == activities.number %}
+                        <span class="mx-2 font-bold text-2xl"> {{ num }} </span>  <!-- 當前頁碼 -->
+                    {% else %}
+                        <a href="?page_{{ category.id }}={{ num }}" class="mx-2 font-bold text-2xl"> {{ num }} </a>
+                    {% endif %}
+                {% endfor %}
+
+                {% if activities.has_next %}
+                    <a href="?page_{{ category.id }}={{ activities.next_page_number }}" class="mx-2 text-2xl font-bold"> > </a>
+                {% endif %}
+            </span>
+          </div>
+
+        {% endif %}
+      {% endfor %}
+    </div>
+  </section>
+</div>
+    {% endblock content %}

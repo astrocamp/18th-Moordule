@@ -1,4 +1,5 @@
 from django.urls import path
+
 from . import views
 
 app_name = "activities"
@@ -20,4 +21,10 @@ urlpatterns = [
         name="delete_category",
     ),
     path("search/", views.search, name="search"),
+    path("eating/", views.eating, name="eating"),
+    path("driking/", views.driking, name="driking"),
+    path("sports/", views.sports, name="sports"),
+    path("singing/", views.singing, name="singing"),
+    path("movies/", views.movies, name="movies"),
+    path("discussion/", views.discussion, name="discussion"),
 ]

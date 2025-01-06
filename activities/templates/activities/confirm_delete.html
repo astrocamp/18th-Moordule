@@ -15,7 +15,7 @@
                     參加人數上限：{{ activity.max_participants }}<br>
                     預計結束時間：{{ activity.end_time|date:"Y-m-d H:i" }}<br>
                     建立時間：{{ activity.created_at|date:"Y-m-d H:i" }}<br>
-                    
+
 <form method="POST">
     {% csrf_token %}
     <button type="submit">確定刪除</button>
@@ -24,4 +24,4 @@
 </form>
 
 </div>
-{% endblock %}  
+{% endblock %}

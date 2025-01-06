@@ -9,7 +9,7 @@
           zoom: 15,
           center: results[0].geometry.location
         });
-        new google.maps.marker.AdvancedMarkerElement({
+        new google.maps.Marker({
           position: results[0].geometry.location,
           map
         });
