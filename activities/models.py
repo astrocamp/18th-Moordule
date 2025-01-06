@@ -1,8 +1,6 @@
 from datetime import timedelta
-
 from django.db import models
 from django.utils import timezone
-from datetime import timedelta
 from users.models import CustomUser
 from django_google_maps import fields as map_fields
 
