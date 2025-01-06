@@ -2,61 +2,55 @@
 <!---->
 {% block head %}
 <style>
-  /* 自定義動畫效果 */
-  @keyframes moveDown {
+@keyframes slide-up {
     0% {
-      transform: translateY(0); /* 初始位置 */
+        transform: translateY(100%);
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(0);
+        opacity: 1;
     }
     100% {
-      transform: translateY(-100%); /* 向上移動整個內容 */
+        transform: translateY(-100%);
+        opacity: 1;
     }
-  }
+}
 
-  @keyframes moveUp {
-    100% {
-      transform: translateY(0); /* 初始位置 */
-    }
+@keyframes slide-down {
     0% {
-      transform: translateY(100%); /* 向下移動整個內容 */
+        transform: translateY(-100%);
+        opacity: 1;
     }
-  }
+    50% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100%);
+        opacity: 1;
+    }
+}
 
-  /* 動畫類別 */
-  .animate-down {
-    animation: moveDown 2s linear infinite; /* 向上滾動 */
-  }
+.animate-slide-up {
+    animation: slide-up 8s linear infinite;
+}
 
-  .animate-up {
-    animation: moveUp 2s linear infinite; /* 向下滾動 */
-  }
-
-  /* 滾動容器樣式 */
-  .scroll-container {
-    position: relative;
-    overflow: hidden; /* 隱藏溢出內容 */
-    height: 200px; /* 可視區域的高度 */
-  }
-
-  /* 滾動內容樣式 */
-  .scroll-content {
-    display: flex;
-    flex-direction: column; /* 縱向排列內容 */
-  }
+.animate-slide-down {
+    animation: slide-down 8s linear infinite;
+}
 </style>
 {% endblock head %} {% block content %}
-<div class="bg-white text-gray-900">
-
   <!-- 主頁內容 -->
-  <section
-    id="top"
-    class="flex flex-col lg:flex-row w-full max-w-screen-lg mx-auto mt-8"
+  <section id="top"
+    class="flex flex-col lg:flex-row w-full max-w-screen-lg mx-auto mt-8 overflow-hidden justify-between gap-12 h-full"
   >
     <!-- 左邊區域：上下流動方框 -->
-    <div class="flex flex-col w-full lg:w-2/5 space-y-4 relative moveDown">
+    <div class="flex flex-col lg:w-1/2 space-y-8 relative moveDown animate-slide-down basis-1/2">
       <!-- 第一個方框 -->
       <a
         href="https://example.com/link1"
-        class="h-40 bg-gray-100 border rounded-lg animate-up flex items-center justify-center"
+        class="h-48 w-72 bg-gray-100 border rounded-lg animate-up flex items-center justify-center"
       >
         <img
           src="https://miro.medium.com/v2/resize:fit:622/format:webp/1*w1MjwyQiX262MkK79TdE_w.jpeg"
@@ -68,7 +62,7 @@
       <!-- 第二個方框 -->
       <a
         href="https://example.com/link2"
-        class="h-40 bg-gray-100 border rounded-lg animate-up flex items-center justify-center"
+        class="h-48 bg-gray-100 border rounded-lg animate-up flex items-center justify-center"
       >
         <img
           src="https://miro.medium.com/v2/resize:fit:692/format:webp/1*jdXIBc_pncEYbqsMGGf81g.jpeg"
@@ -80,7 +74,7 @@
       <!-- 第三個方框 -->
       <a
         href="https://example.com/link3"
-        class="h-40 bg-gray-100 border rounded-lg animate-up flex items-center justify-center"
+        class="h-48 bg-gray-100 border rounded-lg animate-up flex items-center justify-center"
       >
         <img
           src="https://miro.medium.com/v2/resize:fit:690/format:webp/1*PSQ8e_hEM9eOYtMXswH8yA.jpeg"
@@ -92,7 +86,7 @@
       <!-- 第四個方框 -->
       <a
         href="https://example.com/link4"
-        class="h-40 bg-gray-100 border rounded-lg animate-up flex items-center justify-center"
+        class="h-48 bg-gray-100 border rounded-lg animate-up flex items-center justify-center"
       >
         <img
           src="https://miro.medium.com/v2/resize:fit:1034/format:webp/1*XNp17xSsVbHdKxP0spEp1A.png"
@@ -102,11 +96,11 @@
       </a>
     </div>
 
-    <div class="flex flex-col w-full lg:w-2/5 space-y-4 m-8 relative moveUp">
+    <div class="flex flex-col lg:w-1/2 space-y-8 relative moveUp animate-slide-up basis-1/2">
       <!-- 第一個方框 -->
       <a
         href="https://example.com/link5"
-        class="h-40 bg-gray-100 border rounded-lg animate-up flex items-center justify-center"
+        class="h-48 w-72 bg-gray-100 border rounded-lg animate-up flex items-center justify-center"
       >
         <img
           src="https://miro.medium.com/v2/resize:fit:746/format:webp/1*3jP_nttgjfnzlWLKTzvgqw.jpeg"
@@ -118,7 +112,7 @@
       <!-- 第二個方框 -->
       <a
         href="https://example.com/link6"
-        class="h-40 bg-gray-100 border rounded-lg animate-up flex items-center justify-center"
+        class="h-48 bg-gray-100 border rounded-lg animate-up flex items-center justify-center"
       >
         <img
           src="https://miro.medium.com/v2/resize:fit:630/format:webp/1*5xh2fKvJByPlTheZik_VCg.jpeg"
@@ -130,7 +124,7 @@
       <!-- 第三個方框 -->
       <a
         href="https://example.com/link7"
-        class="h-40 bg-gray-100 border rounded-lg animate-up flex items-center justify-center"
+        class="h-48 bg-gray-100 border rounded-lg animate-up flex items-center justify-center"
       >
         <img
           src="https://miro.medium.com/v2/resize:fit:628/format:webp/1*zysizqg1tTRa1AM0rOSxkQ.jpeg"
@@ -142,7 +136,7 @@
       <!-- 第四個方框 -->
       <a
         href="https://example.com/link8"
-        class="h-40 bg-gray-100 border rounded-lg animate-up flex items-center justify-center"
+        class="h-48 bg-gray-100 border rounded-lg animate-up flex items-center justify-center"
       >
         <img
           src="https://miro.medium.com/v2/resize:fit:1142/format:webp/1*6lqXOP4ZzkXb-0etPKl_fA.jpeg"
@@ -152,8 +146,9 @@
       </a>
     </div>
 
+    
     <!-- 右邊區域 -->
-    <div class="w-full lg:w-3/5 flex flex-col items-center text-center">
+    <div class="w-full lg:w-3/5 flex flex-col items-center text-center mt-10">
       <!-- Logo 與文字 -->
       <div class="flex items-center justify-center mb-4">
         <img
