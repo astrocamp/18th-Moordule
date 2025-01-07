@@ -6,7 +6,7 @@
 	"scripts": {
 		"js": "esbuild ./src/script/main.js --bundle --outfile=static/dist/bundle.js --watch",
 		"css": "tailwindcss -i ./src/style/main.css -o ./static/dist/bundle.css --watch",
-		"activities":"esbuild ./src/script/activities.js --bundle --outfile=static/dist/activities.js",
+		"activities": "esbuild ./src/script/activities.js --bundle --outfile=static/dist/activities.js",
 		"map": "esbuild ./src/script/map.js --bundle --outfile=static/src/map.js",
 		"dev": "npm-run-all --parallel css js activities map",
 		"build": "tailwindcss -i ./src/style/main.css -o ./static/dist/bundle.css && esbuild ./src/script/activities.js --bundle --outfile=static/dist/activities.js"
@@ -23,5 +23,13 @@
 		"zxcvbn": "^4.4.2",
 		"npm-run-all": "^4.1.5",
 		"tailwindcss": "^3.4.16"
-	}
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/astrocamp/18th-Moordule.git"
+	},
+	"bugs": {
+		"url": "https://github.com/astrocamp/18th-Moordule/issues"
+	},
+	"homepage": "https://github.com/astrocamp/18th-Moordule#readme"
 }
