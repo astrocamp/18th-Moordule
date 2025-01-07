@@ -14,15 +14,7 @@ class ActivityForm(forms.ModelForm):
 
     class Meta:
         model = Activity
-        fields = [
-            "title",
-            "description",
-            "address",
-            "start_time",
-            "duration",
-            "max_participants",
-            "category",
-        ]
+        fields = ['title', 'description', 'address', 'start_time', 'duration', 'max_participants', 'category','photo']
 
     def clean_start_time(self):
         start_time = self.cleaned_data.get("start_time")

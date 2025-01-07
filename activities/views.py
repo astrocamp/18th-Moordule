@@ -44,7 +44,7 @@ def activities(request):
 def create(request):
     categories = Category.objects.all()
     if request.method == "POST":
-        form = ActivityForm(request.POST)
+        form = ActivityForm(request.POST,request.FILES)
         if form.is_valid():
             activity = form.save(commit=False)
             activity.owner = request.user

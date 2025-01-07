@@ -22,17 +22,12 @@ class Activity(models.Model):
     start_time = models.DateTimeField(help_text="聚會開始時間")
     duration = models.PositiveIntegerField(help_text="預估聚會持續時間（小時）", default=1)
     max_participants = models.PositiveIntegerField(help_text="參加人數上限", default=10)
-    created_at = models.DateTimeField(auto_now_add=True, help_text="聚會建立時間")
-    category = models.ForeignKey(
-        "Category", on_delete=models.SET_NULL, null=True, blank=True, help_text="聚會分類"
-    )
-    owner = models.ForeignKey(
-        CustomUser,
-        on_delete=models.CASCADE,
-        related_name="created_activities",
-        help_text="聚會建立者",
-    )
+    created_at = models.DateTimeField(auto_now_add=True, help_text="活動建立時間")
+    category = models.ForeignKey("Category", on_delete=models.SET_NULL, null=True, blank=True, help_text="活動分類")
+    owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='created_activities', help_text="活動建立者",default=1)
+    photo = models.ImageField(upload_to='activities_photo',null=True,blank=True,)
 
+    
     @property
     def end_time(self):
         return self.start_time + timedelta(hours=self.duration)
