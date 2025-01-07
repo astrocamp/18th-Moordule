@@ -121,7 +121,7 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 SOCIALACCOUNT_LOGIN_ON_GET = True
-
+SOCIAL_AUTH_GOOGLE_OAUTH2_REDIRECT_URI = "http://moordule.com"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
