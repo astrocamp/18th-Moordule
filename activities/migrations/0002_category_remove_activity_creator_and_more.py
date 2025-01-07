@@ -33,12 +33,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='activity',
             name='duration',
-            field=models.PositiveIntegerField(default=1, help_text='預估活動持續時間（小時）'),
+            field=models.PositiveIntegerField(default=1, help_text='預估聚會持續時間（小時）'),
         ),
         migrations.AddField(
             model_name='activity',
             name='owner',
-            field=models.ForeignKey(default=1, help_text='活動建立者', on_delete=django.db.models.deletion.CASCADE, related_name='created_activities', to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(default=1, help_text='聚會建立者', on_delete=django.db.models.deletion.CASCADE, related_name='created_activities', to=settings.AUTH_USER_MODEL),
         ),
         migrations.AddField(
             model_name='activity',
@@ -48,19 +48,19 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='activity',
             name='title',
-            field=models.CharField(help_text='活動標題', max_length=15),
+            field=models.CharField(help_text='聚會標題', max_length=15),
         ),
         migrations.AddField(
             model_name='activity',
             name='category',
-            field=models.ForeignKey(blank=True, help_text='活動分類', null=True, on_delete=django.db.models.deletion.SET_NULL, to='activities.category'),
+            field=models.ForeignKey(blank=True, help_text='聚會分類', null=True, on_delete=django.db.models.deletion.SET_NULL, to='activities.category'),
         ),
         migrations.CreateModel(
             name='MeetupPaticipat',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('joined_at', models.DateTimeField(auto_now_add=True, help_text='加入時間')),
-                ('activity', models.ForeignKey(help_text='活動', on_delete=django.db.models.deletion.CASCADE, related_name='participants', to='activities.activity')),
+                ('activity', models.ForeignKey(help_text='聚會', on_delete=django.db.models.deletion.CASCADE, related_name='participants', to='activities.activity')),
                 ('participant', models.ForeignKey(help_text='參與者', on_delete=django.db.models.deletion.CASCADE, related_name='meetups', to=settings.AUTH_USER_MODEL)),
             ],
             options={
