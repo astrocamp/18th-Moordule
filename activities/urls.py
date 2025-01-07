@@ -7,7 +7,6 @@ app_name = "activities"
 urlpatterns = [
     path("", views.activities, name="index"),
     path("create/", views.create, name="create"),
-    path("my_activities/", views.created_activities, name="my_activities"),
     path("<int:activity_id>/update/", views.update, name="update"),
     path("<int:activity_id>/delete/", views.delete, name="delete"),
     path(

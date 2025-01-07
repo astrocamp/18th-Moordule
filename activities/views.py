@@ -5,11 +5,9 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
-
-from moordule import settings
-
 from .forms import ActivityForm, CategoryForm
 from .models import Activity, Category, MeetupPaticipat
+from moordule import settings
 
 
 def get_activity_for_user(request, activity_id):
@@ -22,7 +20,7 @@ def get_activity_for_user(request, activity_id):
 def activities(request):
     categories = Category.objects.prefetch_related("activity_set")
 
-    now = timezone.now()  # 過濾掉過期的聚會，只顯示未過期的聚會
+    now = timezone.now()
     activities_by_category = {
         category: category.activity_set.filter(start_time__gte=now).order_by(
             "start_time"
@@ -49,7 +47,7 @@ def create(request):
             activity = form.save(commit=False)
             activity.owner = request.user
             activity.save()
-            return redirect("activities:my_activities")
+            return redirect("users:user_page", tag="my_activities")
         else:
             return render(
                 request,
@@ -113,7 +111,7 @@ def update(request, activity_id):
         form = ActivityForm(request.POST, instance=activity)
         if form.is_valid():
             form.save()
-            return redirect("activities:index")
+            return redirect("users:user_page", tag="my_activities")
         else:
             print(form.errors)
             return render(
@@ -151,7 +149,7 @@ def confirm_delete(request, activity_id):
     activity = get_activity_for_user(request, activity_id)
     if request.method == "POST":
         activity.delete()
-        return redirect("activities:my_activities")
+        return redirect("users:user_page", tag="my_activities")
     return render(request, "activities/confirm_delete.html", {"activity": activity})
 
 
@@ -231,7 +229,7 @@ def search(request):
 def eating(request):
     categories = Category.objects.prefetch_related("activity_set")
 
-    now = timezone.now()  # 過濾掉過期的聚會，只顯示未過期的聚會
+    now = timezone.now()
     activities_by_category = {}
     activities_per_page = 8  # 每頁顯示的活動數量
 
@@ -270,7 +268,7 @@ def eating(request):
 def driking(request):
     categories = Category.objects.prefetch_related("activity_set")
 
-    now = timezone.now()  # 過濾掉過期的聚會，只顯示未過期的聚會
+    now = timezone.now()
     activities_by_category = {}
     activities_per_page = 8  # 每頁顯示的活動數量
 
@@ -309,7 +307,7 @@ def driking(request):
 def sports(request):
     categories = Category.objects.prefetch_related("activity_set")
 
-    now = timezone.now()  # 過濾掉過期的聚會，只顯示未過期的聚會
+    now = timezone.now()
     activities_by_category = {}
     activities_per_page = 8  # 每頁顯示的活動數量
 
@@ -348,7 +346,7 @@ def sports(request):
 def singing(request):
     categories = Category.objects.prefetch_related("activity_set")
 
-    now = timezone.now()  # 過濾掉過期的聚會，只顯示未過期的聚會
+    now = timezone.now()
     activities_by_category = {}
     activities_per_page = 8  # 每頁顯示的活動數量
 
@@ -387,7 +385,7 @@ def singing(request):
 def movies(request):
     categories = Category.objects.prefetch_related("activity_set")
 
-    now = timezone.now()  # 過濾掉過期的聚會，只顯示未過期的聚會
+    now = timezone.now()
     activities_by_category = {}
     activities_per_page = 8  # 每頁顯示的活動數量
 
@@ -426,7 +424,7 @@ def movies(request):
 def discussion(request):
     categories = Category.objects.prefetch_related("activity_set")
 
-    now = timezone.now()  # 過濾掉過期的聚會，只顯示未過期的聚會
+    now = timezone.now()
     activities_by_category = {}
     activities_per_page = 8  # 每頁顯示的活動數量
 
