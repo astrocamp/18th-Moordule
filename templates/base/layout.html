@@ -6,12 +6,14 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" href="{% static 'dist/bundle.css' %}" />
 		<script type="module" src="{% static 'dist/bundle.js' %}"></script>
-		{% block head %} {% endblock head %}
+		{% block head %} {% endblock %}
 	</head>
 	<body>
 		<!-- prettier-ignore-->
 		{% include 'base/nav.html' %}
-		<main mx-4 sm:mx-8 md:mx-12 lg:mx-16>{% block content %}{% endblock %}</main>
+		<main mx-4 sm:mx-8 md:mx-12 lg:mx-16>
+			{% block content %}{% endblock %}
+		</main>
 		{% include 'base/footer.html' %}
 	</body>
 </html>
