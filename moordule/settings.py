@@ -7,7 +7,7 @@ load_dotenv()
 
 allowed_hosts_env = os.getenv("ALLOWED_HOSTS", "*").split(",")
 line_pay_hostname = os.getenv("HOSTNAME")
-ALLOWED_HOSTS = allowed_hosts_env + [line_pay_hostname]
+ALLOWED_HOSTS = allowed_hosts_env + [line_pay_hostname] + ['moordule.com', 'www.moordule.com'] 
 
 CSRF_TRUSTED_ORIGINS = [f"https://{os.getenv('HOSTNAME')}"]
 
@@ -30,9 +30,6 @@ LOGIN_URL = "users:signin"
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("SECRET_KEY")
-
-ALLOWED_HOSTS = []
-
 
 # Application definition
 

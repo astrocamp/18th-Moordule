@@ -8,7 +8,8 @@
 		"css": "tailwindcss -i ./src/style/main.css -o ./static/dist/bundle.css --watch",
 		"activities":"esbuild ./src/script/activities.js --bundle --outfile=static/dist/activities.js",
 		"map": "esbuild ./src/script/map.js --bundle --outfile=static/src/map.js",
-		"dev": "npm-run-all --parallel css js activities map"
+		"dev": "npm-run-all --parallel css js activities map",
+		"build": "tailwindcss -i ./src/style/main.css -o ./static/dist/bundle.css && esbuild ./src/script/activities.js --bundle --outfile=static/dist/activities.js"
 	},
 	"author": "",
 	"license": "ISC",
