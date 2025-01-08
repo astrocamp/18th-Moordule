@@ -1,13 +1,15 @@
 from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count
 from django.http import HttpRequest, HttpResponse, JsonResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from django.urls import reverse
 from django.utils import timezone
 from django.views.decorators.http import require_GET, require_POST
 from django_htmx.middleware import HtmxDetails
 
 from activities.models import Activity as Meetup
+from activities.models import MeetupPaticipat as MeetupParticipant
 
 from .decorators import anonymous_required
 from .forms import AboutMeForm, CustomUserChangeForm, UserRegistrationForm
@@ -59,13 +61,33 @@ def password_change_view(request):
 
 @login_required
 def user_page_view(request, tag="member"):
-    form = CustomUserChangeForm()
-    context = {"tag": tag, "form": form}
+    user = request.user
+    context = {"tag": tag}
 
-    # 如果 tag 是 my_activities，則加載用戶創建的活動
-    if tag == "my_activities":
-        activities = Meetup.objects.filter(owner=request.user)
+    if tag == "member":
+        context["meetup"] = (
+            Meetup.objects.filter(start_time__gte=timezone.now())
+            .order_by("start_time")
+            .first()
+        )
+    elif tag == "account":
+        form = CustomUserChangeForm()
+        context["form"] = form
+    elif tag == "activities":
+        meetups = (
+            MeetupParticipant.objects.filter(
+                participant=user, activity__start_time__gt=timezone.now()
+            )
+            .annotate(total_count=Count("activity__participants"))
+            .order_by("activity__start_time")
+        )
+        context["meetups"] = meetups
+    elif tag == "my_activities":
+        activities = Meetup.objects.filter(owner=user)
         context["activities"] = activities
+    else:
+        # 若沒有符合任何條件，保留基本的 context
+        context = {"tag": tag}
 
     if not request.headers.get("HX-Request"):
         return render(request, "users/dashboard.html", context)

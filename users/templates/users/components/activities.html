@@ -1,77 +1,14 @@
-{%block content%}
-
-<div class="max-w-screen-lg mx-auto px-4 py-12">
-	<div class="grid grid-cols-3 gap-6">
-		<div class="bg-yellow-300 rounded-lg p-4">
-			<p class="text-white-shadow font-bold text-center p-2">即將到來的聚會</p>
-			<div
-				class="bg-gray-300 h-32 rounded-lg flex items-center justify-center text-gray-600"
-			>
-				聚會photo
-			</div>
-			<p class="text-center font-bold mt-4">參加的聚會</p>
+{% block content %}
+<div class="relative max-w-7xl mt-8 mx-auto">
+	<div class="grid grid-cols-4 gap-6 bg-yellow-300 rounded-[24px] p-6">
+		<!-- prettier-ignore -->
+		{% for meetup in meetups %} 
+		{% include 'users/components/activity.html' with meetup=meetup %} 
+		{% empty %}
+		<div class="col-span-3 text-center py-8 text-gray-500">
+			目前沒有即將到來的活動
 		</div>
-
-		<div class="bg-yellow-300 rounded-lg p-4">
-			<div
-				class="bg-gray-300 h-32 rounded-lg flex items-center justify-center text-gray-600"
-			>
-				聚會photo
-			</div>
-			<p class="text-center font-bold mt-4">顯示用戶參加的聚會</p>
-		</div>
-
-		<div class="bg-yellow-300 rounded-lg p-4">
-			<div
-				class="bg-gray-300 h-32 rounded-lg flex items-center justify-center text-gray-600"
-			>
-				聚會photo
-			</div>
-			<p class="text-center font-bold mt-4">顯示用戶參加的聚會</p>
-		</div>
-
-		<div class="bg-yellow-300 rounded-lg p-4">
-			<p class="text-yellow-600 font-bold">我的收藏</p>
-			<div
-				class="bg-gray-300 h-32 rounded-lg flex items-center justify-center text-gray-600"
-			>
-				收藏的內容
-			</div>
-			<button
-				class="bg-yellow-500 text-white-shadow rounded-full px-4 py-2 mt-4 mx-auto block"
-			>
-				查看更多
-			</button>
-		</div>
-
-		<div class="bg-yellow-300 rounded-lg p-4">
-			<p class="text-yellow-600 font-bold">系統通知</p>
-			<div
-				class="bg-gray-300 h-32 rounded-lg flex items-center justify-center text-gray-600"
-			>
-				通知訊息
-			</div>
-			<button
-				class="bg-yellow-500 text-white-shadow rounded-full px-4 py-2 mt-4 mx-auto block"
-			>
-				查看通知
-			</button>
-		</div>
-
-		<div class="bg-yellow-300 rounded-lg p-4">
-			<p class="text-yellow-600 font-bold">聊天訊息</p>
-			<div
-				class="bg-gray-300 h-32 rounded-lg flex items-center justify-center text-gray-600"
-			>
-				聊天列表
-			</div>
-			<button
-				class="bg-yellow-500 text-white-shadow rounded-full px-4 py-2 mt-4 mx-auto block"
-			>
-				打開聊天
-			</button>
-		</div>
+		{% endfor %}
 	</div>
 </div>
-
-{%endblock%}
+{% endblock %}
