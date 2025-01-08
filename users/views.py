@@ -95,8 +95,8 @@ def signup_view(request: HttpRequest):
         form = UserRegistrationForm()
         if form.is_valid():
             form.save()
-
-            return redirect("pages:index")
+            signin_url = reverse("users:signin")
+            return HttpResponse("", headers={"HX-Redirect": signin_url})
 
     meetups = Meetup.objects.filter(start_time__gte=timezone.now()).order_by(
         "start_time"
