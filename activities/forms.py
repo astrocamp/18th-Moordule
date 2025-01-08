@@ -12,7 +12,7 @@ class ActivityForm(forms.ModelForm):
         error_messages={"required": "必須選擇一個類別！"},
     )
 
-class Meta:
+    class Meta:
         model = Activity
         fields = [
             "title",
@@ -22,13 +22,15 @@ class Meta:
             "duration",
             "max_participants",
             "category",
-            'photo'
+            "photo",
         ]
+
+
 def clean_start_time(self):
-        start_time = self.cleaned_data.get("start_time")
-        if start_time and start_time < timezone.now():
-            raise forms.ValidationError("聚會開始時間必須晚於當前時間！")
-        return start_time
+    start_time = self.cleaned_data.get("start_time")
+    if start_time and start_time < timezone.now():
+        raise forms.ValidationError("聚會開始時間必須晚於當前時間！")
+    return start_time
 
 
 class CategoryForm(forms.ModelForm):

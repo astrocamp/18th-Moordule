@@ -44,12 +44,13 @@ def activities(request):
 def create(request):
     categories = Category.objects.all()
     if request.method == "POST":
-        form = ActivityForm(request.POST,request.FILES)
+        form = ActivityForm(request.POST)
         if form.is_valid():
             activity = form.save(commit=False)
             activity.owner = request.user
             activity.save()
-            return redirect("activities:my_activities")
+            return redirect("users:user_page", tag="my_activities")
+
         else:
             return render(
                 request,
@@ -113,7 +114,7 @@ def update(request, activity_id):
         form = ActivityForm(request.POST, instance=activity)
         if form.is_valid():
             form.save()
-            return redirect("activities:index")
+            return redirect("users:user_page", tag="my_activities")
         else:
             print(form.errors)
             return render(
@@ -151,7 +152,7 @@ def confirm_delete(request, activity_id):
     activity = get_activity_for_user(request, activity_id)
     if request.method == "POST":
         activity.delete()
-        return redirect("activities:my_activities")
+        return redirect("users:user_page", tag="my_activities")
     return render(request, "activities/confirm_delete.html", {"activity": activity})
 
 
@@ -237,13 +238,17 @@ def eating(request):
 
     for category in categories:
         # 獲取未過期的活動並按開始時間排序
-        activities = category.activity_set.filter(start_time__gte=now).order_by("start_time")
-        
+        activities = category.activity_set.filter(start_time__gte=now).order_by(
+            "start_time"
+        )
+
         # 獲取當前頁碼
-        page_number = request.GET.get(f'page_{category.id}', 1)  # 使用類別ID來區分不同類別的頁碼
-        
+        page_number = request.GET.get(
+            f"page_{category.id}", 1
+        )  # 使用類別ID來區分不同類別的頁碼
+
         paginator = Paginator(activities, activities_per_page)  # 創建分頁器
-        
+
         try:
             page_obj = paginator.page(page_number)  # 獲取當前頁的活動
         except PageNotAnInteger:
@@ -259,8 +264,9 @@ def eating(request):
         {
             "activities_by_category": activities_by_category,
             "categories": categories,
-        }
+        },
     )
+
 
 def driking(request):
     categories = Category.objects.prefetch_related("activity_set")
@@ -271,13 +277,17 @@ def driking(request):
 
     for category in categories:
         # 獲取未過期的活動並按開始時間排序
-        activities = category.activity_set.filter(start_time__gte=now).order_by("start_time")
-        
+        activities = category.activity_set.filter(start_time__gte=now).order_by(
+            "start_time"
+        )
+
         # 獲取當前頁碼
-        page_number = request.GET.get(f'page_{category.id}', 1)  # 使用類別ID來區分不同類別的頁碼
-        
+        page_number = request.GET.get(
+            f"page_{category.id}", 1
+        )  # 使用類別ID來區分不同類別的頁碼
+
         paginator = Paginator(activities, activities_per_page)  # 創建分頁器
-        
+
         try:
             page_obj = paginator.page(page_number)  # 獲取當前頁的活動
         except PageNotAnInteger:
@@ -293,7 +303,7 @@ def driking(request):
         {
             "activities_by_category": activities_by_category,
             "categories": categories,
-        }
+        },
     )
 
 
@@ -306,13 +316,17 @@ def sports(request):
 
     for category in categories:
         # 獲取未過期的活動並按開始時間排序
-        activities = category.activity_set.filter(start_time__gte=now).order_by("start_time")
-        
+        activities = category.activity_set.filter(start_time__gte=now).order_by(
+            "start_time"
+        )
+
         # 獲取當前頁碼
-        page_number = request.GET.get(f'page_{category.id}', 1)  # 使用類別ID來區分不同類別的頁碼
-        
+        page_number = request.GET.get(
+            f"page_{category.id}", 1
+        )  # 使用類別ID來區分不同類別的頁碼
+
         paginator = Paginator(activities, activities_per_page)  # 創建分頁器
-        
+
         try:
             page_obj = paginator.page(page_number)  # 獲取當前頁的活動
         except PageNotAnInteger:
@@ -328,8 +342,9 @@ def sports(request):
         {
             "activities_by_category": activities_by_category,
             "categories": categories,
-        }
+        },
     )
+
 
 def singing(request):
     categories = Category.objects.prefetch_related("activity_set")
@@ -340,13 +355,17 @@ def singing(request):
 
     for category in categories:
         # 獲取未過期的活動並按開始時間排序
-        activities = category.activity_set.filter(start_time__gte=now).order_by("start_time")
-        
+        activities = category.activity_set.filter(start_time__gte=now).order_by(
+            "start_time"
+        )
+
         # 獲取當前頁碼
-        page_number = request.GET.get(f'page_{category.id}', 1)  # 使用類別ID來區分不同類別的頁碼
-        
+        page_number = request.GET.get(
+            f"page_{category.id}", 1
+        )  # 使用類別ID來區分不同類別的頁碼
+
         paginator = Paginator(activities, activities_per_page)  # 創建分頁器
-        
+
         try:
             page_obj = paginator.page(page_number)  # 獲取當前頁的活動
         except PageNotAnInteger:
@@ -362,8 +381,9 @@ def singing(request):
         {
             "activities_by_category": activities_by_category,
             "categories": categories,
-        }
+        },
     )
+
 
 def movies(request):
     categories = Category.objects.prefetch_related("activity_set")
@@ -374,13 +394,17 @@ def movies(request):
 
     for category in categories:
         # 獲取未過期的活動並按開始時間排序
-        activities = category.activity_set.filter(start_time__gte=now).order_by("start_time")
-        
+        activities = category.activity_set.filter(start_time__gte=now).order_by(
+            "start_time"
+        )
+
         # 獲取當前頁碼
-        page_number = request.GET.get(f'page_{category.id}', 1)  # 使用類別ID來區分不同類別的頁碼
-        
+        page_number = request.GET.get(
+            f"page_{category.id}", 1
+        )  # 使用類別ID來區分不同類別的頁碼
+
         paginator = Paginator(activities, activities_per_page)  # 創建分頁器
-        
+
         try:
             page_obj = paginator.page(page_number)  # 獲取當前頁的活動
         except PageNotAnInteger:
@@ -396,8 +420,9 @@ def movies(request):
         {
             "activities_by_category": activities_by_category,
             "categories": categories,
-        }
+        },
     )
+
 
 def discussion(request):
     categories = Category.objects.prefetch_related("activity_set")
@@ -408,13 +433,17 @@ def discussion(request):
 
     for category in categories:
         # 獲取未過期的活動並按開始時間排序
-        activities = category.activity_set.filter(start_time__gte=now).order_by("start_time")
-        
+        activities = category.activity_set.filter(start_time__gte=now).order_by(
+            "start_time"
+        )
+
         # 獲取當前頁碼
-        page_number = request.GET.get(f'page_{category.id}', 1)  # 使用類別ID來區分不同類別的頁碼
-        
+        page_number = request.GET.get(
+            f"page_{category.id}", 1
+        )  # 使用類別ID來區分不同類別的頁碼
+
         paginator = Paginator(activities, activities_per_page)  # 創建分頁器
-        
+
         try:
             page_obj = paginator.page(page_number)  # 獲取當前頁的活動
         except PageNotAnInteger:
@@ -430,5 +459,5 @@ def discussion(request):
         {
             "activities_by_category": activities_by_category,
             "categories": categories,
-        }
+        },
     )

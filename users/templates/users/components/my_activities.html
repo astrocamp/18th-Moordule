@@ -1,35 +1,26 @@
-{% extends "base/layout.html" %}
-
-{% block head %}
-    <title>聚會列表</title>
-
-{% endblock head %}
-{% block content %}
-<body class="bg-gray-100">
-    <header class="bg-yellow-500 text-white text-center py-4 text-2xl font-bold">
-        聚會列表
-    </header>
-
-
+<div>
+    
 
 <div class="space-y-4">
 
     <div class="container mx-auto mt-6 px-4">
-     <!-- 所有聚會 (已審核和未審核共用同一區塊) -->
+     {% comment %}所有聚會 (已審核和未審核共用同一區塊) {% endcomment %}
 
         <div class="max-w-7xl  mx-auto mt-8 bg-yellow-300 p-8 rounded-lg shadow-md space-y-8">
 
     <div class="p-4 rounded-lg shadow-inner border-2 border-white">
-     <!-- 顯示已審核的聚會 -->
-      <!-- 聚會列表 -->
+     {% comment %} 
+     顯示已審核的聚會
+      聚會列表 
+      {% endcomment %}
         {% if activities %}
          <h3 class="text-xl font-semibold text-white">已審核的聚會</h3>
 
             <div class="flex justify-center gap-6">
                 {% for activity in activities %}
-                    <!-- 每個聚會卡片 -->
+                    {% comment %} 每個聚會卡片 {% endcomment %}
                     <div class="w-80 rounded-3xl overflow-hidden shadow-lg border border-white ">
-                                <img src="{{ activity.photo.url }}" alt="{{ activity.title }}"
+                                <img src="{{ activity.image_url }}" alt="{{ activity.title }}"
                                     class="h-48 w-full object-cover">
                                 <div class="bg-[#5DA2D5] p-4">
                                     <div class="flex justify-between items-center mb-2">
@@ -71,7 +62,7 @@
     </div>
 
     <div class="p-4 rounded-lg shadow-inner border-2 border-white">
-     <!-- 顯示未審核的聚會 -->
+     {% comment %} <!-- 顯示未審核的聚會 --> {% endcomment %}
                     <p class="text-center text-gray-500 text-lg mt-12">目前沒有未審核的聚會。</p>
 
      </div>
@@ -99,5 +90,4 @@
 
     </div>
 </div>
-</body>
-{% endblock content %}
+</div>

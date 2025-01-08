@@ -62,6 +62,11 @@ def user_page_view(request, tag="member"):
     form = CustomUserChangeForm()
     context = {"tag": tag, "form": form}
 
+    # 如果 tag 是 my_activities，則加載用戶創建的活動
+    if tag == "my_activities":
+        activities = Meetup.objects.filter(owner=request.user)
+        context["activities"] = activities
+
     if not request.headers.get("HX-Request"):
         return render(request, "users/dashboard.html", context)
 
