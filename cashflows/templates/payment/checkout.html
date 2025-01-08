@@ -6,7 +6,7 @@
 {% block content%}
 <h1 class="text-3xl pt-20 m-8 text-center">LINE Pay結帳</h1>
 
-<div class="rounded-3xl bg-yellow-300 mx-20">
+<div class="rounded-[24px] bg-yellow-400 mx-20">
   <div class="p-4 flex gap-4">
 
     <div class="basis-1/2 ">
@@ -37,14 +37,15 @@
       </div>
     
     
-      <form class="bg-white rounded-full my-4 p-2 text-center" method="POST">
+      <form class="bg-white rounded-[24px] my-4 p-2 text-center" method="POST">
         {% csrf_token %}
         <button class="text-yellow-500 " type="submit">前往付款</button>
       </form>
     </div>
-    <div class="bg-gray-600 basis-1/2">其他方案
-      <div class="bg-white">方案B</div>
-      <div class="bg-white">方案C</div>
+    <div class="bg-white-600 basis-1/2 rounded-[24px]">
+      <div class="bg-block text-center   text-3xl mt-4">其他方案</div>
+      <button class="bg-blue-500 rounded-[24px] w-full  text-2xl  whitespace-nowrap text-white py-8 px-48 my-6">初來乍到 想試揪</button>
+      <button class="bg-red-300 rounded-[24px] w-full text-2xl  whitespace-nowrap text-white py-8 px-48 mt-1">好揪就要 一直揪</button>
     </div>
   </div>
 
