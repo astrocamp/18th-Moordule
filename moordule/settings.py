@@ -17,7 +17,8 @@ AUTH_USER_MODEL = "users.CustomUser"
 DEBUG = os.getenv("DEBUG", "True") == "True"
 
 # 初始化環境變數
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+# BASE_DIR = Path(__file__).resolve().parent.parent
 # env = environ.Env(DEBUG=(bool, False))
 # environ.Env.read_env(str(BASE_DIR / ".env"))
 db_url = os.getenv("DATABASE_URL")
