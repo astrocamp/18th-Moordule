@@ -218,11 +218,12 @@
             <p class="text-sm mb-4 text-lg">
              {{ activity.description }}                                                                          
             </p>
-            <button
-              class="w-full py-2 rounded-full bg-white text-yebg-yellow-300 font-bold"
+            <a href="{% url 'activities:join' activity.id %}">
+            <button class="w-full py-2 rounded-full bg-white text-yebg-yellow-300 font-bold"
             >
               馬上揪
             </button>
+            </a>
           </div>
         </div>
          {% empty %}
