@@ -186,8 +186,7 @@
         {% for activity in upcoming_activities %}
         <div class="w-82 rounded-3xl overflow-hidden shadow-lg">
           <img
-            src="https://miro.medium.com/v2/resize:fit:630/format:webp/1*5xh2fKvJByPlTheZik_VCg.jpeg"
-            alt="pizza"
+           img src="{{ activity.photo.url }}" alt="{{ activity.title }}"
             class="h-48 w-full object-cover"
           />
           <div class="bg-yellow-300 p-4">

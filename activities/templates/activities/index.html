@@ -75,7 +75,7 @@
           {% if category.name == '揪吃飯' %}
             {% for activity in activities %}
               <div class="w-80 rounded-3xl overflow-hidden shadow-lg">
-                <img src="https://picsum.photos/200/300" alt="{{ activity.title }}" class="h-48 w-full object-cover" />
+                <img src="{{ activity.photo.url }}" alt="{{ activity.title }}" class="h-48 w-full object-cover" />
                 <div class="bg-moordule-pink p-4">
                   <div class="flex justify-between items-center mb-2">
                     <h3>{{ activity.title }}</h3>
@@ -132,7 +132,7 @@
           {% if category.name == '揪喝酒' %}
             {% for activity in activities %}
               <div class="w-80 rounded-3xl overflow-hidden shadow-lg">
-                <img src="https://picsum.photos/200/300" alt="{{ activity.title }}" class="h-48 w-full object-cover" />
+                <img src="{{ activity.photo.url }}" alt="{{ activity.title }}" class="h-48 w-full object-cover" />
                  <div class="bg-yellow-300 p-4">
                   <div class="flex justify-between items-center mb-2">
                     <h3>{{ activity.title }}</h3>
@@ -187,7 +187,7 @@
           {% if category.name == '揪運動' %}
             {% for activity in activities %}
               <div class="w-80 rounded-3xl overflow-hidden shadow-lg">
-                <img src="https://picsum.photos/200/300" alt="{{ activity.title }}" class="h-48 w-full object-cover" />
+                <img src="{{ activity.photo.url }}" alt="{{ activity.title }}" class="h-48 w-full object-cover" />
                  <div class="bg-moordule-deep-blue p-4">
                   <div class="flex justify-between items-center mb-2">
                     <h3>{{ activity.title }}</h3>
@@ -243,7 +243,7 @@
           {% if category.name == '揪唱歌' %}
             {% for activity in activities %}
               <div class="w-80 rounded-3xl overflow-hidden shadow-lg">
-                <img src="https://picsum.photos/200/300" alt="{{ activity.title }}" class="h-48 w-full object-cover" />
+                <img src="{{ activity.photo.url }}" alt="{{ activity.title }}" class="h-48 w-full object-cover" />
                 <div class="bg-moordule-yellow p-4">
                   <div class="flex justify-between items-center mb-2">
                     <h3>{{ activity.title }}</h3>
@@ -302,7 +302,7 @@
           {% if category.name == '揪電影' %}
             {% for activity in activities %}
               <div class="w-80 rounded-3xl overflow-hidden shadow-lg">
-                <img src="https://picsum.photos/200/300" alt="{{ activity.title }}" class="h-48 w-full object-cover" />
+                <img src="{{ activity.photo.url }}" alt="{{ activity.title }}" class="h-48 w-full object-cover" />
                  <div class="bg-moordule-pink p-4">
                   <div class="flex justify-between items-center mb-2">
                     <h3>{{ activity.title }}</h3>
@@ -356,7 +356,7 @@
           {% if category.name == '揪討論' %}
             {% for activity in activities %}
               <div class="w-80 rounded-3xl overflow-hidden shadow-lg">
-                <img src="https://picsum.photos/200/300" alt="{{ activity.title }}" class="h-48 w-full object-cover" />
+                <img src="{{ activity.photo.url }}" alt="{{ activity.title }}" class="h-48 w-full object-cover" />
                  <div class="bg-moordule-deep-blue p-4">
                   <div class="flex justify-between items-center mb-2">
                     <h3>{{ activity.title }}</h3>
