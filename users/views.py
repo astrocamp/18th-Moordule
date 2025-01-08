@@ -59,14 +59,22 @@ def password_change_view(request):
 
 @login_required
 def user_page_view(request, tag="member"):
-    form = CustomUserChangeForm()
-    context = {"tag": tag, "form": form}
 
-    # 如果 tag 是 my_activities，則加載用戶創建的活動
-    if tag == "my_activities":
-        activities = Meetup.objects.filter(owner=request.user)
-        context["activities"] = activities
-
+    context = {}
+    if tag == "member":
+        context = {
+            "tag": tag,
+            "meetup": (
+                Meetup.objects.filter(start_time__gte=timezone.now())
+                .order_by("start_time")
+                .first()
+            ),
+        }
+    elif tag == "account":
+        form = CustomUserChangeForm()
+        context["form"] = {"tag": tag, "form": form}
+    else:
+        context = {"tag": tag}
     if not request.headers.get("HX-Request"):
         return render(request, "users/dashboard.html", context)
 
