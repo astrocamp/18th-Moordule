@@ -17,8 +17,8 @@ AUTH_USER_MODEL = "users.CustomUser"
 DEBUG = os.getenv("DEBUG", "True") == "True"
 
 # 初始化環境變數
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-# BASE_DIR = Path(__file__).resolve().parent.parent
+# BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = Path(__file__).resolve().parent.parent
 # env = environ.Env(DEBUG=(bool, False))
 # environ.Env.read_env(str(BASE_DIR / ".env"))
 db_url = os.getenv("DATABASE_URL")
@@ -173,8 +173,8 @@ LINE_SANDBOX_URL = os.getenv("LINE_SANDBOX_URL")
 GOOGLE_MAPS_API_KEY = os.getenv("GOOGLE_MAPS_API_KEY")
 
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-MEDIA_URL = os.getenv("MEDIA_URL") 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/' 
+MEDIA_ROOT = BASE_DIR / "media"
 
 STORAGES = {
     "default": {
