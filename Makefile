@@ -34,3 +34,6 @@ records:
 
 seed:
 	poetry run python manage.py seed_categories
+
+seed_users:
+	poetry run python manage.py seed

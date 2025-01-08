@@ -1,13 +1,15 @@
 from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count
 from django.http import HttpRequest, HttpResponse, JsonResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from django.urls import reverse
 from django.utils import timezone
 from django.views.decorators.http import require_GET, require_POST
 from django_htmx.middleware import HtmxDetails
 
 from activities.models import Activity as Meetup
+from activities.models import MeetupPaticipat as MeetupParticipant
 
 from .decorators import anonymous_required
 from .forms import AboutMeForm, CustomUserChangeForm, UserRegistrationForm
@@ -59,7 +61,7 @@ def password_change_view(request):
 
 @login_required
 def user_page_view(request, tag="member"):
-
+    user = request.user
     context = {}
     if tag == "member":
         context = {
@@ -73,6 +75,16 @@ def user_page_view(request, tag="member"):
     elif tag == "account":
         form = CustomUserChangeForm()
         context["form"] = {"tag": tag, "form": form}
+    elif tag == "activities":
+        meetups = (
+            MeetupParticipant.objects.filter(
+                participant=user, activity__start_time__gt=timezone.now()
+            )
+            .annotate(total_count=Count("activity__participants"))
+            .order_by("activity__start_time")
+        )
+
+        context = {"tag": tag, "meetups": meetups}
     else:
         context = {"tag": tag}
     if not request.headers.get("HX-Request"):
