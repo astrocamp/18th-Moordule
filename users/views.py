@@ -132,10 +132,9 @@ def user_create_view(request: HtmxHttpRequest):
     form = UserRegistrationForm(request.POST)
     if request.POST:
         if form.is_valid():
-            user = form.save()
-            login(request, user, backend="django.contrib.auth.backends.ModelBackend")
-            index_url = reverse("pages:index")
-            return HttpResponse("", headers={"HX-Redirect": index_url})
+            form.save()
+            signin_url = reverse("users:signin")
+            return HttpResponse("", headers={"HX-Redirect": signin_url})
 
     return render(
         request,
