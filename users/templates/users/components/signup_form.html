@@ -39,7 +39,7 @@
 	<div class="flex justify-center mb-6">
         <button 
             type="button"
-            class="flex items-center justify-center w-[52%] py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-white hover:brightness-110 bg-moordule-deep-blue"
+            class="flex items-center justify-center w-[52%] py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-white-shadow hover:brightness-110 bg-moordule-deep-blue"
         >
 				    {% include 'shared/icon.html' %}
 					<a href="{% provider_login_url 'google' method='oauth2' %}">Google登入</a>
@@ -50,7 +50,7 @@
 	<div class="flex flex-col items-center gap-[21px]">
 		<span>已經有帳號了？</span>
 		<a
-			class="text-white rounded-2xl py-0.5 px-6 outline-offset-2 bg-moordule-yellow outline outline-1 outline-moordule-yellow"
+			class="text-white-shadow rounded-2xl py-0.5 px-6 outline-offset-2 bg-moordule-yellow outline outline-1 outline-moordule-yellow"
 			href="{% url 'users:signin' %}"
 			>登入</a
 		>

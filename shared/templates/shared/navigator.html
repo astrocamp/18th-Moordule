@@ -26,7 +26,7 @@
         <button
             x-data="{ itemName: '{{ item.name }}' }"
             @click="active = itemName"
-            class="px-6 py-3 rounded-full hover:bg-yellow-500 text-white text-xl"
+            class="px-6 py-3 rounded-full hover:bg-yellow-500 text-white-shadow text-xl"
             :class="{ 'bg-yellow-500': active === itemName, 'bg-yellow-300': active !== itemName }"
         >
             {{ item.title }}

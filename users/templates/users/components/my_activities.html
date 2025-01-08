@@ -14,7 +14,7 @@
       聚會列表 
       {% endcomment %}
         {% if activities %}
-         <h3 class="text-xl font-semibold  text-white">已審核的聚會</h3>
+         <h3 class="text-xl font-semibold  text-white-shadow">已審核的聚會</h3>
 
             <div class="flex justify-center gap-6">
                 {% for activity in activities %}
@@ -49,8 +49,8 @@
                                         {{ activity.description }}
                                     </p>
                         <div lass="mt-4 flex justify-end space-x-2">
-                            <a href="{% url 'activities:update' activity.id %}" class="bg-moordule-yellow text-white px-4 py-2 rounded-[24px] hover:bg-moordule-light-blue">更新聚會</a>
-                            <a href="{% url 'activities:confirm_delete' activity.id %}" class="bg-moordule-pink  text-white px-4 py-2 rounded-[24px] hover:bg-red-600">刪除</a>
+                            <a href="{% url 'activities:update' activity.id %}" class="bg-moordule-yellow text-white-shadow px-4 py-2 rounded-[24px] hover:bg-moordule-light-blue">更新聚會</a>
+                            <a href="{% url 'activities:confirm_delete' activity.id %}" class="bg-moordule-pink  text-white-shadow px-4 py-2 rounded-[24px] hover:bg-red-600">刪除</a>
                 </div>
     </div>
                         </div>
@@ -75,7 +75,7 @@
             {% if activities|length < 4 %}
             <div class="flex justify-center mb-6">
                 <a href="{% url 'activities:create' %}" class="inline-block">
-                                <button class="bg-moordule-light-blue text-white px-6 py-2 rounded-full hover:bg-moordule-deep-blue">新增聚會</button>
+                                <button class="bg-moordule-light-blue text-white-shadow px-6 py-2 rounded-full hover:bg-moordule-deep-blue">新增聚會</button>
                 </a>
             </div>
             {% else %}

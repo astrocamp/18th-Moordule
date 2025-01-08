@@ -15,19 +15,19 @@
 
     <nav class="space-x-5 flex justify-center items-center mt-5 mx-auto w-max">
        <a href="{% url 'users:user_page' tag='member' %}">  
-    <button class="px-4 sm:px-6 py-2 sm:py-3 rounded-full hover:bg-yellow-500 text-white bg-yellow-300 text-xl">
+    <button class="px-4 sm:px-6 py-2 sm:py-3 rounded-full hover:bg-yellow-500 text-white-shadow bg-yellow-300 text-xl">
       我的頁面
     </button>
   </a>
 
   <a href="{% url 'users:user_page' tag='account' %}">  
-    <button class="px-4 sm:px-6 py-2 sm:py-3 rounded-full hover:bg-yellow-500 text-white bg-yellow-300 text-xl">
+    <button class="px-4 sm:px-6 py-2 sm:py-3 rounded-full hover:bg-yellow-500 text-white-shadow bg-yellow-300 text-xl">
       我的帳號
     </button>
   </a>
 
   <a href="{% url 'users:user_page' tag='activities' %}">  
-    <button class="px-4 sm:px-6 py-2 sm:py-3 rounded-full hover:bg-yellow-500 text-white bg-yellow-300 text-xl">
+    <button class="px-4 sm:px-6 py-2 sm:py-3 rounded-full hover:bg-yellow-500 text-white-shadow bg-yellow-300 text-xl">
       我的聚會
     </button>
   </a>
@@ -35,7 +35,7 @@
 
       
       <a href="{% url 'activities:create' %}">
-        <button class="px-4 sm:px-6 py-2 sm:py-3  rounded-full hover:bg-yellow-500 text-white bg-yellow-400 text-xl">
+        <button class="px-4 sm:px-6 py-2 sm:py-3  rounded-full hover:bg-yellow-500 text-white-shadow bg-yellow-400 text-xl">
           創建聚會
         </button>
       </a>
@@ -128,7 +128,7 @@
                 <p class="text-gray-800 mb-4">創建聚會規則 與 扣點規則</p>
                 <p class="text-gray-700">聚會規則內容請詳盡閱讀</p>
                 <p class="text-moordule-pink text-sm mb-4">請詳閱聚會規則內容並勾選確認，否則無法建立聚會。</p>
-                <p id="openActivitiesRules" class=" bg-moordule-pink text-white rounded-full hover:bg-yellow-500">閱讀規則</p>
+                <p id="openActivitiesRules" class=" bg-moordule-pink text-white-shadow rounded-full hover:bg-yellow-500">閱讀規則</p>
 
                 
                 <div id="activitiesRules" class="fixed inset-0 bg-gray-800 bg-opacity-50 hidden justify-center items-center flex z-50">
@@ -156,7 +156,7 @@
                     </div>
                 </div>
 
-                <button class="mt-6 w-full py-3 bg-yellow-500 text-white rounded-full hover:bg-yellow-600">
+                <button class="mt-6 w-full py-3 bg-yellow-500 text-white-shadow rounded-full hover:bg-yellow-600">
                     建立
                 </button>
             </div>

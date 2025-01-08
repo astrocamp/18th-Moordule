@@ -4,7 +4,7 @@
 @import url('./activites.css');
 
 :root {
-    --moordule-yellow: #f6d246;
+    --moordule-yellow: #ffc517;
     --moordule-gray: #ececec;
     --moordule-light-blue: #90ccf4;
     --moordule-deep-blue: #5da2d5;
@@ -67,4 +67,9 @@ gmp-map {
 
 .animate-slide-down {
   animation: slide-down 8s linear infinite;
+}
+
+.text-white-shadow {
+  color: white;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
