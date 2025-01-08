@@ -3,9 +3,5 @@ import htmx from "htmx.org";
 import zxcvbn from "zxcvbn";
 window.zxcvbn = zxcvbn;
 import initMap from "./map";
-
-setTimeout(() => {
-    initMap();
-})
-
+window.initMap = initMap;
 Alpine.start();
