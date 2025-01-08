@@ -1,10 +1,10 @@
 {% block content %}
-<section class="relative max-w-screen-lg mt-8 mx-auto">
-	<div class="grid grid-cols-2 gap-4 bg-yellow-300 rounded-lg p-6">
+<section class="relative max-w-7xl mt-8 mx-auto">
+	<div class="  grid grid-cols-3 gap-4 bg-yellow-300 rounded-[24px] p-6 max-w-7xl">
 		<!-- prettier-ignore -->
 		{% include 'users/components/info.html' %}
+    	{% include 'users/components/about_me.html' %}
 		{% include 'users/components/password.html' %}
-    {% include 'users/components/about_me.html' %}
 	</div>
 </section>
 {% endblock %}

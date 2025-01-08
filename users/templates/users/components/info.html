@@ -1,5 +1,5 @@
 <!-- prettier-ignore -->
-<div id="user-info" class="bg-white rounded-lg shadow-lg p-6">
+<div id="user-info" class="bg-white rounded-[24px] shadow-lg p-6">
   <h3 class="text-yellow-500 font-bold text-lg mb-4">個人資料</h3>
 
   <div class="space-y-6">
@@ -52,7 +52,7 @@
       hx-get="{% url 'users:info_edit' %}"
       hx-target="#user-info"
       hx-swap="outerHTML"
-      class="bg-yellow-400 text-white-shadow px-4 py-2 rounded hover:bg-yellow-500 mt-8"
+      class="bg-yellow-400 text-white-shadow px-4 py-2 rounded-[24px] hover:bg-yellow-500 mt-8"
   >
       編輯
   </button>

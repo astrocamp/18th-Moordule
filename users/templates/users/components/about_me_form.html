@@ -3,16 +3,16 @@
 	hx-post="{% url 'users:about_me_edit' %}"
 	hx-target="#about-me"
 	hx-swap="outerHTML"
-	class="col-span-2"
+	class="col-span-1 "
 >
 	{% csrf_token %}
-	<div class="bg-white rounded-lg shadow-lg p-6">
+	<div class="bg-white rounded-[24px] shadow-lg p-6 ">
 		<h3 class="text-yellow-500 font-bold text-lg mb-4">關於我</h3>
 
 		<div class="space-y-6">
 			<div>{{ form.bio }}</div>
 		</div>
-
+		<br>
 		<div class="flex items-center gap-6 mt-8">
 			<a
 				class="underline cursor-pointer"
@@ -24,10 +24,11 @@
 			</a>
 			<button
 				type="submit"
-				class="bg-yellow-400 text-white-shadow px-4 py-2 rounded hover:bg-yellow-500"
+				class="bg-yellow-400 text-white-shadow px-4 py-2 rounded-[24px] hover:bg-yellow-500"
 			>
 				提交
 			</button>
 		</div>
+		<br>
 	</div>
 </form>
