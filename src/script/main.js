@@ -4,6 +4,8 @@ import zxcvbn from "zxcvbn";
 window.zxcvbn = zxcvbn;
 import initMap from "./map";
 
-initMap();
+setTimeout(() => {
+    initMap();
+})
 
 Alpine.start();
