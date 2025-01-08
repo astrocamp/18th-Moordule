@@ -2,68 +2,83 @@
 <!-- templates/dashboard.html -->
 
 <div class="relative max-w-screen-lg mt-8 mx-auto">
-	<div class="grid grid-cols-3 gap-4 p-6 bg-yellow-300 rounded-lg">
-		<div class="space-y-4">
-			<div class="bg-white p-4 rounded-lg shadow-lg">
-				<div
-					class="w-full h-48 bg-gray-200 rounded-lg flex items-center justify-center"
-				>
-					<span class="text-gray-500">用戶 photo</span>
-				</div>
-			</div>
-			<div class="bg-white p-4 rounded-lg shadow-lg">
-				<div class="text-center space-y-2">
-					<p>-顯示名稱-</p>
-					<p>興趣 #</p>
-				</div>
-			</div>
-		</div>
+  <div class="grid grid-cols-3 gap-4 p-6 bg-yellow-300 rounded-lg">
+    <div class="space-y-4">
+      <div class="bg-white p-4 rounded-lg shadow-lg">
+        <div
+          class="w-full h-48 bg-gray-200 rounded-lg flex items-center justify-center"
+        >
+          <span class="text-gray-500">用戶 photo</span>
+        </div>
+      </div>
+      <div class="bg-white p-4 rounded-lg shadow-lg">
+        <div class="text-center space-y-2">
+          <p>-顯示名稱-</p>
+          <p>興趣 #</p>
+        </div>
+      </div>
+    </div>
 
-		<!-- 中間聚會資訊 -->
-		<div class="bg-white p-4 rounded-lg shadow-lg">
-			<p class="text-gray-500 font-medium text-2xl text-center mb-4">
-				已報名的聚會
-			</p>
-			<div
-				class="w-full h-48 bg-gray-200 rounded-lg flex items-center justify-center mb-4"
-			>
-				<span class="text-gray-500">聚會 photo</span>
-			</div>
-			<div class="text-center space-y-2">
-				<p class="text-gray-700 font-semibold">聚會名稱：</p>
-				<p class="text-yellow-500">跟首頁聚會卡牌一致</p>
-			</div>
-		</div>
+    <!-- 中間聚會資訊 -->
+    <div class="bg-white p-4 rounded-lg shadow-lg">
+      <p class="text-gray-500 font-medium text-2xl text-center mb-4">
+        已報名的聚會
+      </p>
+      <div
+        class="w-full h-48 bg-gray-200 rounded-lg flex items-center justify-center mb-4"
+      >
+        <span class="text-gray-500">聚會 photo</span>
+      </div>
+      <div class="text-center space-y-2">
+        <p class="text-gray-700 font-semibold">聚會名稱：</p>
+        <p class="text-yellow-500">跟首頁聚會卡牌一致</p>
+      </div>
+    </div>
 
-		<div class="space-y-4">
-			<div class="bg-white p-4 rounded-lg shadow-lg text-center">
-				<h3 class="text-gray-700 mb-2 text-xl">我的錢包</h3>
-				<div
-					class="w-32 h-24 mx-auto bg-yellow-400 rounded-full flex items-center justify-center text-white text-7xl font-small"
-				>
-					99
-				</div>
-				<button
-					class="mt-4 bg-yellow-400 text-white text-xl px-8 py-2 rounded-full"
-				>
-					儲值
-				</button>
-			</div>
+    <div class="space-y-4">
+      <div class="bg-white p-4 rounded-lg shadow-lg text-center">
+        <h3 class="text-gray-700 mb-2 text-xl">我的錢包</h3>
+        <div
+          class="w-32 h-24 mx-auto bg-yellow-400 rounded-full flex items-center justify-center text-white text-7xl font-small"
+        >
+          99
+        </div>
+        <button
+          class="mt-4 bg-yellow-400 text-white text-xl px-8 py-2 rounded-full"
+        >
+          儲值
+        </button>
+      </div>
 
-			<div class="bg-white p-4 rounded-lg shadow-lg text-center">
-				<h3 class="text-yellow-500 font-bold">日曆</h3>
-				<p class="text-yellow-500">可以連 google</p>
-			</div>
-
-			<div class="bg-white p-4 rounded-lg shadow-lg">
-				<h3 class="text-gray-700 mb-4">最新消息</h3>
-				<div class="space-y-2">
-					<div class="h-12 bg-gray-200 rounded"></div>
-					<div class="h-12 bg-gray-200 rounded"></div>
-					<div class="h-12 bg-gray-200 rounded"></div>
-				</div>
-			</div>
-		</div>
-	</div>
+      <div class="bg-white p-3 rounded-lg shadow-lg text-center">
+        <h3 class="text-yellow-500 font-bold">日曆</h3>
+        <div
+          style="
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 100%; /* 調整這裡以放大日曆顯示比例 */
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+          "
+        >
+          <iframe
+            src="https://calendar.google.com/calendar/embed?src=YOUR_CALENDAR_ID&ctz=YOUR_TIMEZONE&mode=MONTH&showTitle=0&showPrint=0&showTabs=0&showCalendars=0&showDate=1"
+            style="
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              border: 0;
+            "
+            frameborder="0"
+            scrolling="no"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 {%endblock%}
