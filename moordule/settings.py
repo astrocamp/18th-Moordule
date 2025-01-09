@@ -10,8 +10,7 @@ line_pay_hostname = os.getenv("HOSTNAME")
 ALLOWED_HOSTS = allowed_hosts_env + [line_pay_hostname] + ['moordule.com', 'www.moordule.com'] 
 
 CSRF_TRUSTED_ORIGINS = [f"https://{os.getenv('HOSTNAME')}"]
-
-
+# FIXME: 加網址
 AUTH_USER_MODEL = "users.CustomUser"
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 DEBUG = os.getenv("DEBUG", "True") == "True"

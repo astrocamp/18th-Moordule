@@ -19,3 +19,7 @@ def index_view(request):
     }
 
     return render(request, "pages/index.html", context)
+
+
+def privacy(request):
+    return render(request, "pages/privacy.html")

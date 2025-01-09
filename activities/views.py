@@ -229,6 +229,44 @@ def search(request):
     return render(request, "activities/search.html", {"activities": activities})
 
 
+def today(request):
+    categories = Category.objects.prefetch_related("activity_set")
+
+    now = timezone.now()  # 過濾掉過期的聚會，只顯示未過期的聚會
+    activities_by_category = {}
+    activities_per_page = 8  # 每頁顯示的活動數量
+
+    for category in categories:
+        # 獲取未過期的活動並按開始時間排序
+        activities = category.activity_set.filter(start_time__gte=now).order_by(
+            "start_time"
+        )
+
+        # 獲取當前頁碼
+        page_number = request.GET.get(
+            f"page_{category.id}", 1
+        )  # 使用類別ID來區分不同類別的頁碼
+
+        paginator = Paginator(activities, activities_per_page)  # 創建分頁器
+
+        try:
+            page_obj = paginator.page(page_number)  # 獲取當前頁的活動
+        except PageNotAnInteger:
+            page_obj = paginator.page(1)  # 如果不是整數，顯示第1頁
+        except EmptyPage:
+            page_obj = paginator.page(paginator.num_pages)  # 如果超出範圍，顯示最後一頁
+
+        activities_by_category[category] = page_obj  # 將分頁後的活動存入字典
+
+    return render(
+        request,
+        "activities/today.html",
+        {
+            "activities_by_category": activities_by_category,
+            "categories": categories,
+        },
+    )
+
 def eating(request):
     categories = Category.objects.prefetch_related("activity_set")
 

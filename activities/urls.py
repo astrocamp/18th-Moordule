@@ -21,6 +21,7 @@ urlpatterns = [
         name="delete_category",
     ),
     path("search/", views.search, name="search"),
+    path("today/", views.today, name="today"),
     path("eating/", views.eating, name="eating"),
     path("driking/", views.driking, name="driking"),
     path("sports/", views.sports, name="sports"),
