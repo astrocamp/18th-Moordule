@@ -1,68 +1,103 @@
-{% extends 'base/layout.html' %}
+{% extends "base/layout.html" %}
 {% load static %}
 {% block head %}
     <title>刪除聚會</title>
-{% endblock %}
+    <script src="https://maps.googleapis.com/maps/api/js?key={{google_maps_api_key}}&callback=initMap&loading=async" async defer></script>
+    <script src="{% static 'src/map.js' %}"></script>
+{% endblock head %}
 
 {% block content %}
-<div class="pt-20 mx-auto w-full max-w-4xl">
+<div class="bg-white text-gray-900">
+    <!-- 特別聚會 banner -->
+    <section id="top">
+        <img src="https://images.unsplash.com/photo-1541379889336-70f26e4c4617?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2hpbmVzZSUyMG5ldyUyMHllYXJ8ZW58MHx8MHx8fDA%3D" alt="chinese new year" class="w-full h-[70vh] object-cover">
+    </section>
 
-    <div class="max-w-7xl mx-auto mt-8 bg-moordule-yellow p-8 rounded-[24px] shadow-md space-y-8">
-       <div class="bg-white rounded-[24px]">
-       <br>
-       <h1 class="flex justify-center  text-4xl text-moordule-pink">刪除確認</h1>
-                <div class="flex flex-wrap justify-center gap-6 mx-2 pt-8">
-                    <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 rounded-3xl overflow-hidden shadow-lg">
-                        <!-- 卡牌內容 -->
-                        <div class=" bg-moordule-pink p-4 shadow-md rounded-[24px]">
-                            <h3 class="text-xl text-red-600 text-center">您確定要刪除聚會 <strong>{{ activity.title }}</strong> 嗎？</h3>
-                            
-                            <img src="{{ activity.photo.url }}" alt="{{ activity.title }}" class="h-48 w-full object-cover " />
-                            
-                            <div class="mb-4">
-                                <strong>{{ activity.title }}</strong><br>
-                                地址：{{ activity.address }}<br>
-                                開始時間：{{ activity.start_time|date:"Y-m-d H:i" }}<br>
-                                持續時間：{{ activity.duration }} 小時<br>
-                                參加人數上限：{{ activity.max_participants }}<br>
-                                預計結束時間：{{ activity.end_time|date:"Y-m-d H:i" }}<br>
-                                建立時間：{{ activity.created_at|date:"Y-m-d H:i" }}<br>
-                            </div>
+    <!-- 按鈕去各區 -->
+    <div class="flex justify-center space-x-10 my-10">
+        <a href="{% url 'activities:eating' %}">
+            <button class="text-xl px-4 py-1 rounded-full bg-moordule-pink text-white-shadow hover:bg-pink-500">
+                揪吃飯
+            </button>
+        </a>
+        <a href="{% url 'activities:driking' %}">
+            <button class="text-xl px-4 py-1 rounded-full bg-moordule-yellow text-white-shadow hover:bg-yellow-500">
+                揪喝酒
+            </button>
+        </a>
+        <a href="{% url 'activities:sports' %}">
+            <button class="text-xl px-4 py-1 rounded-full bg-moordule-deep-blue text-white-shadow hover:bg-blue-500">
+                揪運動
+            </button>
+        </a>
+        <a href="{% url 'activities:singing' %}">
+            <button class="text-xl px-4 py-1 rounded-full bg-moordule-yellow text-white-shadow hover:bg-yellow-500">
+                揪唱歌
+            </button>
+        </a>
+        <a href="{% url 'activities:movies' %}">
+            <button class="text-xl px-4 py-1 rounded-full bg-moordule-pink text-white-shadow hover:bg-pink-500">
+                揪電影
+            </button>
+        </a>
+        <a href="{% url 'activities:discussion' %}">
+            <button class="text-xl px-4 py-1 rounded-full bg-moordule-deep-blue text-white-shadow hover:bg-blue-500">
+                揪討論
+            </button>
+        </a>
+    </div>
 
-                            <div class="flex justify-between items-center mb-2">
-                                <div class="flex items-center gap-1">
-                                    <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
-                                        <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"/>
-                                    </svg>
-                                    <span>已參加{{ activity.participants.count }} / {{ activity.max_participants }}人</span>
-                                </div>
-                            </div>
+    <!-- 聚會資訊 -->
+    <div class="bg-yellow-300 rounded-3xl h-[600px] overflow-hidden shadow-lg mx-20">
+        <div class="px-10 py-10 flex row rounded-3xl gap-4 h-full">
+            <img src="{{ activity.photo.url }}" alt="{{ activity.title }}" class="basis-1/3 rounded-s-3xl bg-white object-cover">
 
-                            <div class="flex justify-between gap-2 text-sm mb-2">
-                                <div class="flex">
-                                    <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
-                                    </svg>
-                                    <p>地點: {{ activity.address }}</p>
-                                </div>
-                                <p>時間: {{ activity.start_time|date:"Y-m-d H:i" }}</p>
-                            </div>
-
-                            <span class="text-lg font-medium">聚會內容：</span>
-                            <p class="text-sm mb-4 text-lg">{{ activity.description }}</p>
-
-                            <form method="POST" class="mt-4">
-                                {% csrf_token %}
-                                <button type="submit" class="w-full py-2 mt-4 rounded-full bg-gray-300 text-white-shadow font-bold text-center block">確定刪除</button>
-                            </form>
-
-                            <a href="{% url 'users:user_page' tag='my_activities' %}" class="w-full py-2 mt-4 rounded-full bg-gray-300 text-white-shadow font-bold text-center block">取消</a>
-                        </div>
+            <div class="basis-2/3 rounded-r-3xl bg-white px-8 py-6">
+                <div class="flex justify-between items-center mb-2">
+                    <h3 class="font-bold text-2xl">{{ activity.title }}</h3>
+                    <div class="flex items-center gap-1">
+                        <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"></path>
+                        </svg>
+                        <span class="text-lg">已參加{{ activity.participants.count }} / 最多{{ activity.max_participants }}人</span>
                     </div>
                 </div>
-                <br>
 
-        
+                <div class="flex justify-between gap-2 text-sm mb-2">
+                    <div class="flex">
+                        <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="text-lg">{{ activity.address }}</span>
+                    </div>
+                    <div class="flex gap-8">
+                        <span class="text-lg">聚會日期：{{ activity.start_time|date:"Y-m-d" }}</span>
+                        <span class="text-lg">聚會時間：{{ activity.start_time|date:"H:i" }}</span>
+                    </div>
+                </div>
+
+                <div class="gap-4 pb-6 flex h-[200px] pt-4">
+                    <div >
+                        <span class="text-xl font-medium">聚會內容：</span>
+                        <p class="text-lg mb-4 text-lg">{{ activity.description }}</p>
+                    </div>
+                    
+                      <!-- 刪除區塊 -->
+                </div>
+                <div>
+                <form method="POST" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" name="delete" class="w-full rounded-full text-white-shadow bg-moordule-pink font-bold p-2">確定刪除聚會</button>
+                </form>
+                <br>
+                <a href="{% url 'users:user_page' tag='my_activities' %}">
+                    <button type="button" class="w-full rounded-full text-white-shadow bg-moordule-yellow font-bold p-2">取消</button>
+                </a>
+                </div>
+              
+
+            </div>
+        </div>
     </div>
 </div>
-{% endblock %}
+{% endblock content %}

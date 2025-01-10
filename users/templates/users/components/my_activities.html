@@ -6,7 +6,7 @@
     <div class="container mx-auto mt-6 px-4">
      {% comment %}所有聚會 (已審核和未審核共用同一區塊) {% endcomment %}
 
-        <div class="max-w-7xl  mx-auto mt-8 bg-yellow-300 p-8 rounded-[24px]  shadow-md space-y-8">
+        <div class="max-w-7xl  mx-auto mt-8 bg-moordule-yellow  p-8 rounded-[24px]  shadow-md space-y-8">
 
     <div class="p-4 rounded-[24px] shadow-inner border-2 border-white">
      {% comment %} 
@@ -22,14 +22,14 @@
                     <div class="w-80 rounded-3xl overflow-hidden shadow-lg border border-white ">
                                 <img src="{{ activity.photo.url }}" alt="{{ activity.title }}"
                                     class="h-48 w-full object-cover">
-                                <div class="bg-white p-4">
+                                <div class="bg-white p-4 h-full">
                                     <div class="flex justify-between items-center mb-2">
                                         <h3 class="font-bold text-2xl">{{ activity.title }}</h3>
                                         <div class="flex items-center gap-1">
                                             <svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
                                                 <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" />
                                             </svg>
-                                            <span>{{ activity.participants_count }}</span>
+                                            <span>最多{{ activity.max_participants }}人</span>
                                         </div>
                                     </div>
                                     <div class="flex justify-between gap-2 text-sm mb-2">

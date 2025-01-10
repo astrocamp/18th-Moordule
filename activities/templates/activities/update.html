@@ -1,96 +1,110 @@
-{% extends "base/layout.html" %} 
+{% extends "base/layout.html" %}
+{% load static %}
 {% block head %}
     <title>更新聚會</title>
-{% endblock head %} 
+    <script type="module" src="{% static 'dist/activities.js' %}" defer></script>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
+{% endblock head %}
 
 {% block content %}
-<div class="pt-20  mx-auto w-full max-w-4xl">
-    <h1 class="flex justify-center my-10 text-4xl">更新聚會</h1>
+<div class="pt-20">
 
-    <div class="max-w-7xl mx-auto mt-8 bg-yellow-300 p-8 rounded-[24px] shadow-md space-y-8">
-        {% if error_message %}
-            <p style="color: red;">{{ error_message }}</p>
-        {% endif %}
+    <nav class="space-x-5 flex justify-center items-center mt-5 mx-auto w-max">
+        <a href="{% url 'users:user_page' tag='member' %}">
+            <button class="px-4 sm:px-6 py-2 sm:py-3 rounded-full hover:bg-yellow-500 text-white-shadow bg-moordule-yellow text-xl">
+                我的頁面
+            </button>
+        </a>
 
-       
+        <a href="{% url 'users:user_page' tag='account' %}">
+            <button class="px-4 sm:px-6 py-2 sm:py-3 rounded-full hover:bg-yellow-500 text-white-shadow bg-moordule-yellow text-xl">
+                我的帳號
+            </button>
+        </a>
 
-        <!-- 表單區域開始 -->
-        <form method="POST" class="pt-8 ">
-            {% csrf_token %}
-            <div class="mb-4">
-                <label for="title" class="block text-gray-700">聚會標題：</label>
-                <input type="text" id="title" name="title" value="{{ activity.title }}" required class="w-full p-2 mt-2 border rounded">
-            </div>
+        <a href="{% url 'users:user_page' tag='activities' %}">
+            <button class="px-4 sm:px-6 py-2 sm:py-3 rounded-full hover:bg-yellow-500 text-white-shadow bg-moordule-yellow text-xl">
+                我的聚會
+            </button>
+        </a>
 
-            <div class="mb-4">
-                <label for="description" class="block text-gray-700">聚會描述：</label>
-                <textarea id="description" name="description" class="w-full p-2 mt-2 border rounded">{{ activity.description }}</textarea>
-            </div>
+        <a href="{% url 'users:user_page' tag='my_activities' %}">
+            <button class="px-4 sm:px-6 py-2 sm:py-3 rounded-full hover:bg-yellow-500 text-white-shadow bg-yellow-400 text-xl">
+                創建聚會
+            </button>
+        </a>
+    </nav>
 
-            <div class="mb-4">
-                <label for="address" class="block text-gray-700">聚會地址：</label>
-                <input type="text" id="address" name="address" value="{{ activity.address }}" required class="w-full p-2 mt-2 border rounded">
-            </div>
-
-            <div class="mb-4">
-                <label for="start_time" class="block text-gray-700">開始時間：</label>
-                <input type="datetime-local" id="start_time" name="start_time" value="{{ activity.start_time|date:"Y-m-d\TH:i" }}" required class="w-full p-2 mt-2 border rounded">
-            </div>
-
-            <div class="mb-4">
-                <label for="duration" class="block text-gray-700">持續時間（小時）：</label>
-                <input type="number" id="duration" name="duration" value="{{ activity.duration }}" min="1" required class="w-full p-2 mt-2 border rounded">
-            </div>
-
-            <div class="mb-4">
-                <label class="block font-bold text-gray-800 mb-2">聚會類別：</label>
-                {{ form.category }}
-                {% for error in form.category.errors %}
-                    <p style="color: red;">{{ error }}</p>
-                {% endfor %}
-            </div>
-
-            <div class="mb-4">
-                <label for="max_participants" class="block text-gray-700">參加人數上限：</label>
-                <input type="number" id="max_participants" name="max_participants" value="{{ activity.max_participants }}" min="1" required class="w-full p-2 mt-2 border rounded">
-            </div>
-
-            <button type="submit" class="w-full py-2 rounded-full bg-moordule-pink text-white font-bold">更新聚會</button>
-        </form>
-
-
-    <h3 class="flex justify-center my-10 text-4xl">原卡牌資訊</h3>
-         <!-- 卡牌顯示 -->
-        <div class="flex flex-wrap justify-center gap-6 mx-2 pt-8">
-            <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 rounded-3xl overflow-hidden shadow-lg">
-                <img src="{{ activity.photo.url }}" alt="{{ activity.title }}" class="h-48 w-full object-cover" />
-                <div class="bg-moordule-pink p-4">
-                    <div class="flex justify-between items-center mb-2">
-                        <h3>{{ activity.title }}</h3>
-                        <div class="flex items-center gap-1">
-                            <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"/>
-                            </svg>
-                            <span>已參加{{ activity.participants.count }} / {{ activity.max_participants }}人</span>
-                        </div>
+    <form method="POST" class="mt-12 max-w-7xl mx-auto" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="max-w-7xl mx-auto mt-8 bg-yellow-300 p-8 rounded-[24px]  shadow-md space-y-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+                <div>
+                    <div class="bg-white rounded-[24px] rounded-card p-6">
+                        <img src="{{ activity.photo.url }}" alt="{{ activity.title }}" class="h-48 w-full  rounded-[24px] object-cover" />
                     </div>
-                    <div class="flex justify-between gap-2 text-sm mb-2">
-                        <div class="flex">
-                            <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
-                            </svg>
-                            <p>地點: {{ activity.address }}</p>
-                        </div>
-                        <p>時間: {{ activity.start_time|date:"Y-m-d H:i" }}</p>
+
+                    <div class="bg-white rounded-[24px] rounded-card mt-6 p-6">
+                        <label class="block font-bold text-gray-800 mb-2">聚會名稱：</label>
+                        <input type="text" id="title" name="title" value="{{ activity.title }}" required
+                               class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-yellow-500">
+                        
+                        <label class="block font-bold text-gray-800 mb-2 mt-4">類別：</label>
+                        <select name="category" id="category" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-yellow-500">
+                            <option value="" disabled selected>選擇類別</option>
+                            {% for category in categories %}
+                                <option value="{{ category.id }}" {% if activity.category.id == category.id %}selected{% endif %}>{{ category.name }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
-                   
-                    <span class="text-lg font-medium">聚會內容：</span>
-                    <p class="text-sm mb-4 text-lg">{{ activity.description }}</p>
+                </div>
+
+                <div class="bg-white rounded-[24px] rounded-card p-6 space-y-6">
+                    <h2 class="text-lg font-bold text-gray-800 mb-4">聚會設定</h2>
+
+                    <div class="space-y-3">
+                        <p class="text-gray-700">開始時間：</p>
+                        <input type="datetime-local" id="start_time" name="start_time" value="{{ activity.start_time|date:"Y-m-d\TH:i" }}" required
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                    </div>
+
+                    <div class="space-y-3">
+                        <p class="text-gray-700">聚會地點（地址）：</p>
+                        <input type="text" id="address" name="address" value="{{ activity.address }}" required
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                    </div>
+
+                    <div class="space-y-3">
+                        <p class="text-gray-700">聚會時長（小時）：</p>
+                        <input type="number" id="duration" name="duration" value="{{ activity.duration }}" min="1" required
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                    </div>
+
+                    <div class="space-y-3">
+                        <p class="text-gray-700">參加人數：</p>
+                        <input type="number" id="max_participants" name="max_participants" value="{{ activity.max_participants }}" min="1" required
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-[24px] rounded-card p-6 space-y-6">
+                    <h2 class="text-lg font-bold text-gray-800 mb-4">聚會詳細</h2>
+                    <div class="space-y-3">
+                        <p class="text-gray-700">內容描述：</p>
+                        <textarea id="description" name="description" required
+                                  class="w-full px-4 py-2 mt-2 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-yellow-500 min-h-[120px]">{{ activity.description }}</textarea>
+                    </div>
                 </div>
             </div>
+
+            
+                <button type="submit" class="mt-6 w-full py-3 bg-moordule-pink text-white-shadow rounded-full hover:bg-red-500 ">
+                    更新聚會
+                </button>
+            
         </div>
-
-
-    </div>
+    </form>
 </div>
+
 {% endblock content %}
