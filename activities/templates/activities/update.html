@@ -1,45 +1,96 @@
-
-{% extends "base/layout.html" %} {% block head %}
+{% extends "base/layout.html" %} 
+{% block head %}
     <title>更新聚會</title>
-{% endblock head %} {% block content %}
+{% endblock head %} 
 
-    <h1>更新聚會</h1>
-    {% if error_message %}
-        <p style="color: red;">{{ error_message }}</p>
-    {% endif %}
-    <form method="POST">
-        {% csrf_token %}
-        <label for="title">聚會標題：</label>
-        <input type="text" id="title" name="title" value="{{ activity.title }}" required><br>
+{% block content %}
+<div class="pt-20  mx-auto w-full max-w-4xl">
+    <h1 class="flex justify-center my-10 text-4xl">更新聚會</h1>
 
-        <label for="description">聚會描述：</label>
-        <textarea id="description" name="description">{{ activity.description }}</textarea><br>
+    <div class="max-w-7xl mx-auto mt-8 bg-yellow-300 p-8 rounded-[24px] shadow-md space-y-8">
+        {% if error_message %}
+            <p style="color: red;">{{ error_message }}</p>
+        {% endif %}
 
-        <label for="address">聚會地址：</label>
-        <input type="text" id="address" name="address" value="{{ activity.address }}" required><br>
+       
 
-        <label for="start_time">開始時間：</label>
-        <input type="datetime-local" id="start_time" name="start_time" value="{{ activity.start_time|date:"Y-m-d\TH:i" }}" required><br>
+        <!-- 表單區域開始 -->
+        <form method="POST" class="pt-8 ">
+            {% csrf_token %}
+            <div class="mb-4">
+                <label for="title" class="block text-gray-700">聚會標題：</label>
+                <input type="text" id="title" name="title" value="{{ activity.title }}" required class="w-full p-2 mt-2 border rounded">
+            </div>
 
-        <label for="duration">持續時間（小時）：</label>
-        <input type="number" id="duration" name="duration" value="{{ activity.duration }}" min="1" required><br>
+            <div class="mb-4">
+                <label for="description" class="block text-gray-700">聚會描述：</label>
+                <textarea id="description" name="description" class="w-full p-2 mt-2 border rounded">{{ activity.description }}</textarea>
+            </div>
 
-         <label class="block font-bold text-gray-800 mb-2">聚會類別：</label>
-        {{ form.category }}
-        {% for error in form.category.errors %}
-            <p style="color: red;">{{ error }}</p>
-        {% endfor %}
-        <br>
+            <div class="mb-4">
+                <label for="address" class="block text-gray-700">聚會地址：</label>
+                <input type="text" id="address" name="address" value="{{ activity.address }}" required class="w-full p-2 mt-2 border rounded">
+            </div>
+
+            <div class="mb-4">
+                <label for="start_time" class="block text-gray-700">開始時間：</label>
+                <input type="datetime-local" id="start_time" name="start_time" value="{{ activity.start_time|date:"Y-m-d\TH:i" }}" required class="w-full p-2 mt-2 border rounded">
+            </div>
+
+            <div class="mb-4">
+                <label for="duration" class="block text-gray-700">持續時間（小時）：</label>
+                <input type="number" id="duration" name="duration" value="{{ activity.duration }}" min="1" required class="w-full p-2 mt-2 border rounded">
+            </div>
+
+            <div class="mb-4">
+                <label class="block font-bold text-gray-800 mb-2">聚會類別：</label>
+                {{ form.category }}
+                {% for error in form.category.errors %}
+                    <p style="color: red;">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <div class="mb-4">
+                <label for="max_participants" class="block text-gray-700">參加人數上限：</label>
+                <input type="number" id="max_participants" name="max_participants" value="{{ activity.max_participants }}" min="1" required class="w-full p-2 mt-2 border rounded">
+            </div>
+
+            <button type="submit" class="w-full py-2 rounded-full bg-moordule-pink text-white font-bold">更新聚會</button>
+        </form>
 
 
+    <h3 class="flex justify-center my-10 text-4xl">原卡牌資訊</h3>
+         <!-- 卡牌顯示 -->
+        <div class="flex flex-wrap justify-center gap-6 mx-2 pt-8">
+            <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 rounded-3xl overflow-hidden shadow-lg">
+                <img src="{{ activity.photo.url }}" alt="{{ activity.title }}" class="h-48 w-full object-cover" />
+                <div class="bg-moordule-pink p-4">
+                    <div class="flex justify-between items-center mb-2">
+                        <h3>{{ activity.title }}</h3>
+                        <div class="flex items-center gap-1">
+                            <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"/>
+                            </svg>
+                            <span>已參加{{ activity.participants.count }} / {{ activity.max_participants }}人</span>
+                        </div>
+                    </div>
+                    <div class="flex justify-between gap-2 text-sm mb-2">
+                        <div class="flex">
+                            <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                            </svg>
+                            <p>地點: {{ activity.address }}</p>
+                        </div>
+                        <p>時間: {{ activity.start_time|date:"Y-m-d H:i" }}</p>
+                    </div>
+                   
+                    <span class="text-lg font-medium">聚會內容：</span>
+                    <p class="text-sm mb-4 text-lg">{{ activity.description }}</p>
+                </div>
+            </div>
+        </div>
 
 
-        <label for="max_participants">參加人數上限：</label>
-        <input type="number" id="max_participants" name="max_participants" value="{{ activity.max_participants }}" min="1" required><br>
-
-        <button type="submit">更新聚會</button>
-
-    </form>
-</body>
-
+    </div>
+</div>
 {% endblock content %}

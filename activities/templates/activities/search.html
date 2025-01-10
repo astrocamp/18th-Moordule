@@ -16,102 +16,93 @@
     />
   </section>
   <!-- 按鈕去各區 -->
-  <div class="flex justify-center space-x-10 my-10">
-    <a href="#eat"
+ <div class="flex justify-center space-x-10 my-10">
+    <a href="{% url 'activities:eating' %}"
       ><button
-        class="text-xl px-4 py-1 rounded-full bg-[#F78888] text-white-shadow hover:bg-pink-500"
+        class="text-xl px-4 py-1 rounded-full bg-moordule-pink text-white-shadow hover:bg-pink-500"
       >
         揪吃飯
       </button></a
     >
-    <a href="#drink"
+    <a href="{% url 'activities:driking' %}"
       ><button
-        class="text-xl px-4 py-1 rounded-full bg-yellow-300 text-white-shadow hover:bg-yellow-500"
+        class="text-xl px-4 py-1 rounded-full bg-moordule-yellow text-white-shadow hover:bg-yellow-500"
       >
         揪喝酒
       </button></a
     >
-    <a href="#sports"
+     <a href="{% url 'activities:sports' %}"
       ><button
-        class="text-xl px-4 py-1 rounded-full bg-[#5DA2D5] text-white-shadow hover:bg-blue-500"
+        class="text-xl px-4 py-1 rounded-full bg-moordule-deep-blue text-white-shadow hover:bg-blue-500"
       >
         揪運動
       </button></a
     >
-    <a href="#sing"
+    <a href="{% url 'activities:singing' %}"
       ><button
-        class="text-xl px-4 py-1 rounded-full bg-yellow-300 text-white-shadow hover:bg-yellow-500"
+        class="text-xl px-4 py-1 rounded-full bg-moordule-yellow text-white-shadow hover:bg-yellow-500"
       >
         揪唱歌
       </button></a
     >
-    <a href="#movies"
+    <a href="{% url 'activities:movies' %}"
       ><button
-        class="text-xl px-4 py-1 rounded-full bg-[#F78888] text-white-shadow hover:bg-pink-500"
+        class="text-xl px-4 py-1 rounded-full bg-moordule-pink text-white-shadow hover:bg-pink-500"
       >
         揪電影
       </button></a
     >
-    <a href="#seminer"
+    <a href="{% url 'activities:discussion' %}"
       ><button
-        class="text-xl px-4 py-1 rounded-full bg-[#5DA2D5] text-white-shadow hover:bg-blue-500"
+        class="text-xl px-4 py-1 rounded-full bg-moordule-deep-blue text-white-shadow hover:bg-blue-500"
       >
         揪討論
       </button></a
     >
-  </div>
+  </div> 
 
   <section>
     <h1 class="flex justify-center text-4xl">搜尋結果:{{ keyword }}</h1>
 
     <!-- 卡牌樣式 -->
     {% if activities %}
-    <div id="drink" class="mx-20 pt-12">
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div  class="justify-center mx-20 pt-12">
+      <div class="flex flex-wrap justify-center gap-6 mx-2 pt-8">
         <!-- Card -->
-        {% for activty in activities %}
-        <div class="rounded-3xl overflow-hidden shadow-lg bg-white">
-          <img
-            src="https://miro.medium.com/v2/resize:fit:630/format:webp/1*5xh2fKvJByPlTheZik_VCg.jpeg"
-            alt="pizza"
-            class="h-48 w-full object-cover"
-          />
-          <div class="bg-yellow-300 p-6">
-            <div class="flex justify-between items-center mb-4">
-              <h3 class="font-bold text-xl">{{activty.title}}</h3>
-              <div class="flex items-center gap-1">
-                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
-                  <path
-                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                  />
-                </svg>
-                <span>20</span>
+        {% for activity in activities %}
+              <div class="w-1/5 rounded-3xl overflow-hidden shadow-lg ">
+                <img src="{{ activity.photo.url }}" alt="{{ activity.title }}"  class="h-48 w-full object-cover" />
+                <div class="bg-moordule-yellow p-4  h-full">
+                  <div class="flex justify-between items-center mb-2">
+                    <h3>{{ activity.title }}</h3>
+                    <div class="flex items-center gap-1">
+                      <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"/>
+                      </svg>
+                        <span>已參加{{ activity.participants.count }} / {{ activity.max_participants }}人</span>
+                    </div>
+                  </div>
+                  <div class="flex justify-between gap-2 text-sm mb-2">
+                    <div class="flex">
+                      <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                      </svg>
+                      <p>地點: {{ activity.address }}</p>
+                    </div>
+                    <p>時間: {{ activity.start_time|date:"Y-m-d H:i" }}</p>
+                  </div>
+                  <span class="text-lg font-medium">聚會內容：</span>
+                  <p class="text-sm mb-4 text-lg">
+                    {{ activity.description }}
+                  </p>
+                  <a href="{% url 'activities:join' activity.id %} "  
+                  >
+                <button class="w-full py-2 rounded-full bg-white text-moordule-yellow font-bold">馬上揪</button>
+                </a>
+                </div>
               </div>
-            </div>
-            <div class="flex justify-between items-center text-sm mb-4">
-              <div class="flex items-center gap-2">
-                <svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path
-                    fill-rule="evenodd"
-                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-                <span>{{activty.address}}</span>
-              </div>
-              <span class="text-sm">{{activty.created_at}}</span>
-            </div>
-            <p class="text-sm mb-4">{{activty.description}}</p>
-            <button
-              class="w-full py-2 rounded-full bg-white text-yellow-500 font-bold"
-            >
-              馬上揪
-            </button>
+            {% endfor %}
           </div>
-        </div>
-        {% endfor %}
-      </div>
-    </div>
     {% else %}
     <h3 class="flex justify-center text-2xl p-8 text-red text-center">
       沒有找到相關結果。
@@ -119,4 +110,26 @@
     {% endif %}
   </section>
 </div>
+
+          <!-- 分頁導航 -->
+          <div class="pagination mt-8 mb-4 flex justify-center">
+            <span class="step-links">
+                {% if activities.has_previous %}
+                    <a href="?page_{{ category.id }}={{ activities.previous_page_number }}" class="mx-2 font-bold text-2xl "> < </a>
+                {% endif %}
+
+                {% for num in activities.paginator.page_range %}
+                    {% if num == activities.number %}
+                        <span class="mx-2 font-bold text-2xl"> {{ num }} </span>  <!-- 當前頁碼 -->
+                    {% else %}
+                        <a href="?page_{{ category.id }}={{ num }}" class="mx-2 font-bold text-2xl"> {{ num }} </a>
+                    {% endif %}
+                {% endfor %}
+
+                {% if activities.has_next %}
+                    <a href="?page_{{ category.id }}={{ activities.next_page_number }}" class="mx-2 text-2xl font-bold"> > </a>
+                {% endif %}
+            </span>
+          </div>
+          
 {% endblock content %}

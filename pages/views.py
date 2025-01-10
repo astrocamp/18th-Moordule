@@ -12,7 +12,7 @@ def index_view(request):
 
     upcoming_activities = Activity.objects.filter(
         start_time__gte=now, start_time__lte=tomorrow
-    ).order_by("start_time")
+    ).order_by("start_time")[:4]
 
     context = {
         "upcoming_activities": upcoming_activities,

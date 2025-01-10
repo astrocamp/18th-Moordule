@@ -16,44 +16,44 @@
     <!-- 按鈕去各區 -->
    <!-- 按鈕去各區 -->
   <div class="flex justify-center space-x-10 my-10">
-    <a href="#eat"
+    <a href="{% url 'activities:eating' %}"
       ><button
-        class="text-xl px-4 py-1 rounded-full bg-[#F78888] text-white-shadow hover:bg-pink-500"
+        class="text-xl px-4 py-1 rounded-full bg-moordule-pink text-white-shadow hover:bg-pink-500"
       >
         揪吃飯
       </button></a
     >
-    <a href="#drink"
+    <a href="{% url 'activities:driking' %}"
       ><button
-        class="text-xl px-4 py-1 rounded-full bg-yellow-300 text-white-shadow hover:bg-yellow-500"
+        class="text-xl px-4 py-1 rounded-full bg-moordule-yellow text-white-shadow hover:bg-yellow-500"
       >
         揪喝酒
       </button></a
     >
-    <a href="#sports"
+     <a href="{% url 'activities:sports' %}"
       ><button
-        class="text-xl px-4 py-1 rounded-full bg-[#5DA2D5] text-white-shadow hover:bg-blue-500"
+        class="text-xl px-4 py-1 rounded-full bg-moordule-deep-blue text-white-shadow hover:bg-blue-500"
       >
         揪運動
       </button></a
     >
-    <a href="#sing"
+    <a href="{% url 'activities:singing' %}"
       ><button
-        class="text-xl px-4 py-1 rounded-full bg-yellow-300 text-white-shadow hover:bg-yellow-500"
+        class="text-xl px-4 py-1 rounded-full bg-moordule-yellow text-white-shadow hover:bg-yellow-500"
       >
         揪唱歌
       </button></a
     >
-    <a href="#movies"
+    <a href="{% url 'activities:movies' %}"
       ><button
-        class="text-xl px-4 py-1 rounded-full bg-[#F78888] text-white-shadow hover:bg-pink-500"
+        class="text-xl px-4 py-1 rounded-full bg-moordule-pink text-white-shadow hover:bg-pink-500"
       >
         揪電影
       </button></a
     >
-    <a href="#seminer"
+    <a href="{% url 'activities:discussion' %}"
       ><button
-        class="text-xl px-4 py-1 rounded-full bg-[#5DA2D5] text-white-shadow hover:bg-blue-500"
+        class="text-xl px-4 py-1 rounded-full bg-moordule-deep-blue text-white-shadow hover:bg-blue-500"
       >
         揪討論
       </button></a
@@ -106,17 +106,6 @@
                  <!-- 第四排 -->
                 {% if request.user.is_authenticated %}
 
-                        <form method="post" class="d-inline">
-                            {% csrf_token %}
-                            <button type="submit" name="join" class="w-full rounded-full text-white-shadow bg-[#F78888] font-bold p-2">加入聚會</button>
-                        </form>
-
-                    {% else %}
-                     <a href="{% url 'users:signin' %}">
-                    <button type="button" class="w-full rounded-full text-white-shadow bg-[#F78888] font-bold">請先登入以參加聚會</button>
-                    </a>
-                    {% endif %}
-
                     {% if message %}
                         <p class="text-center alert alert-success">{{ message }}</p>
                     {% endif %}
@@ -124,6 +113,19 @@
                     {% if error_message %}
                         <p class="text-center alert alert-danger">{{ error_message }}</p>
                     {% endif %}
+
+
+                        <form method="post" class="d-inline"  action="#infortop">
+                            {% csrf_token %}
+                            <button type="submit" name="join" class="w-full rounded-full text-white-shadow bg-moordule-pink font-bold p-2">加入聚會</button>
+                        </form>
+
+                    {% else %}
+                     <a href="{% url 'users:signin' %}">
+                    <button type="button" class="w-full rounded-full text-white-shadow bg-moordule-pink font-bold">請先登入以參加聚會</button>
+                    </a>
+                    {% endif %}
+
 
 
 

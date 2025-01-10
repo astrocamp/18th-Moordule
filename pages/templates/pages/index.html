@@ -157,9 +157,8 @@
           class="w-164 h-164 object-contain mt-40"
         />
       </div>
-      {% comment %}
-      <h1 class="text-3xl font-bold mb-2">MOORDULE 多揪</h1>
-      {% endcomment %}
+  
+
       <p class="text-gray-600 mb-4 text-xl">揪朋友 來多揪 越多朋友越好揪</p>
       <p class="text-gray-500 mb-4 text-lg">
         More friends you meet, the more life feels sweeet.
@@ -182,42 +181,35 @@
 
     <div id="drink" class="mx-20 pt-12">
       <div class="flex justify-center gap-12">
-        <!-- Card 1 -->
+        {% comment %} Card {% endcomment %}
         {% for activity in upcoming_activities %}
-        <div class="w-82 rounded-3xl overflow-hidden shadow-lg">
-          <img
-           img src="{{ activity.photo.url }}" alt="{{ activity.title }}"
-            class="h-48 w-full object-cover"
-          />
-          <div class="bg-moordule-yellow p-4">
-            <div class="flex justify-between items-center mb-2">
-              <h3 class="font-bold text-2xl">{{activity.title}}</h3>
-              <div class="flex items-center gap-1">
-                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
-                  <path
-                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                  />
-                </svg>
-                <span>已參加{{ activity.participants.count }} / 最多{{ activity.max_participants }}人</span>
-              </div>
-            </div>
-            <div class="flex justify-between gap-2 text-sm mb-2">
-              <div class="flex">
-                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
-                  <path
-                    fill-rule="evenodd"
-                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-                <span>{{ activity.address }}</span>
-              </div>
-              <span class="text-lg">{{ activity.start_time|date:"Y-m-d H:i" }}</span>
-            </div>
-            <span class="text-lg font-medium">聚會內容：</span>
-            <p class="text-sm mb-4 text-lg">
-             {{ activity.description }}                                                                          
-            </p>
+        
+                <div class="w-1/5 rounded-3xl overflow-hidden shadow-lg ">
+                <img src="{{ activity.photo.url }}" alt="{{ activity.title }}"  class="h-48 w-full object-cover" />
+                <div class="bg-moordule-yellow p-4  h-full">
+                  <div class="flex justify-between items-center mb-2">
+                    <h3>{{ activity.title }}</h3>
+                    <div class="flex items-center gap-1">
+                      <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"/>
+                      </svg>
+                        <span>已參加{{ activity.participants.count }} / {{ activity.max_participants }}人</span>
+                    </div>
+                  </div>
+                  <div class="flex justify-between gap-2 text-sm mb-2">
+                    <div class="flex">
+                      <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                      </svg>
+                      <p>地點: {{ activity.address }}</p>
+                    </div>
+                    <p>時間: {{ activity.start_time|date:"Y-m-d H:i" }}</p>
+                  </div>
+                  <span class="text-lg font-medium">聚會內容：</span>
+                  <p class="text-sm mb-4 text-lg">
+                    {{ activity.description }}
+                  </p>
+
             <a href="{% url 'activities:join' activity.id %}">
             <button class="w-full py-2 rounded-full bg-white  font-bold"
             >
