@@ -1,55 +1,53 @@
 {% extends "base/layout.html" %} <br />
 {% block head %}
-<title>LINE Pay Checkout</title>
+<title>Checkout</title>
 {% endblock %} <br />
 
 {% block content%}
-<h1 class="text-3xl pt-20 m-8 text-center">LINE Pay結帳</h1>
+<h1 class="text-4xl pt-20 m-8 text-center font-bold">加值方案</h1>
 
-<div class="rounded-[24px] bg-yellow-400 mx-20">
-  <div class="p-4 flex gap-4">
-
-    <div class="basis-1/2 ">
-      <div class="text-center mb-6">
-        <h1 class="text-lg mb-2">三五成群 長長久久</h1>
-        <div class="flex justify-center items-baseline">
-          <span class="text-sm align-top mt-2">NTD</span>
-          <span class="text-5xl font-bold">699</span>
-        </div>
-        <div class="mt-2">
-          <span class="text-sm">for</span>
-          <span class="text-2xl ml-2">3 揪</span>
-        </div>
+<div class="rounded-[24px] bg-yellow-400 mx-20 flex">
+  <section class="bg-white rounded-3xl m-8 basis-2/3 items-center">
+    <div class="p-4 gap-4 justify-center">
+      <h1 class="text-lg mb-2 text-center mb-4">三五成群 長長久久</h1>
+      <div class="flex justify-center items-baseline">
+        <span class="text-sm align-top mt-2">NTD</span>
+        <span class="text-5xl font-bold">699</span>
       </div>
-      <div class="space-y-2">
-        <div class="flex items-center">
-          <span class="mr-2">✓</span>
-          <span>包含內容A</span>
-        </div>
-        <div class="flex items-center">
-          <span class="mr-2">✓</span>
-          <span>包含內容B</span>
-        </div>
-        <div class="flex items-center">
-          <span class="mr-2">✓</span>
-          <span>包含內容C</span>
-        </div>
+      
+      <div class="mt-2 flex justify-center">
+        <span class="text-sm">for</span>
+        <span class="text-2xl ml-2">3 揪</span>
       </div>
-    
-    
-      <form class="bg-white rounded-[24px] my-4 p-2 text-center" method="POST">
+      
+    <div class="space-y-2 m-8 flex justify-center">
+      <ul>
+        <li><span class="mr-2">✓</span> 包含內容A</li>
+        <li><span class="mr-2">✓</span> 包含內容A</li>
+        <li><span class="mr-2">✓</span> 包含內容A</li>
+      </ul>
+    </div>
+  
+    <div class="flex mx-auto items-center justify-center mt-4 gap-8">
+      <form class="bg-moordule-yellow rounded-[24px] my-4 px-4 py-2 text-center" method="POST">
         {% csrf_token %}
-        <button class="text-yellow-500 " type="submit">前往付款</button>
+        <button class="text-white-shadow " type="submit">使用Line Pay付款</button>
+      </form>
+      <form class="bg-moordule-yellow rounded-[24px] my-4 px-4 py-2 text-center" method="POST">
+        {% csrf_token %}
+        <button class="text-white-shadow " type="submit">使用信用卡付款</button>
       </form>
     </div>
-    <div class="bg-white-600 basis-1/2 rounded-[24px]">
-      <div class="bg-block text-center text-3xl mt-4 mb-8">其他方案</div>
-      <div> <button class="bg-moordule-deep-blue rounded-full w-full  text-2xl  whitespace-nowrap text-white py-6 px-48 my-6">初來乍到 想試揪</button></div>
-      
-      <button class="bg-moordule-pink rounded-full w-full text-2xl  whitespace-nowrap text-white py-6 px-48 mt-2">好揪就要 一直揪</button>
+     
+  </section>
+  
+  <section class="basis-1/3 m-8 items-center justify-center">
+    <div class="text-center text-3xl mt-4 mb-8 text-white-shadow">其他方案</div>
+    <div class="text-center" > 
+      <button class="bg-moordule-deep-blue rounded-full  text-2xl  whitespace-nowrap text-white py-4 px-4 my-6">初來乍到 想試揪</button>
+      <button class="bg-moordule-pink rounded-full text-2xl  whitespace-nowrap text-white py-4 px-4 my-2">好揪就要 一直揪</button>
     </div>
-  </div>
-
+  </section>
 </div>
 
 {% endblock %}
