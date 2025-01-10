@@ -8,9 +8,10 @@ load_dotenv()
 allowed_hosts_env = os.getenv("ALLOWED_HOSTS", "*").split(",")
 line_pay_hostname = os.getenv("HOSTNAME")
 ALLOWED_HOSTS = allowed_hosts_env + [line_pay_hostname] + ['moordule.com', 'www.moordule.com'] 
+# FIXME:確定部署沒問題，這段再刪除['https://a2a0-61-220-182-115.ngrok-free.app ']
 
-CSRF_TRUSTED_ORIGINS = [f"https://{os.getenv('HOSTNAME')}"]
-# FIXME: 加網址
+CSRF_TRUSTED_ORIGINS = [f"https://{os.getenv('HOSTNAME')}"] 
+
 AUTH_USER_MODEL = "users.CustomUser"
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 DEBUG = os.getenv("DEBUG", "True") == "True"

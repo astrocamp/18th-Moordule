@@ -85,6 +85,11 @@ def user_page_view(request, tag="member"):
     elif tag == "my_activities":
         activities = Meetup.objects.filter(owner=user)
         context["activities"] = activities
+
+    elif tag == "wallet":
+        return render(request, "users/wallet.html")
+        
+
     else:
         # 若沒有符合任何條件，保留基本的 context
         context = {"tag": tag}

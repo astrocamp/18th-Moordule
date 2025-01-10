@@ -67,7 +67,7 @@ def request_payment(request):
                 }
             ],
             "redirectUrls": {
-                "confirmUrl": f"https://{settings.HOSTNAME}/payment/confirm",
+                "confirmUrl": f"https://{settings.HOSTNAME}/cashflows/payment/confirm",
                 "cancelUrl": f"https://{settings.HOSTNAME}/payment/cancel",
             },
         }
@@ -95,3 +95,6 @@ def request_payment(request):
             )
 
     return render(request, "payment/checkout.html")
+
+def confirm(request):
+    return render(request, "payment/confirm.html")

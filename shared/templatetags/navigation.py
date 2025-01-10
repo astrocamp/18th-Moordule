@@ -11,5 +11,6 @@ def navigator(context):
         {"title": "我的帳號", "url": "account", "name": "account"},
         {"title": "我的聚會", "url": "activities", "name": "activities"},
         {"title": "創建聚會", "url": "my_activities", "name": "my_activities"},
+        {"title": "我的錢包", "url": "wallet", "name": "wallet"},
     ]
     return {"nav_items": nav_items}
