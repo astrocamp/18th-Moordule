@@ -5,6 +5,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
+from django.contrib import messages
 
 from moordule import settings
 
@@ -49,6 +50,7 @@ def create(request):
             activity = form.save(commit=False)
             activity.owner = request.user
             activity.save()
+            messages.success(request, "創建聚會成功。")
             return redirect("users:user_page", tag="my_activities")
 
         else:

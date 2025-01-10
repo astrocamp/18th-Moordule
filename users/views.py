@@ -7,13 +7,13 @@ from django.urls import reverse
 from django.utils import timezone
 from django.views.decorators.http import require_GET, require_POST
 from django_htmx.middleware import HtmxDetails
-
+from django.contrib import messages
 from activities.models import Activity as Meetup
 from activities.models import MeetupPaticipat as MeetupParticipant
-
+from django.shortcuts import redirect
 from .decorators import anonymous_required
 from .forms import AboutMeForm, CustomUserChangeForm, UserRegistrationForm
-
+from django.contrib.auth.views import LogoutView
 
 class HtmxHttpRequest(HttpRequest):
     htmx: HtmxDetails
@@ -123,6 +123,7 @@ def signup_view(request: HttpRequest):
         if form.is_valid():
             form.save()
             signin_url = reverse("users:signin")
+            
             return HttpResponse("", headers={"HX-Redirect": signin_url})
 
     meetups = Meetup.objects.filter(start_time__gte=timezone.now()).order_by(
@@ -148,6 +149,7 @@ def user_create_view(request: HtmxHttpRequest):
         if form.is_valid():
             form.save()
             signin_url = reverse("users:signin")
+            messages.success(request, "註冊成功，請登入")
             return HttpResponse("", headers={"HX-Redirect": signin_url})
 
     return render(
@@ -172,6 +174,7 @@ def login_view(request: HttpRequest):
     if user is not None:
         login(request, user)
         index_url = reverse("pages:index")
+        messages.success(request, "登入成功")
         return HttpResponse("", headers={"HX-Redirect": index_url})
 
     return render(
@@ -187,17 +190,21 @@ def login_view(request: HttpRequest):
 
 
 def clear_errors(request: HtmxHttpRequest):
+    
     return HttpResponse("")
 
 
 @require_GET
 def info_view(request: HtmxHttpRequest):
+
     print("hobbies:", request.user)
     print("get_hobbies_display:", request.user)
+    messages.success(request, "個人資料更新成功")
     return render(request, "users/components/info.html")
 
 
 def info_form_view(request: HtmxHttpRequest):
+    messages.success(request, "個人資料更新成功")
     return render(request, "users/components/info_form.html")
 
 
@@ -209,6 +216,7 @@ def info_edit_view(request: HtmxHttpRequest):
         form = CustomUserChangeForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
+            messages.success(request, "個人資料更新成功")
             return render(request, "users/components/info.html", {"user": user})
         print(form.errors)
         return render(request, "users/components/info_form.html", {"form": form})
@@ -230,8 +238,16 @@ def about_me_edit_view(request: HtmxHttpRequest):
         form = AboutMeForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
+            messages.success(request, "個人資料更新成功")
             return render(request, "users/components/about_me.html", {"user": user})
         return render(request, "users/components/about_me_form.html", {"form": form})
 
     form = AboutMeForm(instance=user)
     return render(request, "users/components/about_me_form.html", {"form": form})
+
+
+class CustomLogoutView(LogoutView):
+    def dispatch(self, request, *args, **kwargs):
+        # 添加成功消息
+        messages.success(request, "您已成功登出。")
+        return super().dispatch(request, *args, **kwargs)

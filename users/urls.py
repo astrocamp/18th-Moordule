@@ -1,6 +1,4 @@
-from django.contrib.auth.views import LogoutView
 from django.urls import path, re_path
-
 from . import views
 
 app_name = "users"
@@ -12,7 +10,7 @@ frontend = [
 ]
 
 backend = [
-    path("logout/", LogoutView.as_view(next_page="/"), name="logout"),
+    path("logout/", views.CustomLogoutView.as_view(next_page="/"), name="logout"),
     path("login/", views.login_view, name="login"),
     path("password-change/", views.password_change_view, name="password_change"),
     path("info/edit", views.info_edit_view, name="info_edit"),
