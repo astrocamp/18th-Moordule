@@ -6,11 +6,10 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.contrib import messages
-
 from moordule import settings
-
 from .forms import ActivityForm, CategoryForm
 from .models import Activity, Category, MeetupPaticipat
+from django.http import HttpResponseForbidden
 
 
 def get_activity_for_user(request, activity_id):
@@ -23,11 +22,11 @@ def get_activity_for_user(request, activity_id):
 def activities(request):
     categories = Category.objects.prefetch_related("activity_set")
 
-    now = timezone.now()  # 過濾掉過期的聚會，只顯示未過期的聚會
+    now = timezone.now()
     activities_by_category = {
-        category: category.activity_set.filter(start_time__gte=now).order_by(
-            "start_time"
-        )[:4]
+        category: category.activity_set.filter(
+            start_time__gte=now, status="approved"
+        ).order_by("start_time")[:4]
         for category in categories
     }
 
@@ -112,6 +111,9 @@ def update(request, activity_id):
     categories = Category.objects.all()
     activity = get_activity_for_user(request, activity_id)
 
+    if activity.status == "approved" and not request.user.is_superuser:
+        return HttpResponseForbidden("只有平台管理者可以修改已批准的活動。")
+
     if request.method == "POST":
         form = ActivityForm(request.POST, instance=activity)
         if form.is_valid():
@@ -160,9 +162,22 @@ def confirm_delete(request, activity_id):
 
 def join_activity(request, activity_id):
     activity = get_object_or_404(Activity, id=activity_id)
+
+    if activity.status != "approved":
+        return render(
+            request,
+            "activities/information.html",
+            {
+                "activity": activity,
+                "error_message": "此活動尚未審核通過，無法參加！",
+                "google_maps_api_key": settings.GOOGLE_MAPS_API_KEY,
+            },
+        )
+
     is_participating = activity.participants.filter(id=request.user.id).exists()
     message = None
     google_maps_api_key = settings.GOOGLE_MAPS_API_KEY
+
     if request.method == "POST":
         if "join" in request.POST:
             if activity.participants.count() >= activity.max_participants:
@@ -214,7 +229,7 @@ def join_activity(request, activity_id):
 
 
 def search(request):
-    activities = Activity.objects.all()
+    activities = Activity.objects.filter(status="approved")  # 只顯示已審核的活動
     if request.method == "POST":
         keyword = request.POST.get("keyword", "").strip()
         if keyword:
@@ -240,9 +255,9 @@ def today(request):
 
     for category in categories:
         # 獲取未過期的活動並按開始時間排序
-        activities = category.activity_set.filter(start_time__gte=now).order_by(
-            "start_time"
-        )
+        activities = category.activity_set.filter(
+            start_time__gte=now, status="approved"
+        ).order_by("start_time")
 
         # 獲取當前頁碼
         page_number = request.GET.get(
@@ -269,6 +284,7 @@ def today(request):
         },
     )
 
+
 def eating(request):
     categories = Category.objects.prefetch_related("activity_set")
 
@@ -278,9 +294,9 @@ def eating(request):
 
     for category in categories:
         # 獲取未過期的活動並按開始時間排序
-        activities = category.activity_set.filter(start_time__gte=now).order_by(
-            "start_time"
-        )
+        activities = category.activity_set.filter(
+            start_time__gte=now, status="approved"
+        ).order_by("start_time")
 
         # 獲取當前頁碼
         page_number = request.GET.get(
@@ -316,10 +332,9 @@ def driking(request):
     activities_per_page = 8  # 每頁顯示的活動數量
 
     for category in categories:
-        # 獲取未過期的活動並按開始時間排序
-        activities = category.activity_set.filter(start_time__gte=now).order_by(
-            "start_time"
-        )
+        activities = category.activity_set.filter(
+            start_time__gte=now, status="approved"
+        ).order_by("start_time")
 
         # 獲取當前頁碼
         page_number = request.GET.get(
@@ -355,10 +370,9 @@ def sports(request):
     activities_per_page = 8  # 每頁顯示的活動數量
 
     for category in categories:
-        # 獲取未過期的活動並按開始時間排序
-        activities = category.activity_set.filter(start_time__gte=now).order_by(
-            "start_time"
-        )
+        activities = category.activity_set.filter(
+            start_time__gte=now, status="approved"
+        ).order_by("start_time")
 
         # 獲取當前頁碼
         page_number = request.GET.get(
@@ -394,10 +408,9 @@ def singing(request):
     activities_per_page = 8  # 每頁顯示的活動數量
 
     for category in categories:
-        # 獲取未過期的活動並按開始時間排序
-        activities = category.activity_set.filter(start_time__gte=now).order_by(
-            "start_time"
-        )
+        activities = category.activity_set.filter(
+            start_time__gte=now, status="approved"
+        ).order_by("start_time")
 
         # 獲取當前頁碼
         page_number = request.GET.get(
@@ -433,10 +446,9 @@ def movies(request):
     activities_per_page = 8  # 每頁顯示的活動數量
 
     for category in categories:
-        # 獲取未過期的活動並按開始時間排序
-        activities = category.activity_set.filter(start_time__gte=now).order_by(
-            "start_time"
-        )
+        activities = category.activity_set.filter(
+            start_time__gte=now, status="approved"
+        ).order_by("start_time")
 
         # 獲取當前頁碼
         page_number = request.GET.get(
@@ -472,10 +484,9 @@ def discussion(request):
     activities_per_page = 8  # 每頁顯示的活動數量
 
     for category in categories:
-        # 獲取未過期的活動並按開始時間排序
-        activities = category.activity_set.filter(start_time__gte=now).order_by(
-            "start_time"
-        )
+        activities = category.activity_set.filter(
+            start_time__gte=now, status="approved"
+        ).order_by("start_time")
 
         # 獲取當前頁碼
         page_number = request.GET.get(

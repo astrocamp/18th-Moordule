@@ -8,20 +8,58 @@
 
         <div class="max-w-7xl  mx-auto mt-8 bg-moordule-yellow  p-8 rounded-[24px]  shadow-md space-y-8">
 
-    <div class="p-4 rounded-[24px] shadow-inner border-2 border-white">
-     {% comment %} 
-     顯示已審核的聚會
-      聚會列表 
-      {% endcomment %}
-        {% if activities %}
-         <h3 class="text-xl font-semibold  text-white-shadow">已審核的聚會</h3>
+ <!-- 已審核的聚會 -->
+            <div class="p-4 rounded-[24px] shadow-inner border-2 border-white">
+                {% if activities %}
+                    <h3 class="text-xl font-semibold text-white-shadow">已審核的聚會</h3>
+                    <div class="flex justify-center gap-6">
+                        {% for activity in activities %}
+                            {% if activity.status == 'approved' %}
+                                <div class="w-80 rounded-3xl overflow-hidden shadow-lg border border-white">
+                                    <img src="{{ activity.photo.url }}" alt="{{ activity.title }}" class="h-48 w-full object-cover">
+                                    <div class="bg-white p-4 h-full">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <h3 class="font-bold text-2xl">{{ activity.title }}</h3>
+                                            <div class="flex items-center gap-1">
+                                                <svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" />
+                                                </svg>
+                                                <span>最多{{ activity.max_participants }}人</span>
+                                            </div>
+                                        </div>
+                                        <div class="flex justify-between gap-2 text-sm mb-2">
+                                            <div class="flex">
+                                                <svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+                                                </svg>
+                                                <span>{{ activity.address }}</span>
+                                            </div>
+                                            <span class="text-lg">{{ activity.start_time|date:"Y-m-d H:i" }}</span>
+                                        </div>
+                                        <span class="text-lg font-medium">聚會內容：</span>
+                                        <p class="text-sm mb-4 text-lg">{{ activity.description }}</p>
+                                        <div class="mt-4 flex justify-end space-x-2">
+                                            
+                                            <a href="{% url 'activities:confirm_delete' activity.id %}" class="bg-moordule-pink text-white-shadow px-4 py-2 rounded-[24px] hover:bg-red-600">刪除</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-center text-gray-500 text-lg mt-12">目前沒有已審核的聚會。</p>
+                {% endif %}
+            </div>
 
-            <div class="flex justify-center gap-6">
-                {% for activity in activities %}
-                    {% comment %} 每個聚會卡片 {% endcomment %}
-                    <div class="w-80 rounded-3xl overflow-hidden shadow-lg border border-white ">
-                                <img src="{{ activity.photo.url }}" alt="{{ activity.title }}"
-                                    class="h-48 w-full object-cover">
+    <div class="p-4 rounded-[24px] shadow-inner border-2 border-white">
+      <h3 class="text-xl font-semibold text-white-shadow">未審核的聚會與拒絕原因</h3>
+                <div class="flex justify-center gap-6">
+                   {% for activity in activities %}
+                        {% if activity.status == 'pending' %}
+                            <!-- 顯示待審核的聚會 -->
+                            <div class="w-80 rounded-3xl overflow-hidden shadow-lg border border-white">
+                                <img src="{{ activity.photo.url }}" alt="{{ activity.title }}" class="h-48 w-full object-cover">
                                 <div class="bg-white p-4 h-full">
                                     <div class="flex justify-between items-center mb-2">
                                         <h3 class="font-bold text-2xl">{{ activity.title }}</h3>
@@ -35,39 +73,58 @@
                                     <div class="flex justify-between gap-2 text-sm mb-2">
                                         <div class="flex">
                                             <svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
-                                                <path
-                                                    fill-rule="evenodd"
-                                                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-                                                    clip-rule="evenodd" />
+                                                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
                                             </svg>
                                             <span>{{ activity.address }}</span>
                                         </div>
                                         <span class="text-lg">{{ activity.start_time|date:"Y-m-d H:i" }}</span>
                                     </div>
-                                    <span class="text-lg font-medium ">聚會內容：</span>
-                                    <p class="text-sm mb-4 text-lg">
-                                        {{ activity.description }}
-                                    </p>
-                        <div lass="mt-4 flex justify-end space-x-2">
-                            <a href="{% url 'activities:update' activity.id %}" class="bg-moordule-yellow text-white-shadow px-4 py-2 rounded-[24px] hover:bg-moordule-light-blue">更新聚會</a>
-                            <a href="{% url 'activities:confirm_delete' activity.id %}" class="bg-moordule-pink  text-white-shadow px-4 py-2 rounded-[24px] hover:bg-red-600">刪除</a>
+                                    <span class="text-lg font-medium">聚會內容：</span>
+                                    <p class="text-sm mb-4 text-lg">{{ activity.description }}</p>
+                                    <p class="text-moordule-yellow text-sm">尚未審核</p> 
+                                    <div class="mt-4 flex justify-end space-x-2">
+                                        <a href="{% url 'activities:update' activity.id %}" class="bg-moordule-yellow text-white-shadow px-4 py-2 rounded-[24px] hover:bg-moordule-light-blue">更新聚會</a>
+                                        <a href="{% url 'activities:confirm_delete' activity.id %}" class="bg-moordule-pink text-white-shadow px-4 py-2 rounded-[24px] hover:bg-red-600">刪除</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% elif activity.status == 'rejected' %}
+                            <!-- 顯示已拒絕的聚會並顯示拒絕原因 -->
+                            <div class="w-80 rounded-3xl overflow-hidden shadow-lg border border-white">
+                                <img src="{{ activity.photo.url }}" alt="{{ activity.title }}" class="h-48 w-full object-cover">
+                                <div class="bg-white p-4 h-full">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <h3 class="font-bold text-2xl">{{ activity.title }}</h3>
+                                        <div class="flex items-center gap-1">
+                                            <svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
+                                                <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" />
+                                            </svg>
+                                            <span>最多{{ activity.max_participants }}人</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-between gap-2 text-sm mb-2">
+                                        <div class="flex">
+                                            <svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+                                            </svg>
+                                            <span>{{ activity.address }}</span>
+                                        </div>
+                                        <span class="text-lg">{{ activity.start_time|date:"Y-m-d H:i" }}</span>
+                                    </div>
+                                    <span class="text-lg font-medium">聚會內容：</span>
+                                    <p class="text-sm mb-4 text-lg">{{ activity.description }}</p>
+                                    <p class="text-white-shadow bg-moordule-pink rounded-[24px] text-center text-sm">未審核通過</p> 
+                                    <p class="text-moordule-pink text-sm">需更改原因:  {{ activity.rejection_reason }}</p> <!-- 顯示拒絕原因 -->
+                                    <div class="mt-4 flex justify-end space-x-2">
+                                        <a href="{% url 'activities:update' activity.id %}" class="bg-moordule-yellow text-white-shadow px-4 py-2 rounded-[24px] hover:bg-moordule-light-blue">更新聚會</a>
+                                        <a href="{% url 'activities:confirm_delete' activity.id %}" class="bg-moordule-pink text-white-shadow px-4 py-2 rounded-[24px] hover:bg-red-600">刪除</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
                 </div>
-    </div>
-                        </div>
-                {% endfor %}
-            </div>
-        {% else %}
-            <p class="text-center text-gray-500 text-lg mt-12">目前沒有聚會。</p>
-        {% endif %}
-    </div>
-
-    <div class="p-4 rounded-[24px] shadow-inner border-2 border-white">
-     {% comment %} <!-- 顯示未審核的聚會 --> {% endcomment %}
-                    <p class="text-center text-gray-500 text-lg mt-12"> </p>
-
-     </div>
-
-
+                </div>
 
 {% comment "" %}
 新增聚會按鈕
@@ -82,6 +139,11 @@
                 <div class="text-center text-moordule-pink">您進行中的聚會,已達到最多4個聚會額。</div>
             {% endif %}
         </div>
+     </div>
+
+
+
+
 
 
 

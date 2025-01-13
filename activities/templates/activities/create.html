@@ -55,11 +55,15 @@
           <p class="text-center text-gray-700">聚會 photo</p>
           <i class="fi fi-br-add-image"></i>
           <div class="bg-gray-300 w-32 h-32 flex items-center justify-center rounded-full mt-4">
-              <i class="fi fi-rr-camera text-gray-600 text-3xl"></i>
-              <input type="file" id="photo" name="photo"  required >
+              <i class="fi fi-rr-camera text-gray-600 text-3xl"></i>             
           </div>
       </div>     
   </div>
+
+  <div class="bg-white rounded-[24px] rounded-card p-6">
+   <input type="file" id="photo" name="photo"  required >
+  </div>
+
       <div class="bg-white rounded-[24px] rounded-card mt-6 p-6">
           <label class="block font-bold text-gray-800 mb-2">聚會名稱：</label>
           <input type="text" id="title" name="title" value="{{ form_data.title|default:'' }}" required 
@@ -92,6 +96,17 @@
         </ul>
     {% endif %}
   </div>
+
+<div class="mt-4">
+    {% if messages %}
+        <div class="alert alert-danger">
+            {% for message in messages %}
+                <p class="text-red-600">{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+
 
   <div class="space-y-3">
     <p class="text-gray-700">聚會地點（地址）：</p>

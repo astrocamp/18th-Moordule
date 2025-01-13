@@ -15,6 +15,7 @@ from .decorators import anonymous_required
 from .forms import AboutMeForm, CustomUserChangeForm, UserRegistrationForm
 from django.contrib.auth.views import LogoutView
 
+
 class HtmxHttpRequest(HttpRequest):
     htmx: HtmxDetails
 
@@ -66,7 +67,12 @@ def user_page_view(request, tag="member"):
 
     if tag == "member":
         context["meetup"] = (
-            Meetup.objects.filter(start_time__gte=timezone.now())
+            Meetup.objects.filter(
+                start_time__gte=timezone.now(),
+                id__in=MeetupParticipant.objects.filter(participant=user).values(
+                    "activity_id"
+                ),  # 透過參加者關聯查詢
+            )
             .order_by("start_time")
             .first()
         )
@@ -88,7 +94,6 @@ def user_page_view(request, tag="member"):
 
     elif tag == "wallet":
         return render(request, "users/wallet.html")
-        
 
     else:
         # 若沒有符合任何條件，保留基本的 context
@@ -128,7 +133,7 @@ def signup_view(request: HttpRequest):
         if form.is_valid():
             form.save()
             signin_url = reverse("users:signin")
-            
+
             return HttpResponse("", headers={"HX-Redirect": signin_url})
 
     meetups = Meetup.objects.filter(start_time__gte=timezone.now()).order_by(
@@ -195,7 +200,7 @@ def login_view(request: HttpRequest):
 
 
 def clear_errors(request: HtmxHttpRequest):
-    
+
     return HttpResponse("")
 
 
