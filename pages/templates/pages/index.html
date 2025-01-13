@@ -1,7 +1,80 @@
-{% extends "base/layout.html" %} {% load static %}
+{% extends "base/layout.html" %} 
+{% load static %}
 <!---->
 {% block head %}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
+  /* RWD樣式 */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+#top {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* 手機樣式 */
+@media (max-width: 768px) {
+    #top {
+        flex-direction: column; /* 手機垂直排列 */
+    }
+
+    .h-48 {
+        height: auto; /* 讓圖片自適應高度 */
+    }
+
+    .w-72 {
+        width: 100%; /* 滿版寬度 */
+    }
+
+    .mx-20 {
+        margin: 0 16px; /* 減小邊距 */
+    }
+
+    .w-1/5 {
+        width: 100%; /* 卡片佔滿寬度 */
+    }
+
+    .lg\\:w-1\\/2, .lg\\:w-3\\/5 {
+        width: 100%; /* 移除桌面寬度限制 */
+    }
+}
+
+/* 平板樣式 */
+@media (min-width: 769px) and (max-width: 1024px) {
+    #top {
+        flex-direction: row;
+    }
+
+    .mx-20 {
+        margin: 0 32px;
+    }
+
+    .grid-cols-3 {
+        grid-template-columns: repeat(2, 1fr); /* 平板顯示 2 列 */
+    }
+}
+
+/* 桌面樣式 */
+@media (min-width: 1025px) {
+    #top {
+        flex-direction: row; /* 左右排列 */
+    }
+
+    .grid-cols-3 {
+        grid-template-columns: repeat(3, 1fr); /* 桌面顯示 3 列 */
+    }
+}
 @keyframes slide-up {
     0% {
         transform: translateY(100%);
@@ -41,16 +114,16 @@
 }
 </style>
 {% endblock head %} {% block content %}
-  <!-- 主頁內容 -->
+  <!-- 主頁內容 --> 
   <section id="top"
     class="flex flex-col lg:flex-row w-full max-w-screen-lg mx-auto mt-8 overflow-hidden justify-between gap-12 h-full"
   >
     <!-- 左邊區域：上下流動方框 -->
-    <div class="flex flex-col lg:w-1/2 space-y-8 relative moveDown animate-slide-down basis-1/2">
+    <div class="flex flex-col lg:w-1/2 space-y-8 relative moveDown animate-slide-down basis-1/2 sm:animate-none">
       <!-- 第一個方框 -->
       <a
         href="https://example.com/link1"
-        class="h-48 w-72 bg-gray-100 border rounded-lg animate-up flex items-center justify-center"
+        class="h-48 w-72 bg-gray-100 border rounded-lg animate-up flex items-center justify-center sm:animate-none"
       >
         <img
           src="https://images.pexels.com/photos/9001994/pexels-photo-9001994.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
@@ -62,7 +135,7 @@
       <!-- 第二個方框 -->
       <a
         href="https://example.com/link2"
-        class="h-48 bg-gray-100 border rounded-lg animate-up flex items-center justify-center"
+        class="h-48 bg-gray-100 border rounded-lg animate-up flex items-center justify-center sm:animate-none"
       >
         <img
           src="https://images.pexels.com/photos/9005463/pexels-photo-9005463.jpeg"
@@ -74,7 +147,7 @@
       <!-- 第三個方框 -->
       <a
         href="https://example.com/link3"
-        class="h-48 bg-gray-100 border rounded-lg animate-up flex items-center justify-center"
+        class="h-48 bg-gray-100 border rounded-lg animate-up flex items-center justify-center sm:animate-none"
       >
         <img
           src="https://images.pexels.com/photos/977237/pexels-photo-977237.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
@@ -86,7 +159,7 @@
       <!-- 第四個方框 -->
       <a
         href="https://example.com/link4"
-        class="h-48 bg-gray-100 border rounded-lg animate-up flex items-center justify-center"
+        class="h-48 bg-gray-100 border rounded-lg animate-up flex items-center justify-center sm:animate-none"
       >
         <img
           src="https://images.pexels.com/photos/7148973/pexels-photo-7148973.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
@@ -100,7 +173,7 @@
       <!-- 第一個方框 -->
       <a
         href="https://example.com/link5"
-        class="h-48 w-72 bg-gray-100 border rounded-lg animate-up flex items-center justify-center"
+        class="h-48 w-72 bg-gray-100 border rounded-lg animate-up flex items-center justify-center sm:animate-none"
       >
         <img
           src="https://images.pexels.com/photos/3727150/pexels-photo-3727150.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
@@ -112,7 +185,7 @@
       <!-- 第二個方框 -->
       <a
         href="https://example.com/link6"
-        class="h-48 bg-gray-100 border rounded-lg animate-up flex items-center justify-center"
+        class="h-48 bg-gray-100 border rounded-lg animate-up flex items-center justify-center sm:animate-none"
       >
         <img
           src="https://images.pexels.com/photos/10690750/pexels-photo-10690750.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
@@ -124,7 +197,7 @@
       <!-- 第三個方框 -->
       <a
         href="https://example.com/link7"
-        class="h-48 bg-gray-100 border rounded-lg animate-up flex items-center justify-center"
+        class="h-48 bg-gray-100 border rounded-lg animate-up flex items-center justify-center sm:animate-none"
       >
         <img
           src="https://images.pexels.com/photos/8919754/pexels-photo-8919754.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
@@ -136,7 +209,7 @@
       <!-- 第四個方框 -->
       <a
         href="https://example.com/link8"
-        class="h-48 bg-gray-100 border rounded-lg animate-up flex items-center justify-center"
+        class="h-48 bg-gray-100 border rounded-lg animate-up flex items-center justify-center sm:animate-none"
       >
         <img
           src="https://images.pexels.com/photos/5537563/pexels-photo-5537563.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"

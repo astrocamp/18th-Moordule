@@ -31,7 +31,7 @@ gmp-map {
   color: white;
 }
 
-@keyframes slide-up {
+/* @keyframes slide-up {
   0% {
       transform: translateY(100%);
       opacity: 1;
@@ -59,7 +59,7 @@ gmp-map {
       transform: translateY(100%);
       opacity: 1;
   }
-}
+} */
 
 .animate-slide-up {
   animation: slide-up 8s linear infinite;
