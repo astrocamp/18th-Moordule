@@ -16,6 +16,9 @@ from .decorators import anonymous_required
 from .forms import AboutMeForm, CustomUserChangeForm, UserRegistrationForm
 from .models import CustomUser
 from django.contrib.auth.views import LogoutView
+from django.utils.translation import gettext as _
+from django.contrib.auth.signals import user_logged_in
+from django.dispatch import receiver
 
 
 class HtmxHttpRequest(HttpRequest):
@@ -228,12 +231,10 @@ def info_view(request: HtmxHttpRequest):
 
     print("hobbies:", request.user)
     print("get_hobbies_display:", request.user)
-    messages.success(request, "個人資料更新成功")
     return render(request, "users/components/info.html")
 
 
 def info_form_view(request: HtmxHttpRequest):
-    messages.success(request, "個人資料更新成功")
     return render(request, "users/components/info_form.html")
 
 
@@ -245,7 +246,6 @@ def info_edit_view(request: HtmxHttpRequest):
         form = CustomUserChangeForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
-            messages.success(request, "個人資料更新成功")
             return render(request, "users/components/info.html", {"user": user})
         print(form.errors)
         return render(request, "users/components/info_form.html", {"form": form})
@@ -267,7 +267,6 @@ def about_me_edit_view(request: HtmxHttpRequest):
         form = AboutMeForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
-            messages.success(request, "個人資料更新成功")
             return render(request, "users/components/about_me.html", {"user": user})
         return render(request, "users/components/about_me_form.html", {"form": form})
 
@@ -280,3 +279,10 @@ class CustomLogoutView(LogoutView):
         # 添加成功消息
         messages.success(request, "您已成功登出。")
         return super().dispatch(request, *args, **kwargs)
+
+@receiver(user_logged_in)
+def custom_login_message(sender, request, user, **kwargs):
+    if request.user.is_authenticated:
+        if user.socialaccount_set.filter(provider='google').exists():
+            messages.success(request, _("登入成功！"))
+        
