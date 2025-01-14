@@ -41,22 +41,24 @@
       </a>
     </nav>
 
-
-   
-
  <form method="POST" class="mt-12 max-w-7xl mx-auto" enctype="multipart/form-data">
   {% csrf_token %}
 <div class="max-w-7xl  mx-auto mt-8 bg-moordule-yellow  p-8 rounded-[24px]  shadow-md space-y-8">
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
     <div class="bg-white rounded-card ">
       <label for="photo">
-
-        <div class="bg-white rounded-[24px] rounded-card p-6"> 
-          <img id="preview" class="h-48 w-full  rounded-[24px] object-cover" />
-     </div>
+        <div class="bg-white rounded-[24px] rounded-card p-6 relative">
+            <p class="text-center text-gray-700">聚會 photo</p>
+            <div class="relative">
+                <img id="preview" class="h-48 w-full rounded-[24px] object-cover" />
+                <i class="bg-gray-300 rounded-[24px] fi-br-add-image absolute inset-0 flex justify-center items-center">
+                    <i class="fi fi-rr-camera text-gray-600 text-3xl"></i>
+                </i>
+            </div>
+        </div>
         <input class="hidden" type="file" id="photo" name="photo" required>
-        <div class="block font-bold text-gray-800 mb-2  text-center">上傳圖片</div>
-      </label>
+        <div class="text-center text-gray-700">上傳圖片</div>
+    </label>
       <div class="rounded-card space-y-8">
       </div>     
       <div class="p-1">

@@ -21,14 +21,19 @@ document.addEventListener("DOMContentLoaded", function() {
     });
     });
     document.getElementById('photo').addEventListener('change', function(event) {
-        const file = event.target.files[0]; 
+        const file = event.target.files[0];
+        const preview = document.getElementById('preview');
+        const iconOverlay = document.querySelector('.fi-br-add-image');
+    
         if (file) {
             const reader = new FileReader();
             reader.onload = function(e) {
-                const preview = document.getElementById('preview');
                 preview.src = e.target.result;
-                preview.style.display = 'block'; 
+                iconOverlay.style.display = 'none';
             };
-            reader.readAsDataURL(file); 
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = '';
+            iconOverlay.style.display = 'flex';
         }
     });
