@@ -11,9 +11,7 @@ def index_view(request):
     tomorrow = now + timedelta(days=1)
 
     upcoming_activities = Activity.objects.filter(
-        start_time__gte=now,
-        start_time__lte=tomorrow,
-        is_approved=True,
+        start_time__gte=now, start_time__lte=tomorrow, status="approved"
     ).order_by("start_time")[:4]
 
     context = {

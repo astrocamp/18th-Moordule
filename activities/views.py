@@ -10,6 +10,18 @@ from moordule import settings
 from .forms import ActivityForm, CategoryForm
 from .models import Activity, Category, MeetupPaticipat
 from django.http import HttpResponseForbidden
+from datetime import date
+
+
+def is_adult(birth_date):
+    # 計算年齡，並檢查是否已滿18歲
+    today = date.today()
+    age = (
+        today.year
+        - birth_date.year
+        - ((today.month, today.day) < (birth_date.month, birth_date.day))
+    )
+    return age >= 18
 
 
 def get_activity_for_user(request, activity_id):
@@ -42,6 +54,23 @@ def activities(request):
 
 @login_required
 def create(request):
+    # 檢查用戶是否填寫了個人資料
+    if (
+        not request.user.username
+        or not request.user.birth_date
+        or not request.user.live_in
+        or not request.user.bio
+    ):
+        messages.error(request, "請先填寫您'必填＊'的個人資料才能創建聚會")
+        return redirect(
+            "users:user_page", tag="account"
+        )  # 重定向到編輯頁面方便編輯寫入
+
+    # 檢查用戶是否年滿 18 歲
+    if not is_adult(request.user.birth_date):
+        messages.error(request, "您必須年滿 18 歲才能創建聚會。")
+        return redirect("users:user_page", tag="member")  # 如果未滿 18 歲，導至個人頁面
+
     categories = Category.objects.all()
     if request.method == "POST":
         form = ActivityForm(request.POST, request.FILES)
@@ -162,6 +191,25 @@ def confirm_delete(request, activity_id):
 
 def join_activity(request, activity_id):
     activity = get_object_or_404(Activity, id=activity_id)
+
+    # 在用戶點擊按鈕時檢查是否滿 18 歲並且資料是否完整
+    if (
+        not request.user.username
+        or not request.user.birth_date
+        or not request.user.live_in
+        or not request.user.bio
+    ):
+        messages.error(request, "請先填寫您'必填＊'的個人資料才能創建聚會")
+        return redirect(
+            "users:user_page", tag="account"
+        )  # 如果資料不完整，重定向到個人資料頁面
+
+    # 檢查用戶是否年滿 18 歲
+    if not is_adult(request.user.birth_date):
+        messages.error(request, "您必須年滿 18 歲才能參加聚會。")
+        return redirect(
+            "users:user_page", tag="member"
+        )  # 如果未滿 18 歲，重定向至個人資料頁面
 
     if activity.status != "approved":
         return render(

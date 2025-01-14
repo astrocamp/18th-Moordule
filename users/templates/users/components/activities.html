@@ -1,14 +1,80 @@
 {% block content %}
 <div class="relative max-w-7xl mt-8 mx-auto">
-	<div class="grid grid-cols-4 gap-6 bg-yellow-300 rounded-[24px] p-6">
-		<!-- prettier-ignore -->
-		{% for meetup in meetups %} 
-		{% include 'users/components/activity.html' with meetup=meetup %} 
-		{% empty %}
-		<div class="col-span-3 text-center py-8 text-gray-500">
-			目前沒有即將到來的活動
-		</div>
-		{% endfor %}
-	</div>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6 bg-moordule-yellow rounded-[24px] p-6">
+    {% for meetup in meetups %}
+    <div class="rounded-3xl overflow-hidden shadow-lg">
+      <!-- 活動照片 -->
+      <img src="{{ meetup.activity.photo.url }}" alt="{{ meetup.activity.title }}" class="h-48 w-full object-cover" />
+      
+      <div class="bg-white p-4 h-full">
+        <!-- 活動標題和參與人數 -->
+        <div class="flex justify-between items-center mb-2">
+          <h3>{{ meetup.activity.title }}</h3>
+          <div class="flex items-center gap-1">
+            <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"/>
+            </svg>
+            <span>目前{{ meetup.activity.participants.count }}人</span>
+          </div>
+        </div>
+
+        <!-- 主辦者 -->
+        <div>
+          <p>主辦者：{{ meetup.activity.owner.username }}</p>
+        </div>
+
+        <!-- 參加者 -->
+        <div class="flex">
+          目前參加者：
+          {% for participation in meetup.activity.participants.all|slice:":2" %}
+            <div class="w-8 h-8" style="margin-left: {% if not forloop.first %}-0.5rem{% endif %}">
+              <div class="w-full h-full rounded-[24px] ring-2 ring-white overflow-hidden bg-gray-200">
+                {% if participation.participant.avatar %}
+                  <img class="w-full h-full object-cover" src="{{ participation.participant.avatar.url }}" alt="{{ participation.participant.username }}" title="{{ participation.participant.username }}" loading="lazy" />
+                {% else %}
+                  <div class="w-full h-full flex items-center justify-center">
+                    <span class="text-xs text-gray-600 font-medium">{{ participation.participant.username|first }}</span>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+          {% if meetup.total_count > 3 %}
+            <div class="w-8 h-8" style="margin-left: -0.5rem">
+              <div class="w-full h-full rounded-[24px] ring-2 ring-white bg-gray-200 text-sm text-gray-600 font-medium flex items-center justify-center">
+                +{{ meetup.total_count|add:"-3" }}
+              </div>
+            </div>
+          {% endif %}
+        </div>
+
+        <!-- 地點與時間 -->
+        <div class="flex justify-between gap-2 text-sm mb-2">
+          <div class="flex">
+            <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+            </svg>
+            <p>地點: {{ meetup.activity.address }}</p>
+          </div>
+          <p>時間: {{ meetup.activity.start_time|date:"Y-m-d H:i" }}</p>
+        </div>
+
+        <!-- 聚會內容 -->
+        <span class="text-lg font-medium">聚會內容：</span>
+        <p class="text-sm mb-4 text-lg">{{ meetup.activity.description }}</p>
+
+       <!-- 退出活動按鈕 -->
+        <div class="flex justify-center items-center">
+          <button type="submit" name="leave" class="bg-moordule-pink text-white px-4 py-2 rounded-[24px] hover:bg-red-600">退出活動</button>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+      <div class="col-span-3 text-center py-8 text-gray-500">
+        目前沒有即將到來的活動
+      </div>
+    {% endfor %}
+  </div>
+  <br>
 </div>
 {% endblock %}
