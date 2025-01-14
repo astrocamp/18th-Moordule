@@ -14,6 +14,7 @@ from cashflows.models import Payment
 from django.shortcuts import redirect
 from .decorators import anonymous_required
 from .forms import AboutMeForm, CustomUserChangeForm, UserRegistrationForm
+from .models import CustomUser
 from django.contrib.auth.views import LogoutView
 
 
@@ -67,6 +68,11 @@ def user_page_view(request, tag="member"):
     context = {"tag": tag}
 
     if tag == "member":
+        wallet = Payment.objects.filter(user=user).first()
+        user = CustomUser.objects.get(id=user.id)
+        context["userinfo"] = user.email
+        context["wallet_balance"] = wallet.amount
+        
         context["meetup"] = (
             Meetup.objects.filter(
                 start_time__gte=timezone.now(),
@@ -102,9 +108,10 @@ def user_page_view(request, tag="member"):
             context["wallet_balance"] = 0  
 
         # 從 Payments 模型抓取與使用者相關的交易紀錄
-        transactions = Payment.objects.filter(order_id__startswith="WALLET").order_by("-created_at")
+        transactions = Payment.objects.filter(order_id__startswith="order").order_by("-created_at")[:5]
         context["transactions"] = transactions
         
+   
         
 
     else:
