@@ -90,7 +90,7 @@ def request_payment(request):
                     user=request.user,  # 將當前用戶儲存到 Payment 中
                     order_id=order_id,
                     transaction_id=data["info"]["transactionId"],  # 假設這裡有交易ID
-                    amount="699",
+                    amount=699,
                     currency="TWD",
                     status="待確認"  # 初始狀態可以設為待確認
                 )
