@@ -19,42 +19,42 @@
   {% comment %} <!-- 按鈕去各區 --> {% endcomment %}
 
   <div class="flex justify-center space-x-10 my-10">
-    <a href="{% url 'activities:eating' %}"
+    <a href="{% url 'activities:index'%}#eating"
       ><button
         class="text-xl px-4 py-1 rounded-full bg-moordule-pink text-white-shadow hover:bg-pink-500"
       >
         揪吃飯
       </button></a
     >
-    <a href="{% url 'activities:driking' %}"
+    <a href="{% url 'activities:index' %}#drinking"
       ><button
         class="text-xl px-4 py-1 rounded-full bg-moordule-yellow text-white-shadow hover:bg-yellow-500"
       >
         揪喝酒
       </button></a
     >
-     <a href="{% url 'activities:sports' %}"
+     <a href="{% url 'activities:index' %}#sports"
       ><button
         class="text-xl px-4 py-1 rounded-full bg-moordule-deep-blue text-white-shadow hover:bg-blue-500"
       >
         揪運動
       </button></a
     >
-    <a href="{% url 'activities:singing' %}"
+    <a href="{% url 'activities:index' %}#singing"
       ><button
         class="text-xl px-4 py-1 rounded-full bg-moordule-yellow text-white-shadow hover:bg-yellow-500"
       >
         揪唱歌
       </button></a
     >
-    <a href="{% url 'activities:movies' %}"
+    <a href="{% url 'activities:index' %}#movies"
       ><button
         class="text-xl px-4 py-1 rounded-full bg-moordule-pink text-white-shadow hover:bg-pink-500"
       >
         揪電影
       </button></a
     >
-    <a href="{% url 'activities:discussion' %}"
+    <a href="{% url 'activities:index' %}#discussion"
       ><button
         class="text-xl px-4 py-1 rounded-full bg-moordule-deep-blue text-white-shadow hover:bg-blue-500"
       >
@@ -67,7 +67,7 @@
     <h1 class="flex justify-center my-10 text-4xl">各種聚會等你來揪</h1>
 
     {% comment %} <!-- 聚會種類 分區:吃飯 --> {% endcomment %}
-    <div id="eat" class="mx-20 pt-12">
+    <div id="eating" class="mx-20 pt-12">
       <h2 class="my-10 text-3xl">揪吃飯 </h2>
       <div class="flex justify-center gap-6">
         {% comment %} <!-- Card --> {% endcomment %}
@@ -111,14 +111,13 @@
 
 
     {% comment %} <!-- 更多-> --> {% endcomment %}
-    <a href="">
-        <div class="flex justify-center items-center gap-4">
-        <a href="{% url 'activities:eating' %}">
-          <h3 class="my-10 text-2xl"> 更多揪吃飯</h3>
-        </a>
-        <svg width="24px" height="24px" viewBox="0 -2.5 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000" transform="rotate(-45)matrix(-1, 0, 0, -1, 0, 0)" stroke="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>arrow_left_up [#295]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-340.000000, -6841.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M292.233,6690.714 L286.854,6685.335 C286.539,6685.02 286,6685.243 286,6685.688 L286,6688 C286,6688.552 285.552,6689 285,6689 C284.448,6689 284,6688.552 284,6688 L284,6683 C284,6681.895 284.896,6681 286,6681 L291,6681 C291.552,6681 292,6681.448 292,6682 C292,6682.552 291.552,6683 291,6683 L288.555,6683 C288.109,6683 287.886,6683.539 288.201,6683.854 L292.939,6688.591 C293.329,6688.982 293.962,6688.982 294.353,6688.591 L294.765,6688.179 C295.546,6687.398 296.812,6687.398 297.594,6688.179 L303.707,6694.293 C304.098,6694.683 304.098,6695.317 303.707,6695.707 L303.707,6695.707 C303.317,6696.098 302.684,6696.098 302.293,6695.707 L296.887,6690.301 C296.496,6689.91 295.863,6689.911 295.472,6690.302 L295.063,6690.712 C294.282,6691.495 293.015,6691.496 292.233,6690.714" id="arrow_left_up-[#295]"> </path> </g> </g> </g> </g></svg>
-      </div>
+      <div class="flex justify-center items-center gap-4">
+      <a href="{% url 'activities:eating' %}">
+        <h3 class="my-10 text-2xl"> 更多揪吃飯</h3>
       </a>
+      <svg width="24px" height="24px" viewBox="0 -2.5 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000" transform="rotate(-45)matrix(-1, 0, 0, -1, 0, 0)" stroke="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>arrow_left_up [#295]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-340.000000, -6841.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M292.233,6690.714 L286.854,6685.335 C286.539,6685.02 286,6685.243 286,6685.688 L286,6688 C286,6688.552 285.552,6689 285,6689 C284.448,6689 284,6688.552 284,6688 L284,6683 C284,6681.895 284.896,6681 286,6681 L291,6681 C291.552,6681 292,6681.448 292,6682 C292,6682.552 291.552,6683 291,6683 L288.555,6683 C288.109,6683 287.886,6683.539 288.201,6683.854 L292.939,6688.591 C293.329,6688.982 293.962,6688.982 294.353,6688.591 L294.765,6688.179 C295.546,6687.398 296.812,6687.398 297.594,6688.179 L303.707,6694.293 C304.098,6694.683 304.098,6695.317 303.707,6695.707 L303.707,6695.707 C303.317,6696.098 302.684,6696.098 302.293,6695.707 L296.887,6690.301 C296.496,6689.91 295.863,6689.911 295.472,6690.302 L295.063,6690.712 C294.282,6691.495 293.015,6691.496 292.233,6690.714" id="arrow_left_up-[#295]"> </path> </g> </g> </g> </g></svg>
+    </div>
+
 </div>
 
 
@@ -167,14 +166,14 @@
 
 
     {% comment %} <!-- 更多-> --> {% endcomment %}
-    <a href="">
-        <div class="flex justify-center items-center gap-4">
-        <a href="{% url 'activities:driking' %}">
-        <h3 class="my-10 text-2xl"> 更多揪喝酒</h3>
-        </a>
-        <svg width="24px" height="24px" viewBox="0 -2.5 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000" transform="rotate(-45)matrix(-1, 0, 0, -1, 0, 0)" stroke="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>arrow_left_up [#295]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-340.000000, -6841.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M292.233,6690.714 L286.854,6685.335 C286.539,6685.02 286,6685.243 286,6685.688 L286,6688 C286,6688.552 285.552,6689 285,6689 C284.448,6689 284,6688.552 284,6688 L284,6683 C284,6681.895 284.896,6681 286,6681 L291,6681 C291.552,6681 292,6681.448 292,6682 C292,6682.552 291.552,6683 291,6683 L288.555,6683 C288.109,6683 287.886,6683.539 288.201,6683.854 L292.939,6688.591 C293.329,6688.982 293.962,6688.982 294.353,6688.591 L294.765,6688.179 C295.546,6687.398 296.812,6687.398 297.594,6688.179 L303.707,6694.293 C304.098,6694.683 304.098,6695.317 303.707,6695.707 L303.707,6695.707 C303.317,6696.098 302.684,6696.098 302.293,6695.707 L296.887,6690.301 C296.496,6689.91 295.863,6689.911 295.472,6690.302 L295.063,6690.712 C294.282,6691.495 293.015,6691.496 292.233,6690.714" id="arrow_left_up-[#295]"> </path> </g> </g> </g> </g></svg>
-      </div>
-      </a>
+  
+    <div class="flex justify-center items-center gap-4">
+    <a href="{% url 'activities:driking' %}">
+    <h3 class="my-10 text-2xl"> 更多揪喝酒</h3>
+    </a>
+    <svg width="24px" height="24px" viewBox="0 -2.5 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000" transform="rotate(-45)matrix(-1, 0, 0, -1, 0, 0)" stroke="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>arrow_left_up [#295]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-340.000000, -6841.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M292.233,6690.714 L286.854,6685.335 C286.539,6685.02 286,6685.243 286,6685.688 L286,6688 C286,6688.552 285.552,6689 285,6689 C284.448,6689 284,6688.552 284,6688 L284,6683 C284,6681.895 284.896,6681 286,6681 L291,6681 C291.552,6681 292,6681.448 292,6682 C292,6682.552 291.552,6683 291,6683 L288.555,6683 C288.109,6683 287.886,6683.539 288.201,6683.854 L292.939,6688.591 C293.329,6688.982 293.962,6688.982 294.353,6688.591 L294.765,6688.179 C295.546,6687.398 296.812,6687.398 297.594,6688.179 L303.707,6694.293 C304.098,6694.683 304.098,6695.317 303.707,6695.707 L303.707,6695.707 C303.317,6696.098 302.684,6696.098 302.293,6695.707 L296.887,6690.301 C296.496,6689.91 295.863,6689.911 295.472,6690.302 L295.063,6690.712 C294.282,6691.495 293.015,6691.496 292.233,6690.714" id="arrow_left_up-[#295]"> </path> </g> </g> </g> </g></svg>
+    </div>
+      
 </div>
 
 
@@ -222,14 +221,14 @@
 
 
     {% comment %} <!-- 更多-> --> {% endcomment %}
-    <a href="">
-        <div class="flex justify-center items-center gap-4">
-          <a href="{% url 'activities:sports' %}">
-        <h3 class="my-10 text-2xl"> 更多揪運動</h3>
-        </a>
-        <svg width="24px" height="24px" viewBox="0 -2.5 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000" transform="rotate(-45)matrix(-1, 0, 0, -1, 0, 0)" stroke="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>arrow_left_up [#295]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-340.000000, -6841.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M292.233,6690.714 L286.854,6685.335 C286.539,6685.02 286,6685.243 286,6685.688 L286,6688 C286,6688.552 285.552,6689 285,6689 C284.448,6689 284,6688.552 284,6688 L284,6683 C284,6681.895 284.896,6681 286,6681 L291,6681 C291.552,6681 292,6681.448 292,6682 C292,6682.552 291.552,6683 291,6683 L288.555,6683 C288.109,6683 287.886,6683.539 288.201,6683.854 L292.939,6688.591 C293.329,6688.982 293.962,6688.982 294.353,6688.591 L294.765,6688.179 C295.546,6687.398 296.812,6687.398 297.594,6688.179 L303.707,6694.293 C304.098,6694.683 304.098,6695.317 303.707,6695.707 L303.707,6695.707 C303.317,6696.098 302.684,6696.098 302.293,6695.707 L296.887,6690.301 C296.496,6689.91 295.863,6689.911 295.472,6690.302 L295.063,6690.712 C294.282,6691.495 293.015,6691.496 292.233,6690.714" id="arrow_left_up-[#295]"> </path> </g> </g> </g> </g></svg>
-      </div>
+  
+      <div class="flex justify-center items-center gap-4">
+        <a href="{% url 'activities:sports' %}">
+      <h3 class="my-10 text-2xl"> 更多揪運動</h3>
       </a>
+      <svg width="24px" height="24px" viewBox="0 -2.5 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000" transform="rotate(-45)matrix(-1, 0, 0, -1, 0, 0)" stroke="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>arrow_left_up [#295]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-340.000000, -6841.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M292.233,6690.714 L286.854,6685.335 C286.539,6685.02 286,6685.243 286,6685.688 L286,6688 C286,6688.552 285.552,6689 285,6689 C284.448,6689 284,6688.552 284,6688 L284,6683 C284,6681.895 284.896,6681 286,6681 L291,6681 C291.552,6681 292,6681.448 292,6682 C292,6682.552 291.552,6683 291,6683 L288.555,6683 C288.109,6683 287.886,6683.539 288.201,6683.854 L292.939,6688.591 C293.329,6688.982 293.962,6688.982 294.353,6688.591 L294.765,6688.179 C295.546,6687.398 296.812,6687.398 297.594,6688.179 L303.707,6694.293 C304.098,6694.683 304.098,6695.317 303.707,6695.707 L303.707,6695.707 C303.317,6696.098 302.684,6696.098 302.293,6695.707 L296.887,6690.301 C296.496,6689.91 295.863,6689.911 295.472,6690.302 L295.063,6690.712 C294.282,6691.495 293.015,6691.496 292.233,6690.714" id="arrow_left_up-[#295]"> </path> </g> </g> </g> </g></svg>
+      </div>
+     
 </div>
 
 
@@ -278,14 +277,14 @@
 
 
     {% comment %} <!-- 更多-> --> {% endcomment %}
-    <a href="">
-        <div class="flex justify-center items-center gap-4">
-        <a href="{% url 'activities:singing' %}">
-        <h3 class="my-10 text-2xl"> 更多揪唱歌</h3>
-        </a>
-        <svg width="24px" height="24px" viewBox="0 -2.5 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000" transform="rotate(-45)matrix(-1, 0, 0, -1, 0, 0)" stroke="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>arrow_left_up [#295]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-340.000000, -6841.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M292.233,6690.714 L286.854,6685.335 C286.539,6685.02 286,6685.243 286,6685.688 L286,6688 C286,6688.552 285.552,6689 285,6689 C284.448,6689 284,6688.552 284,6688 L284,6683 C284,6681.895 284.896,6681 286,6681 L291,6681 C291.552,6681 292,6681.448 292,6682 C292,6682.552 291.552,6683 291,6683 L288.555,6683 C288.109,6683 287.886,6683.539 288.201,6683.854 L292.939,6688.591 C293.329,6688.982 293.962,6688.982 294.353,6688.591 L294.765,6688.179 C295.546,6687.398 296.812,6687.398 297.594,6688.179 L303.707,6694.293 C304.098,6694.683 304.098,6695.317 303.707,6695.707 L303.707,6695.707 C303.317,6696.098 302.684,6696.098 302.293,6695.707 L296.887,6690.301 C296.496,6689.91 295.863,6689.911 295.472,6690.302 L295.063,6690.712 C294.282,6691.495 293.015,6691.496 292.233,6690.714" id="arrow_left_up-[#295]"> </path> </g> </g> </g> </g></svg>
-      </div>
+    
+      <div class="flex justify-center items-center gap-4">
+      <a href="{% url 'activities:singing' %}">
+      <h3 class="my-10 text-2xl"> 更多揪唱歌</h3>
       </a>
+      <svg width="24px" height="24px" viewBox="0 -2.5 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000" transform="rotate(-45)matrix(-1, 0, 0, -1, 0, 0)" stroke="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>arrow_left_up [#295]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-340.000000, -6841.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M292.233,6690.714 L286.854,6685.335 C286.539,6685.02 286,6685.243 286,6685.688 L286,6688 C286,6688.552 285.552,6689 285,6689 C284.448,6689 284,6688.552 284,6688 L284,6683 C284,6681.895 284.896,6681 286,6681 L291,6681 C291.552,6681 292,6681.448 292,6682 C292,6682.552 291.552,6683 291,6683 L288.555,6683 C288.109,6683 287.886,6683.539 288.201,6683.854 L292.939,6688.591 C293.329,6688.982 293.962,6688.982 294.353,6688.591 L294.765,6688.179 C295.546,6687.398 296.812,6687.398 297.594,6688.179 L303.707,6694.293 C304.098,6694.683 304.098,6695.317 303.707,6695.707 L303.707,6695.707 C303.317,6696.098 302.684,6696.098 302.293,6695.707 L296.887,6690.301 C296.496,6689.91 295.863,6689.911 295.472,6690.302 L295.063,6690.712 C294.282,6691.495 293.015,6691.496 292.233,6690.714" id="arrow_left_up-[#295]"> </path> </g> </g> </g> </g></svg>
+      </div>
+    
 </div>
 
 
@@ -336,14 +335,14 @@
 
 
     {% comment %} <!-- 更多-> --> {% endcomment %}
-    <a href="">
-        <div class="flex justify-center items-center gap-4">
-        <a href="{% url 'activities:movies' %}">
-        <h3 class="my-10 text-2xl"> 更多揪電影</h3>
-        </a>
-        <svg width="24px" height="24px" viewBox="0 -2.5 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000" transform="rotate(-45)matrix(-1, 0, 0, -1, 0, 0)" stroke="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>arrow_left_up [#295]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-340.000000, -6841.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M292.233,6690.714 L286.854,6685.335 C286.539,6685.02 286,6685.243 286,6685.688 L286,6688 C286,6688.552 285.552,6689 285,6689 C284.448,6689 284,6688.552 284,6688 L284,6683 C284,6681.895 284.896,6681 286,6681 L291,6681 C291.552,6681 292,6681.448 292,6682 C292,6682.552 291.552,6683 291,6683 L288.555,6683 C288.109,6683 287.886,6683.539 288.201,6683.854 L292.939,6688.591 C293.329,6688.982 293.962,6688.982 294.353,6688.591 L294.765,6688.179 C295.546,6687.398 296.812,6687.398 297.594,6688.179 L303.707,6694.293 C304.098,6694.683 304.098,6695.317 303.707,6695.707 L303.707,6695.707 C303.317,6696.098 302.684,6696.098 302.293,6695.707 L296.887,6690.301 C296.496,6689.91 295.863,6689.911 295.472,6690.302 L295.063,6690.712 C294.282,6691.495 293.015,6691.496 292.233,6690.714" id="arrow_left_up-[#295]"> </path> </g> </g> </g> </g></svg>
-      </div>
+   
+      <div class="flex justify-center items-center gap-4">
+      <a href="{% url 'activities:movies' %}">
+      <h3 class="my-10 text-2xl"> 更多揪電影</h3>
       </a>
+      <svg width="24px" height="24px" viewBox="0 -2.5 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000" transform="rotate(-45)matrix(-1, 0, 0, -1, 0, 0)" stroke="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>arrow_left_up [#295]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-340.000000, -6841.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M292.233,6690.714 L286.854,6685.335 C286.539,6685.02 286,6685.243 286,6685.688 L286,6688 C286,6688.552 285.552,6689 285,6689 C284.448,6689 284,6688.552 284,6688 L284,6683 C284,6681.895 284.896,6681 286,6681 L291,6681 C291.552,6681 292,6681.448 292,6682 C292,6682.552 291.552,6683 291,6683 L288.555,6683 C288.109,6683 287.886,6683.539 288.201,6683.854 L292.939,6688.591 C293.329,6688.982 293.962,6688.982 294.353,6688.591 L294.765,6688.179 C295.546,6687.398 296.812,6687.398 297.594,6688.179 L303.707,6694.293 C304.098,6694.683 304.098,6695.317 303.707,6695.707 L303.707,6695.707 C303.317,6696.098 302.684,6696.098 302.293,6695.707 L296.887,6690.301 C296.496,6689.91 295.863,6689.911 295.472,6690.302 L295.063,6690.712 C294.282,6691.495 293.015,6691.496 292.233,6690.714" id="arrow_left_up-[#295]"> </path> </g> </g> </g> </g></svg>
+      </div>
+      
 </div>
 
 
@@ -391,14 +390,14 @@
 
 
     {% comment %} <!-- 更多-> --> {% endcomment %}
-    <a href="">
-        <div class="flex justify-center items-center gap-4">
-        <a href="{% url 'activities:discussion' %}">
-        <h3 class="my-10 text-2xl"> 更多揪討論</h3>
-        </a>
-        <svg width="24px" height="24px" viewBox="0 -2.5 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000" transform="rotate(-45)matrix(-1, 0, 0, -1, 0, 0)" stroke="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>arrow_left_up [#295]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-340.000000, -6841.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M292.233,6690.714 L286.854,6685.335 C286.539,6685.02 286,6685.243 286,6685.688 L286,6688 C286,6688.552 285.552,6689 285,6689 C284.448,6689 284,6688.552 284,6688 L284,6683 C284,6681.895 284.896,6681 286,6681 L291,6681 C291.552,6681 292,6681.448 292,6682 C292,6682.552 291.552,6683 291,6683 L288.555,6683 C288.109,6683 287.886,6683.539 288.201,6683.854 L292.939,6688.591 C293.329,6688.982 293.962,6688.982 294.353,6688.591 L294.765,6688.179 C295.546,6687.398 296.812,6687.398 297.594,6688.179 L303.707,6694.293 C304.098,6694.683 304.098,6695.317 303.707,6695.707 L303.707,6695.707 C303.317,6696.098 302.684,6696.098 302.293,6695.707 L296.887,6690.301 C296.496,6689.91 295.863,6689.911 295.472,6690.302 L295.063,6690.712 C294.282,6691.495 293.015,6691.496 292.233,6690.714" id="arrow_left_up-[#295]"> </path> </g> </g> </g> </g></svg>
-      </div>
+    
+      <div class="flex justify-center items-center gap-4">
+      <a href="{% url 'activities:discussion' %}">
+      <h3 class="my-10 text-2xl"> 更多揪討論</h3>
       </a>
+      <svg width="24px" height="24px" viewBox="0 -2.5 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000" transform="rotate(-45)matrix(-1, 0, 0, -1, 0, 0)" stroke="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>arrow_left_up [#295]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-340.000000, -6841.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M292.233,6690.714 L286.854,6685.335 C286.539,6685.02 286,6685.243 286,6685.688 L286,6688 C286,6688.552 285.552,6689 285,6689 C284.448,6689 284,6688.552 284,6688 L284,6683 C284,6681.895 284.896,6681 286,6681 L291,6681 C291.552,6681 292,6681.448 292,6682 C292,6682.552 291.552,6683 291,6683 L288.555,6683 C288.109,6683 287.886,6683.539 288.201,6683.854 L292.939,6688.591 C293.329,6688.982 293.962,6688.982 294.353,6688.591 L294.765,6688.179 C295.546,6687.398 296.812,6687.398 297.594,6688.179 L303.707,6694.293 C304.098,6694.683 304.098,6695.317 303.707,6695.707 L303.707,6695.707 C303.317,6696.098 302.684,6696.098 302.293,6695.707 L296.887,6690.301 C296.496,6689.91 295.863,6689.911 295.472,6690.302 L295.063,6690.712 C294.282,6691.495 293.015,6691.496 292.233,6690.714" id="arrow_left_up-[#295]"> </path> </g> </g> </g> </g></svg>
+      </div>
+     
 </div>
 
 
