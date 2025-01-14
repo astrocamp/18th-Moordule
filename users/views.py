@@ -10,6 +10,7 @@ from django_htmx.middleware import HtmxDetails
 from django.contrib import messages
 from activities.models import Activity as Meetup
 from activities.models import MeetupPaticipat as MeetupParticipant
+from cashflows.models import Payment
 from django.shortcuts import redirect
 from .decorators import anonymous_required
 from .forms import AboutMeForm, CustomUserChangeForm, UserRegistrationForm
@@ -93,7 +94,18 @@ def user_page_view(request, tag="member"):
         context["activities"] = activities
 
     elif tag == "wallet":
-        return render(request, "users/wallet.html")
+        # 從 Wallets 模型抓取使用者的錢包資訊
+        wallet = Payment.objects.filter(user=user).first()
+        if wallet:
+            context["wallet_balance"] = wallet.amount
+        else:
+            context["wallet_balance"] = 0  
+
+        # 從 Payments 模型抓取與使用者相關的交易紀錄
+        transactions = Payment.objects.filter(order_id__startswith="WALLET").order_by("-created_at")
+        context["transactions"] = transactions
+        
+        
 
     else:
         # 若沒有符合任何條件，保留基本的 context
