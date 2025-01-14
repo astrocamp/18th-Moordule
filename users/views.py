@@ -279,10 +279,3 @@ class CustomLogoutView(LogoutView):
         # 添加成功消息
         messages.success(request, "您已成功登出。")
         return super().dispatch(request, *args, **kwargs)
-
-@receiver(user_logged_in)
-def custom_login_message(sender, request, user, **kwargs):
-    if request.user.is_authenticated:
-        if user.socialaccount_set.filter(provider='google').exists():
-            messages.success(request, _("登入成功！"))
-        

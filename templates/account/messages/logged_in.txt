@@ -1,4 +1,4 @@
 {% load account %}
 {% load i18n %}
 {% user_display user as name %}
-{% blocktrans %}{% endblocktrans %}
+{% blocktrans %}登入成功！{% endblocktrans %}
