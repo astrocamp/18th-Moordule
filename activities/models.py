@@ -99,7 +99,6 @@ class MeetupPaticipat(models.Model):
 
     def __str__(self):
         return f"{self.activity.title} - {self.participant.username}（{self.joined_at.strftime('%Y-%m-%d %H:%M')})"
-<<<<<<< HEAD
 
 
 class ActivityApproval(models.Model):
@@ -118,8 +117,3 @@ class ActivityApproval(models.Model):
 
     def __str__(self):
         return f"{self.activity.title} - {self.reviewer.username}({'Approved' if self.approved else 'Rejected'})"
-=======
-class MyModel(models.Model):
-    name = models.CharField(max_length=100)
-    value = models.IntegerField()
->>>>>>> 402bbcf (fix: add populate db and update templates for RWD)
