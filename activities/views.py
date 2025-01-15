@@ -199,7 +199,7 @@ def join_activity(request, activity_id):
         or not request.user.live_in
         or not request.user.bio
     ):
-        messages.error(request, "請先填寫您'必填＊'的個人資料才能創建聚會")
+        messages.error(request, "請先填寫您必填＊的個人資料讓大家更了解您")
         return redirect(
             "users:user_page", tag="account"
         )  # 如果資料不完整，重定向到個人資料頁面
