@@ -4,7 +4,7 @@
     <a href="#top">
         <button
         onclick="scrollToTop()"
-        class="fixed bottom-4 right-4 w-14 h-14 bg-moordule-yellow text-white-shadow rounded-full shadow-lg flex items-center justify-center hover:bg-yellow-500 transition duration-300"
+        class="fixed bottom-4 right-4 w-14 h-14 bg-moordule-yellow text-white-shadow rounded-full shadow-lg flex items-center justify-center hover:bg-yellow-500 transition duration-300 z-50"
         aria-label="Back to top"
         >
         <svg
@@ -144,6 +144,11 @@
                   創立聚會
                 </a>
               </li>
+              <li class="flex justify-center">
+                <a href="{% url 'users:user_page' tag='wallet' %}" class="bg-white rounded-3xl text-gray-900 text-xl w-1/2 text-center block">
+                  我的錢包
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -161,7 +166,7 @@
 
 <!-- Footer -->
 <footer class="bg-[#5DA2D5] text-center text-white-shadow text-lg py-4">
-    <p>公司：中文名字還沒確定股份有限公司</p>
+    <p>公司：芯魅力股份有限公司</p>
     <p>統編：13145200</p>
     <p>地址：台灣168台北市衡陽路7號5樓</p>
     <p>客服信箱：service@moordule.com</p>
