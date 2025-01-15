@@ -7,14 +7,43 @@
 {% endblock head %} {% block content %}
 <div class="bg-white text-gray-900">
   {% comment %} <!-- 特別聚會 banner --> {% endcomment %}
-
-  <section id="top">
-    <img
-      src="https://images.unsplash.com/photo-1541379889336-70f26e4c4617?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2hpbmVzZSUyMG5ldyUyMHllYXJ8ZW58MHx8MHx8fDA%3D"
-      alt="chinese new year"
-      class="w-full h-[70vh] object-cover"
-    />
+  <section id="top" class="relative pt-20">
+    <div class="w-[100vw] h-[60vh] overflow-hidden relative">
+      <!-- 圖片容器 - 新增 w-full 確保寬度正確 -->
+      <div id="carousel" class="flex w-full transition-transform duration-1000 ease-in-out">
+        <!-- 每張圖片都需要完整的寬度 -->
+        <div class="min-w-full">
+          <img
+            src="/static/images/Green and Orange Illustrative Music Festival Event Banner.zip - 1.png"
+            alt="chinese new year 1"
+            class="w-full h-[60vh] object-cover"
+          />
+        </div>
+        <div class="min-w-full">
+          <img
+            src="/static/images/Green and Orange Illustrative Music Festival Event Banner.zip - 2.png"
+            alt="chinese new year 2"
+            class="w-full h-[60vh] object-cover"
+          />
+        </div>
+        <div class="min-w-full">
+          <img
+            src="/static/images/Green and Orange Illustrative Music Festival Event Banner.zip - 3.png"
+            alt="chinese new year 3"
+            class="w-full h-[60vh] object-cover"
+          />
+        </div>
+      </div>
+    </div>
+  
+    <!-- 圖片切換點 -->
+    <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+      <span class="dot w-3 h-3 bg-white rounded-full cursor-pointer"></span>
+      <span class="dot w-3 h-3 bg-gray-400 rounded-full cursor-pointer"></span>
+      <span class="dot w-3 h-3 bg-gray-400 rounded-full cursor-pointer"></span>
+    </div>
   </section>
+  
 
   {% comment %} <!-- 按鈕去各區 --> {% endcomment %}
 
