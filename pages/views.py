@@ -25,3 +25,6 @@ def index_view(request):
 
 def privacy(request):
     return render(request, "pages/privacy.html")
+
+def service_terms(request):
+    return render(request, "pages/service_terms.html")
