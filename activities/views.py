@@ -253,7 +253,6 @@ def today(request):
     activities_by_today = {}
     activities_per_page = 8  
 
-        # 獲取當前頁碼
     page_number = request.GET.get(f"page", 1) 
 
     paginator = Paginator(todays_events, activities_per_page)  
@@ -306,7 +305,7 @@ def render_activities(request, template_name):
         },
     )
 
-# 使用通用函數
+
 def eating(request):
     return render_activities(request, "activities/eating.html")
 
