@@ -20,7 +20,7 @@
 	</div>
 
 	<div class="flex items-center space-x-3">
-		<form action="{% url 'activities:search' %}" method="POST" class="w-full max-w-[calc((12rem+3*3rem)/4)] flex">
+		<form action="{% url 'activities:search' %}" method="POST" class="w-full max-w-[calc((12rem+3*3rem)/2)] flex">
 			{% csrf_token %}
 			<div class="relative w-full">
 				<input
@@ -192,6 +192,11 @@
 		display: none;
 	}
 }
+/* 手機版隱藏特定圖片 */
+@media (max-width: 768px) {
+	/* 使用屬性選擇器匹配特定的 src 屬性值 */
+	img[src="https://miro.medium.com/v2/resize:fit:1400/format:webp/1*sphjBoiQpYV1I4Z5hOl5Qw.jpeg"] {
+		display: none;
+	}
+}
 </style>
-
-
