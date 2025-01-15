@@ -10,7 +10,7 @@ from django_htmx.middleware import HtmxDetails
 from django.contrib import messages
 from activities.models import Activity as Meetup
 from activities.models import MeetupPaticipat as MeetupParticipant
-from cashflows.models import Payment
+from cashflows.models import Payment, Wallet
 from django.shortcuts import redirect
 from .decorators import anonymous_required
 from .forms import AboutMeForm, CustomUserChangeForm, UserRegistrationForm
@@ -71,11 +71,15 @@ def user_page_view(request, tag="member"):
     context = {"tag": tag}
 
     if tag == "member":
-        wallet = Payment.objects.filter(user=user).first()
+        wallet = Wallet.objects.filter(user=user).first()
         user = CustomUser.objects.get(id=user.id)
         context["userinfo"] = user.email
-        context["wallet_balance"] = wallet.amount
         
+        if wallet:
+            context["wallet_balance"] = wallet.balence
+        else:
+            context["wallet_balance"] = 0
+
         context["meetup"] = (
             Meetup.objects.filter(
                 start_time__gte=timezone.now(),
@@ -104,14 +108,14 @@ def user_page_view(request, tag="member"):
 
     elif tag == "wallet":
         # 從 Wallets 模型抓取使用者的錢包資訊
-        wallet = Payment.objects.filter(user=user).first()
+        wallet = Wallet.objects.filter(user=user).first()
         if wallet:
-            context["wallet_balance"] = wallet.amount
+            context["wallet_balance"] = wallet.balence
         else:
             context["wallet_balance"] = 0  
 
         # 從 Payments 模型抓取與使用者相關的交易紀錄
-        transactions = Payment.objects.filter(order_id__startswith="order").order_by("-created_at")[:5]
+        transactions = Payment.objects.filter(user=wallet.user).order_by("-created_at")[:5]
         context["transactions"] = transactions
         
    

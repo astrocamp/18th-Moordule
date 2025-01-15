@@ -16,5 +16,6 @@ class Payment(models.Model):
 
 
 class Wallet(models.Model):
-    created_at = (models.DateTimeField(auto_now_add=True),)
-    balence = (models.IntegerField(verbose_name="餘額"),)
+    created_at = models.DateTimeField(auto_now_add=True)
+    balence = models.IntegerField(verbose_name="餘額", default=0)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)

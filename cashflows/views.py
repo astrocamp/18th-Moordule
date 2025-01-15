@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
 from moordule import settings
-from .models import Payment
+from .models import Payment, Wallet
 
 
 def index(request):
@@ -70,7 +70,7 @@ def request_payment(request):
                 }
             ],
             "redirectUrls": {
-                "confirmUrl": f"https://{settings.HOSTNAME}/cashflows/payment/confirm",
+                "confirmUrl": f"https://{settings.HOSTNAME}/cashflows/payment/confirm_b",
                 "cancelUrl": f"https://{settings.HOSTNAME}/payment/cancel",
             },
         }
@@ -106,34 +106,37 @@ def request_payment(request):
                 {"message": f"Error: {response.status_code}"},
             )
 
-    return render(request, "payment/checkout.html")
+    return render(request, "payment/checkout_b.html")
 
-def confirm(request):
-    return render(request, "payment/confirm.html")
-    # transaction_id = request.GET.get('transactionId')  
-    # amount = request.GET.get('amount')  
-    # currency = request.GET.get('currency')  
+def confirm_b(request):
 
-    # uri = f"/v3/payments/{transaction_id}/confirm"
-    # headers = create_headers({"amount": amount, "currency": currency}, uri)
-    # url = f"{settings.LINE_SANDBOX_URL}{uri}"
-    
-    # response = requests.post(url, headers=headers, data=json.dumps({"amount": amount, "currency": currency}))
+    try:
+        transaction_id = request.GET.get("transactionId")  
+        
+        if not transaction_id:
+            return render(request, "payment/error.html", {"message": "Missing required parameters."})
 
-    # if response.status_code == 200:
-    #     data = response.json()
-    #     if data["returnCode"] == "0000":
-    #         # 儲存付款資訊至資料庫，並關聯到當前用戶
-    #         Payment.objects.create(
-    #             user=request.user,
-    #             order_id=data["info"]["orderId"],
-    #             transaction_id=transaction_id,
-    #             amount=amount,
-    #             currency=currency,
-    #             status='成功'
-    #         )
-    #         return render(request, "payment/confirm.html", {"data": data})
-    #     else:
-    #         return render(request, "payment/error.html", {"message": data["returnMessage"]})
-    # else:
-    #     return render(request, "payment/error.html", {"message": f"Error: {response.status_code}"})
+        # 根據 transaction_id 查找對應的支付記錄
+        payment = Payment.objects.filter(transaction_id=transaction_id).first()
+        if not payment:
+            return render(request, "payment/error.html", {"message": "Payment record not found."})
+
+        # 更新狀態為 "成功"
+        payment.status = "已付款"
+        payment.save()  # 更新資料庫中的狀態
+
+        balance = Wallet.objects.filter(user=payment.user).first()
+        if balance:
+            balance.balence += payment.amount
+            balance.save()  # 更新餘額
+        else:
+            Wallet.objects.create(user=payment.user, balence=payment.amount)  # 新增餘額
+        # 用戶等級變更
+
+        # 可以選擇將付款資訊顯示或繼續處理
+        return render(request, "payment/confirm_b.html", {"data": payment})
+
+    except Exception as e:
+        return render(request, "payment/error.html", {"message": f"Exception: {str(e)}"})
+
+      
