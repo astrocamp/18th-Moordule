@@ -2,43 +2,52 @@
 <!---->
 {% block head %}
 <style>
-@keyframes slide-up {
-    0% {
-        transform: translateY(100%);
-        opacity: 1;
-    }
-    50% {
-        transform: translateY(0);
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(-100%);
-        opacity: 1;
-    }
-}
-
-@keyframes slide-down {
-    0% {
-        transform: translateY(-100%);
-        opacity: 1;
-    }
-    50% {
-        transform: translateY(0);
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(100%);
-        opacity: 1;
-    }
-}
-
-.animate-slide-up {
-    animation: slide-up 10s linear infinite;
-}
-
-.animate-slide-down {
-    animation: slide-down 10s linear infinite;
-}
+  @keyframes slide-up {
+      0% {
+          transform: translateY(100%);
+          opacity: 1;
+      }
+      50% {
+          transform: translateY(0);
+          opacity: 1;
+      }
+      100% {
+          transform: translateY(-100%);
+          opacity: 1;
+      }
+  }
+  
+  @keyframes slide-down {
+      0% {
+          transform: translateY(-100%);
+          opacity: 1;
+      }
+      50% {
+          transform: translateY(0);
+          opacity: 1;
+      }
+      100% {
+          transform: translateY(100%);
+          opacity: 1;
+      }
+  }
+  
+  .animate-slide-up {
+      animation: slide-up 10s linear infinite;
+  }
+  
+  .animate-slide-down {
+      animation: slide-down 10s linear infinite;
+  }
+  
+  /* 手機版隱藏動畫、圖片和圖片框 */
+  @media (max-width: 768px) {
+      .animate-slide-up,
+      .animate-slide-down {
+          display: none; /* 隱藏整個圖片框及內容 */
+      }
+  }
+  
 </style>
 {% endblock head %} {% block content %}
   <!-- 主頁內容 -->

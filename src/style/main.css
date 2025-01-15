@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('./activites.css');
+
 
 :root {
     --moordule-yellow: #ffc517;
@@ -31,7 +31,7 @@ gmp-map {
   color: white;
 }
 
-@keyframes slide-up {
+/* @keyframes slide-up {
   0% {
       transform: translateY(100%);
       opacity: 1;
@@ -44,9 +44,9 @@ gmp-map {
       transform: translateY(-100%);
       opacity: 1;
   }
-}
+} */
 
-@keyframes slide-down {
+/* @keyframes slide-down {
   0% {
       transform: translateY(-100%);
       opacity: 1;
@@ -67,9 +67,9 @@ gmp-map {
 
 .animate-slide-down {
   animation: slide-down 8s linear infinite;
-}
+} */
 
-.text-white-shadow {
-  color: white;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-}
+  .text-white-shadow {
+    color: white;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  } 
