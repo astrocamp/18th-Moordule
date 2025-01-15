@@ -19,128 +19,109 @@
   {% comment %} <!-- 按鈕去各區 --> {% endcomment %}
 
   <div class="flex justify-center space-x-10 my-10">
-    <a href="#eat"
+    <a href="{% url 'activities:eating' %}"
       ><button
-        class="text-xl px-4 py-1 rounded-full bg-[#F78888] text-white-shadow hover:bg-pink-500"
+        class="text-xl px-4 py-1 rounded-full bg-moordule-pink text-white-shadow hover:bg-pink-500"
       >
         揪吃飯
       </button></a
     >
-    <a href="#drink"
+    <a href="{% url 'activities:driking' %}"
       ><button
-        class="text-xl px-4 py-1 rounded-full bg-yellow-300 text-white-shadow hover:bg-yellow-500"
+        class="text-xl px-4 py-1 rounded-full bg-moordule-yellow text-white-shadow hover:bg-yellow-500"
       >
         揪喝酒
       </button></a
     >
-    <a href="#sports"
+     <a href="{% url 'activities:sports' %}"
       ><button
-        class="text-xl px-4 py-1 rounded-full bg-[#5DA2D5] text-white-shadow hover:bg-blue-500"
+        class="text-xl px-4 py-1 rounded-full bg-moordule-deep-blue text-white-shadow hover:bg-blue-500"
       >
         揪運動
       </button></a
     >
-    <a href="#sing"
+    <a href="{% url 'activities:singing' %}"
       ><button
-        class="text-xl px-4 py-1 rounded-full bg-yellow-300 text-white-shadow hover:bg-yellow-500"
+        class="text-xl px-4 py-1 rounded-full bg-moordule-yellow text-white-shadow hover:bg-yellow-500"
       >
         揪唱歌
       </button></a
     >
-    <a href="#movies"
+    <a href="{% url 'activities:movies' %}"
       ><button
-        class="text-xl px-4 py-1 rounded-full bg-[#F78888] text-white-shadow hover:bg-pink-500"
+        class="text-xl px-4 py-1 rounded-full bg-moordule-pink text-white-shadow hover:bg-pink-500"
       >
         揪電影
       </button></a
     >
-    <a href="#seminer"
+    <a href="{% url 'activities:discussion' %}"
       ><button
-        class="text-xl px-4 py-1 rounded-full bg-[#5DA2D5] text-white-shadow hover:bg-blue-500"
+        class="text-xl px-4 py-1 rounded-full bg-moordule-deep-blue text-white-shadow hover:bg-blue-500"
       >
         揪討論
       </button></a
     >
-  </div>
+  </div> 
 
-  <section id="today">
-    <h2 class="text-3xl font-bold text-center mb-8 mt-20">
-      今天即將開始的聚會
-    </h2>
+  <section>
+    <h1 class="flex justify-center my-10 text-4xl">今天的聚會</h1>
 
-    <div id="drink" class="mx-20 pt-12">
-      <div class="flex justify-center gap-12">
-        <!-- Card 1 -->
-        {% for activity in upcoming_activities %}
-        <div class="w-82 rounded-3xl overflow-hidden shadow-lg">
-          <img
-            img src="{{ activity.photo.url }}" alt="{{ activity.title }}"
-            class="h-48 w-full object-cover"
-          />
-          <div class="bg-moordule-yellow p-4">
-            <div class="flex justify-between items-center mb-2">
-              <h3 class="font-bold text-2xl">{{activity.title}}</h3>
-              <div class="flex items-center gap-1">
-                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
-                  <path
-                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                  />
-                </svg>
-                <span>已參加{{ activity.participants.count }} / 最多{{ activity.max_participants }}人</span>
+    <div class="justify-center mx-2 pt-8">
+      <div class="flex flex-wrap justify-center gap-6 mx-2 pt-8">
+        {% for activity in todays_events %}
+          <div class="w-1/5 rounded-3xl overflow-hidden shadow-lg">
+            <img src="{{ activity.photo.url }}" alt="{{ activity.title }}" class="h-48 w-full object-cover" />
+            <div class="bg-moordule-deep-blue p-4 h-full">
+              <div class="flex justify-between items-center mb-2">
+                <h3>{{ activity.title }}</h3>
+                <div class="flex items-center gap-1">
+                  <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"/>
+                  </svg>
+                    <span>已參加{{ activity.participants.count }} / {{ activity.max_participants }}人</span>
+                </div>
               </div>
-            </div>
-            <div class="flex justify-between gap-2 text-sm mb-2">
-              <div class="flex">
-                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
-                  <path
-                    fill-rule="evenodd"
-                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-                <span>{{ activity.address }}</span>
+              <div class="flex justify-between gap-2 text-sm mb-2">
+                <div class="flex">
+                  <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                  </svg>
+                  <p>地點: {{ activity.address }}</p>
+                </div>
+                <p>時間: {{ activity.start_time|date:"Y-m-d H:i" }}</p>
               </div>
-              <span class="text-lg">{{ activity.start_time|date:"Y-m-d H:i" }}</span>
-            </div>
-            <span class="text-lg font-medium">聚會內容：</span>
-            <p class="text-sm mb-4 text-lg">
-              {{ activity.description }}                                                                          
-            </p>
-            <a href="{% url 'activities:join' activity.id %}">
-            <button class="w-full py-2 rounded-full bg-white  font-bold"
-            >
-              馬上揪
-            </button>
+              <span class="text-lg font-medium">聚會內容：</span>
+              <p class="text-sm mb-4 text-lg">
+                {{ activity.description }}
+              </p>
+              <a href="{% url 'activities:join' activity.id %}">
+            <button class="w-full py-2 rounded-full bg-white text-moordule-deep-blue font-bold">馬上揪</button>
             </a>
+            </div>
           </div>
-        </div>
-          {% empty %}
-        <li>未來一週內沒有即將開時的活動。</li>
-  
-        {% endfor %}  
-  
+        {% endfor %}
+      </div>
 
-          <!-- 分頁導航 -->
-          <div class="pagination mt-8 mb-4 flex justify-center">
-            <span class="step-links">
-                {% if activities.has_previous %}
-                    <a href="?page_{{ category.id }}={{ activities.previous_page_number }}" class="mx-2 font-bold text-2xl "> < </a>
+      <!-- 分頁導航 -->
+      <div class="pagination mt-8 mb-4 flex justify-center">
+        <span class="step-links">
+            {% if todays_events.has_previous %}
+                <a href="?page={{ todays_events.previous_page_number }}" class="mx-2 font-bold text-2xl"> < </a>
+            {% endif %}
+    
+            {% for num in todays_events.paginator.page_range %}
+                {% if num == todays_events.number %}
+                    <span class="mx-2 font-bold text-2xl"> {{ num }} </span>  <!-- 當前頁碼 -->
+                {% else %}
+                    <a href="?page={{ num }}" class="mx-2 font-bold text-2xl"> {{ num }} </a>
                 {% endif %}
-
-                {% for num in activities.paginator.page_range %}
-                    {% if num == activities.number %}
-                        <span class="mx-2 font-bold text-2xl"> {{ num }} </span>  <!-- 當前頁碼 -->
-                    {% else %}
-                        <a href="?page_{{ category.id }}={{ num }}" class="mx-2 font-bold text-2xl"> {{ num }} </a>
-                    {% endif %}
-                {% endfor %}
-
-                {% if activities.has_next %}
-                    <a href="?page_{{ category.id }}={{ activities.next_page_number }}" class="mx-2 text-2xl font-bold"> > </a>
-                {% endif %}
-            </span>
-          </div>
-
+            {% endfor %}
+    
+            {% if todays_events.has_next %}
+                <a href="?page={{ todays_events.next_page_number }}" class="mx-2 text-2xl font-bold"> > </a>
+            {% endif %}
+        </span>
+      </div>
     </div>
   </section>
 </div>

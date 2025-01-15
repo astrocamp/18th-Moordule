@@ -247,268 +247,80 @@ def search(request):
 
 
 def today(request):
-    categories = Category.objects.prefetch_related("activity_set")
-
-    now = timezone.now()  # 過濾掉過期的聚會，只顯示未過期的聚會
-    activities_by_category = {}
-    activities_per_page = 8  # 每頁顯示的活動數量
-
-    for category in categories:
-        # 獲取未過期的活動並按開始時間排序
-        activities = category.activity_set.filter(
-            start_time__gte=now, status="approved"
-        ).order_by("start_time")
+    today = timezone.now().date()
+    todays_events = Activity.objects.filter(start_time__date=today, status="approved").order_by("start_time")
+    
+    activities_by_today = {}
+    activities_per_page = 8  
 
         # 獲取當前頁碼
-        page_number = request.GET.get(
-            f"page_{category.id}", 1
-        )  # 使用類別ID來區分不同類別的頁碼
+    page_number = request.GET.get(f"page", 1) 
 
-        paginator = Paginator(activities, activities_per_page)  # 創建分頁器
+    paginator = Paginator(todays_events, activities_per_page)  
 
-        try:
-            page_obj = paginator.page(page_number)  # 獲取當前頁的活動
-        except PageNotAnInteger:
-            page_obj = paginator.page(1)  # 如果不是整數，顯示第1頁
-        except EmptyPage:
-            page_obj = paginator.page(paginator.num_pages)  # 如果超出範圍，顯示最後一頁
-
-        activities_by_category[category] = page_obj  # 將分頁後的活動存入字典
+    try:
+        page_obj = paginator.page(page_number)  
+    except PageNotAnInteger:
+        page_obj = paginator.page(1)  
+    except EmptyPage:
+        page_obj = paginator.page(paginator.num_pages)  
+    activities_by_today[activities] = page_obj 
 
     return render(
         request,
         "activities/today.html",
         {
-            "activities_by_category": activities_by_category,
-            "categories": categories,
+            "todays_events": page_obj,
         },
     )
 
 
-def eating(request):
+def render_activities(request, template_name):
     categories = Category.objects.prefetch_related("activity_set")
-
-    now = timezone.now()  # 過濾掉過期的聚會，只顯示未過期的聚會
+    now = timezone.now()
     activities_by_category = {}
-    activities_per_page = 8  # 每頁顯示的活動數量
+    activities_per_page = 8
 
     for category in categories:
-        # 獲取未過期的活動並按開始時間排序
         activities = category.activity_set.filter(
             start_time__gte=now, status="approved"
         ).order_by("start_time")
-
-        # 獲取當前頁碼
-        page_number = request.GET.get(
-            f"page_{category.id}", 1
-        )  # 使用類別ID來區分不同類別的頁碼
-
-        paginator = Paginator(activities, activities_per_page)  # 創建分頁器
+        page_number = request.GET.get(f"page_{category.id}", 1)
+        paginator = Paginator(activities, activities_per_page)
 
         try:
-            page_obj = paginator.page(page_number)  # 獲取當前頁的活動
+            page_obj = paginator.page(page_number)
         except PageNotAnInteger:
-            page_obj = paginator.page(1)  # 如果不是整數，顯示第1頁
+            page_obj = paginator.page(1)
         except EmptyPage:
-            page_obj = paginator.page(paginator.num_pages)  # 如果超出範圍，顯示最後一頁
+            page_obj = paginator.page(paginator.num_pages)
 
-        activities_by_category[category] = page_obj  # 將分頁後的活動存入字典
+        activities_by_category[category] = page_obj
 
     return render(
         request,
-        "activities/eating.html",
+        template_name,
         {
             "activities_by_category": activities_by_category,
             "categories": categories,
         },
     )
 
+# 使用通用函數
+def eating(request):
+    return render_activities(request, "activities/eating.html")
 
 def driking(request):
-    categories = Category.objects.prefetch_related("activity_set")
-
-    now = timezone.now()  # 過濾掉過期的聚會，只顯示未過期的聚會
-    activities_by_category = {}
-    activities_per_page = 8  # 每頁顯示的活動數量
-
-    for category in categories:
-        activities = category.activity_set.filter(
-            start_time__gte=now, status="approved"
-        ).order_by("start_time")
-
-        # 獲取當前頁碼
-        page_number = request.GET.get(
-            f"page_{category.id}", 1
-        )  # 使用類別ID來區分不同類別的頁碼
-
-        paginator = Paginator(activities, activities_per_page)  # 創建分頁器
-
-        try:
-            page_obj = paginator.page(page_number)  # 獲取當前頁的活動
-        except PageNotAnInteger:
-            page_obj = paginator.page(1)  # 如果不是整數，顯示第1頁
-        except EmptyPage:
-            page_obj = paginator.page(paginator.num_pages)  # 如果超出範圍，顯示最後一頁
-
-        activities_by_category[category] = page_obj  # 將分頁後的活動存入字典
-
-    return render(
-        request,
-        "activities/driking.html",
-        {
-            "activities_by_category": activities_by_category,
-            "categories": categories,
-        },
-    )
-
+    return render_activities(request, "activities/driking.html")
 
 def sports(request):
-    categories = Category.objects.prefetch_related("activity_set")
-
-    now = timezone.now()  # 過濾掉過期的聚會，只顯示未過期的聚會
-    activities_by_category = {}
-    activities_per_page = 8  # 每頁顯示的活動數量
-
-    for category in categories:
-        activities = category.activity_set.filter(
-            start_time__gte=now, status="approved"
-        ).order_by("start_time")
-
-        # 獲取當前頁碼
-        page_number = request.GET.get(
-            f"page_{category.id}", 1
-        )  # 使用類別ID來區分不同類別的頁碼
-
-        paginator = Paginator(activities, activities_per_page)  # 創建分頁器
-
-        try:
-            page_obj = paginator.page(page_number)  # 獲取當前頁的活動
-        except PageNotAnInteger:
-            page_obj = paginator.page(1)  # 如果不是整數，顯示第1頁
-        except EmptyPage:
-            page_obj = paginator.page(paginator.num_pages)  # 如果超出範圍，顯示最後一頁
-
-        activities_by_category[category] = page_obj  # 將分頁後的活動存入字典
-
-    return render(
-        request,
-        "activities/sports.html",
-        {
-            "activities_by_category": activities_by_category,
-            "categories": categories,
-        },
-    )
-
+    return render_activities(request, "activities/sports.html")
 
 def singing(request):
-    categories = Category.objects.prefetch_related("activity_set")
-
-    now = timezone.now()  # 過濾掉過期的聚會，只顯示未過期的聚會
-    activities_by_category = {}
-    activities_per_page = 8  # 每頁顯示的活動數量
-
-    for category in categories:
-        activities = category.activity_set.filter(
-            start_time__gte=now, status="approved"
-        ).order_by("start_time")
-
-        # 獲取當前頁碼
-        page_number = request.GET.get(
-            f"page_{category.id}", 1
-        )  # 使用類別ID來區分不同類別的頁碼
-
-        paginator = Paginator(activities, activities_per_page)  # 創建分頁器
-
-        try:
-            page_obj = paginator.page(page_number)  # 獲取當前頁的活動
-        except PageNotAnInteger:
-            page_obj = paginator.page(1)  # 如果不是整數，顯示第1頁
-        except EmptyPage:
-            page_obj = paginator.page(paginator.num_pages)  # 如果超出範圍，顯示最後一頁
-
-        activities_by_category[category] = page_obj  # 將分頁後的活動存入字典
-
-    return render(
-        request,
-        "activities/singing.html",
-        {
-            "activities_by_category": activities_by_category,
-            "categories": categories,
-        },
-    )
-
+    return render_activities(request, "activities/singing.html")
 
 def movies(request):
-    categories = Category.objects.prefetch_related("activity_set")
-
-    now = timezone.now()  # 過濾掉過期的聚會，只顯示未過期的聚會
-    activities_by_category = {}
-    activities_per_page = 8  # 每頁顯示的活動數量
-
-    for category in categories:
-        activities = category.activity_set.filter(
-            start_time__gte=now, status="approved"
-        ).order_by("start_time")
-
-        # 獲取當前頁碼
-        page_number = request.GET.get(
-            f"page_{category.id}", 1
-        )  # 使用類別ID來區分不同類別的頁碼
-
-        paginator = Paginator(activities, activities_per_page)  # 創建分頁器
-
-        try:
-            page_obj = paginator.page(page_number)  # 獲取當前頁的活動
-        except PageNotAnInteger:
-            page_obj = paginator.page(1)  # 如果不是整數，顯示第1頁
-        except EmptyPage:
-            page_obj = paginator.page(paginator.num_pages)  # 如果超出範圍，顯示最後一頁
-
-        activities_by_category[category] = page_obj  # 將分頁後的活動存入字典
-
-    return render(
-        request,
-        "activities/movies.html",
-        {
-            "activities_by_category": activities_by_category,
-            "categories": categories,
-        },
-    )
-
+    return render_activities(request, "activities/movies.html")
 
 def discussion(request):
-    categories = Category.objects.prefetch_related("activity_set")
-
-    now = timezone.now()  # 過濾掉過期的聚會，只顯示未過期的聚會
-    activities_by_category = {}
-    activities_per_page = 8  # 每頁顯示的活動數量
-
-    for category in categories:
-        activities = category.activity_set.filter(
-            start_time__gte=now, status="approved"
-        ).order_by("start_time")
-
-        # 獲取當前頁碼
-        page_number = request.GET.get(
-            f"page_{category.id}", 1
-        )  # 使用類別ID來區分不同類別的頁碼
-
-        paginator = Paginator(activities, activities_per_page)  # 創建分頁器
-
-        try:
-            page_obj = paginator.page(page_number)  # 獲取當前頁的活動
-        except PageNotAnInteger:
-            page_obj = paginator.page(1)  # 如果不是整數，顯示第1頁
-        except EmptyPage:
-            page_obj = paginator.page(paginator.num_pages)  # 如果超出範圍，顯示最後一頁
-
-        activities_by_category[category] = page_obj  # 將分頁後的活動存入字典
-
-    return render(
-        request,
-        "activities/discussion.html",
-        {
-            "activities_by_category": activities_by_category,
-            "categories": categories,
-        },
-    )
+    return render_activities(request, "activities/discussion.html")
