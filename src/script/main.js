@@ -35,13 +35,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // 設置自動輪播間隔
-  const interval = setInterval(autoSlide, 3000);
-
-  // 滑鼠懸停時暫停輪播
-  carousel.addEventListener("mouseenter", () => clearInterval(interval));
-
-  // 滑鼠離開時恢復輪播
-  carousel.addEventListener("mouseleave", () => {
-    setInterval(autoSlide, 5000);
-  });
+  let timerId = setTimeout(function tick() {
+    autoSlide();
+    timerId = setTimeout(tick, 3000);
+  }, 3000);
 });
