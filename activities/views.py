@@ -256,27 +256,6 @@ def join_activity(request, activity_id):
                 request, "您已成功報名聚會！" if created else "您已經報名此聚會！"
             )
 
-        elif "leave" in request.POST:
-            participation = MeetupPaticipat.objects.filter(
-                activity=activity, participant=request.user
-            ).first()
-            if participation:
-                participation.delete()
-                message = "您已成功退出聚會！"
-            else:
-                message = "您未參加此聚會，無法退出！"
-
-        return render(
-            request,
-            "activities/information.html",
-            {
-                "activity": activity,
-                "message": message,
-                "is_participating": is_participating,
-                "google_maps_api_key": google_maps_api_key,
-            },
-        )
-
     return render(
         request,
         "activities/information.html",
@@ -284,6 +263,32 @@ def join_activity(request, activity_id):
             "activity": activity,
             "is_participating": is_participating,
             "google_maps_api_key": google_maps_api_key,
+        },
+    )
+
+
+def leave_activity(request, activity_id):
+    activity = get_object_or_404(Activity, id=activity_id)
+
+    participation = MeetupPaticipat.objects.filter(
+        activity=activity, participant=request.user
+    ).first()
+    if request.method == "POST":
+        if participation:
+            participation.delete()
+            messages.success(request, "您已成功退出聚會！")
+        else:
+            messages.error(request, "您未參加此聚會，無法退出！")
+
+        return redirect("users:user_page", tag="activities")
+
+    return render(
+        request,
+        "activities/leave_information.html",
+        {
+            "activity": activity,
+            "participation": participation,
+            "google_maps_api_key": settings.GOOGLE_MAPS_API_KEY,
         },
     )
 

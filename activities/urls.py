@@ -14,6 +14,7 @@ urlpatterns = [
         "<int:activity_id>/confirm_delete/", views.confirm_delete, name="confirm_delete"
     ),
     path("<int:activity_id>/join/", views.join_activity, name="join"),
+    path("<int:activity_id>/leave_join/", views.leave_activity, name="leave_join"),
     path("create_category/", views.create_category, name="category"),
     path(
         "<int:category_id>/category_delete/",

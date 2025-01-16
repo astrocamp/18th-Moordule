@@ -1,0 +1,133 @@
+{% extends "base/layout.html" %}
+{% load static %}
+{% block head %}
+    <title>activities</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{google_maps_api_key}}&callback=initMap&loading=async" async defer></script>
+    <script src="{% static 'src/map.js' %}"></script>
+{% endblock head %}
+
+{% block content %}
+<div class="bg-white text-gray-900">
+    <!-- 特別聚會 banner -->
+    <section id="top">
+        <img src="https://images.unsplash.com/photo-1541379889336-70f26e4c4617?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2hpbmVzZSUyMG5ldyUyMHllYXJ8ZW58MHx8MHx8fDA%3D" alt="chinese new year" class="w-full h-[70vh] object-cover">
+    </section>
+
+    <!-- 按鈕去各區 -->
+   <!-- 按鈕去各區 -->
+  <div class="flex justify-center space-x-10 my-10">
+    <a href="{% url 'activities:eating' %}"
+      ><button
+        class="text-xl px-4 py-1 rounded-full bg-moordule-pink text-white-shadow hover:bg-pink-500"
+      >
+        揪吃飯
+      </button></a
+    >
+    <a href="{% url 'activities:driking' %}"
+      ><button
+        class="text-xl px-4 py-1 rounded-full bg-moordule-yellow text-white-shadow hover:bg-yellow-500"
+      >
+        揪喝酒
+      </button></a
+    >
+     <a href="{% url 'activities:sports' %}"
+      ><button
+        class="text-xl px-4 py-1 rounded-full bg-moordule-deep-blue text-white-shadow hover:bg-blue-500"
+      >
+        揪運動
+      </button></a
+    >
+    <a href="{% url 'activities:singing' %}"
+      ><button
+        class="text-xl px-4 py-1 rounded-full bg-moordule-yellow text-white-shadow hover:bg-yellow-500"
+      >
+        揪唱歌
+      </button></a
+    >
+    <a href="{% url 'activities:movies' %}"
+      ><button
+        class="text-xl px-4 py-1 rounded-full bg-moordule-pink text-white-shadow hover:bg-pink-500"
+      >
+        揪電影
+      </button></a
+    >
+    <a href="{% url 'activities:discussion' %}"
+      ><button
+        class="text-xl px-4 py-1 rounded-full bg-moordule-deep-blue text-white-shadow hover:bg-blue-500"
+      >
+        揪討論
+      </button></a
+    >
+  </div>
+        <!-- 其他按鈕略 -->
+    </div>
+
+    <!-- 聚會資訊 -->
+    <div id="infortop" class="bg-yellow-300 rounded-3xl h-[600px] overflow-hidden shadow-lg mx-20">
+        <div class="px-10 py-10 flex row rounded-3xl gap-4 h-full">
+            <img src="{{ activity.photo.url }}" alt="{{ activity.title }}" class="basis-1/3 rounded-s-3xl bg-white h-auto  object-cover">
+
+            <div class="basis-2/3 rounded-r-3xl bg-white px-8 py-6">
+                <h2 class="font-bold text-2xl text-center text-moordule-pink mb-2">您確定退出聚會嗎？</h2>
+                <div class="flex justify-between items-center mb-2">
+                
+                    <h3 class="font-bold text-2xl">{{ activity.title }}</h3>
+                    <div class="flex items-center gap-1">
+                        <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"></path>
+                        </svg>
+                        <span class="text-lg">已參加{{ activity.participants.count }} / 最多{{ activity.max_participants }}人</span>
+                    </div>
+                </div>
+
+                <div class="flex justify-between gap-2 text-sm mb-2">
+                    <div class="flex">
+                        <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="text-lg">{{ activity.address }}</span>
+                    </div>
+                    <div class="flex gap-8">
+                      <span class="text-lg">聚會日期：{{ activity.start_time|date:"Y-m-d" }}</span>
+                      <span class="text-lg">聚會時間：{{ activity.start_time|date:"H:i" }}</span>
+                    </div>
+                </div>
+
+                <div class="gap-4 pb-6 flex h-[280px] pt-4">
+                    <div class="basis-1/2">
+                        <span class="text-xl font-medium">聚會內容：</span>
+                        <p class="text-lg mb-4 text-lg">{{ activity.description }}</p>
+                    </div>
+                    <div class="basis-1/2">
+                      <div id="map" style="height: 280px; width: 100%;"></div>
+                      <input type="hidden" id="address" value="{{ activity.address|escapejs }}">
+                    </div>
+                </div>
+
+                <!-- 報名區塊 -->
+                 <!-- 第四排 -->
+                 <br>
+                {% if participation %}
+                        <form method="post">
+                                        {% csrf_token %}
+                                        <button type="submit"  class="w-full rounded-full text-white-shadow bg-moordule-pink font-bold p-2 hover:bg-red-500">確認退出</button>
+                        </form>
+
+
+                   {% else %}
+                    <p>您沒有參加此聚會，因此無法退出。</p>
+                     {% endif %}
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+
+
+
+
