@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const carousel = document.getElementById("carousel");
   const dots = document.querySelectorAll(".dot");
   let currentIndex = 0;
-  const imageCount = dots.length;
+  const imageCount = dots.length
 
   function updateCarousel() {
     const offset = -currentIndex * 100;

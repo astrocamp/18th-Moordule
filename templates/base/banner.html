@@ -6,24 +6,47 @@
       class="flex w-full transition-transform duration-1000 ease-in-out"
     >
       <!-- 每張圖片都需要完整的寬度 -->
-      <div class="min-w-full">
+      <div class="min-w-full hidden sm:block"> <!-- 僅在非小螢幕顯示 -->
         <img
-          src="/static/images/Music festival.png"
+          src="/static/images/Music_festival.png"
           alt="chinese new year 1"
           class="w-full h-[60vh] object-cover"
         />
       </div>
-      <div class="min-w-full">
+      <div class="min-w-full hidden sm:block"> <!-- 僅在非小螢幕顯示 -->
         <img
-          src="/static/images/Fresh shrimp.png"
+          src="/static/images/Fresh_shrimp.png"
           alt="chinese new year 2"
           class="w-full h-[60vh] object-cover"
         />
       </div>
-      <div class="min-w-full">
+      <div class="min-w-full hidden sm:block"> <!-- 僅在非小螢幕顯示 -->
         <img
-          src="/static/images/Aerial yoga.png"
+          src="/static/images/Aerial_yoga.png"
           alt="chinese new year 3"
+          class="w-full h-[60vh] object-cover"
+        />
+      </div>
+
+      <!-- 替代圖片（適用於小螢幕） -->
+      <div class="min-w-full block sm:hidden"> <!-- 僅在小螢幕顯示 -->
+        <img
+          src="/static/images/Music_festival_sm.png"
+          alt="Music festival sm"
+          class="w-full h-[60vh] object-cover"
+        />
+      </div>
+      <div class="min-w-full block sm:hidden"> <!-- 僅在小螢幕顯示 -->
+        <img
+          src="/static/images/Fresh_shrimp_sm.png"
+          alt="Fresh shrimp sm"
+          class="w-full h-[60vh] object-cover"
+        />
+      </div>
+      <div class="min-w-full block sm:hidden"> <!-- 僅在小螢幕顯示 -->
+        <img
+          src="/static/images/Aerial_yoga_sm.png"
+          alt="Aerial yoga sm"
           class="w-full h-[60vh] object-cover"
         />
       </div>
