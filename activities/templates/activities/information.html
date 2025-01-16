@@ -102,13 +102,6 @@
                  <br>
                 {% if request.user.is_authenticated %}
 
-                    {% if message %}
-                        <p class="text-center alert alert-success">{{ message }}</p>
-                    {% endif %}
-
-                    {% if error_message %}
-                        <p class="text-center alert alert-danger">{{ error_message }}</p>
-                    {% endif %}
 
 
                         <form method="post" class="d-inline"  action="#infortop">

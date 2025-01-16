@@ -137,7 +137,6 @@ def user_page_view(request, tag="member"):
 @require_POST
 def upload_view(request: HttpRequest):
     image = request.FILES.get("image")
-    print("uploading image")
     if image:
         user = request.user  # 獲取當前使用者
         user.avatar = image  # 將圖片文件儲存到avatar欄位

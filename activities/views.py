@@ -77,6 +77,14 @@ def create(request):
         form = ActivityForm(request.POST, request.FILES)
         if form.is_valid():
             activity = form.save(commit=False)
+            if activity.start_time < timezone.now():
+                messages.error(request, "聚會開始時間必須晚於當前時間！")
+                return render(
+                    request,
+                    "activities/create.html",
+                    {"form": form, "categories": categories},
+                )
+
             activity.owner = request.user
             activity.save()
             messages.success(request, "創建聚會成功。")
@@ -230,12 +238,13 @@ def join_activity(request, activity_id):
     if request.method == "POST":
         if "join" in request.POST:
             if activity.participants.count() >= activity.max_participants:
+                messages.error(request, "目前聚會人數已滿！")
                 return render(
                     request,
                     "activities/information.html",
                     {
                         "activity": activity,
-                        "error_message": "聚會人數已滿！",
+                        "message": message,
                         "google_maps_api_key": google_maps_api_key,
                     },
                 )
@@ -243,7 +252,9 @@ def join_activity(request, activity_id):
             participation, created = MeetupPaticipat.objects.get_or_create(
                 activity=activity, participant=request.user
             )
-            message = "您已成功報名聚會！" if created else "您已經報名此聚會！"
+            messages.success(
+                request, "您已成功報名聚會！" if created else "您已經報名此聚會！"
+            )
 
         elif "leave" in request.POST:
             participation = MeetupPaticipat.objects.filter(

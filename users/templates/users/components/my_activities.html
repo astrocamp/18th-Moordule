@@ -11,7 +11,7 @@
  <!-- 已審核的聚會 -->
             <div class="p-4 rounded-[24px] shadow-inner border-2 border-white">
                 {% if activities %}
-                    <h3 class="text-xl font-semibold text-white-shadow">已審核的聚會</h3>
+                    <h3 class="text-xl font-semibold text-white-shadow text-center">已審核的聚會</h3>
                     <div class="flex justify-center gap-6">
                         {% for activity in activities %}
                             {% if activity.status == 'approved' %}
@@ -39,7 +39,7 @@
                                         <span class="text-lg font-medium">聚會內容：</span>
                                         <p class="text-sm mb-4 text-lg">{{ activity.description }}</p>
                                         <div class="mt-4 flex justify-end space-x-2">
-                                            <a href="{% url 'activities:view_participants' activity.id %}" class="bg-moordule-yellow text-white-shadow px-4 py-2 rounded-[24px] hover:bg-yellow-500">了解名單</a>
+                                            <a href="{% url 'activities:view_participants' activity.id %}" class="bg-moordule-yellow text-white-shadow px-4 py-2 rounded-[24px] hover:bg-yellow-500">聚會名單</a>
                                             <a href="{% url 'activities:confirm_delete' activity.id %}" class="bg-moordule-pink text-white-shadow px-4 py-2 rounded-[24px] hover:bg-red-600">刪除</a>
                                         </div>
                                     </div>
@@ -53,7 +53,7 @@
             </div>
 
     <div class="p-4 rounded-[24px] shadow-inner border-2 border-white">
-      <h3 class="text-xl font-semibold text-white-shadow">未審核的聚會與拒絕原因</h3>
+      <h3 class="text-xl font-semibold text-white-shadow text-center">未審核的聚會與拒絕原因</h3>
                 <div class="flex justify-center gap-6">
                    {% for activity in activities %}
                         {% if activity.status == 'pending' %}

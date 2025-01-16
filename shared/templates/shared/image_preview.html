@@ -53,9 +53,9 @@
           xhr.onload = () => {
             this.isUploading = false;      
             if (xhr.status === 200) {
-              console.log('Upload successful');
+             
               const response = JSON.parse(xhr.responseText);
-              console.log(response);
+             
             } else {
               console.error('Upload failed');
             }
