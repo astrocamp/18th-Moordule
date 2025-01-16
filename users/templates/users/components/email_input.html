@@ -1,44 +1,49 @@
 <div
 	x-data="{ 
-	value: '{{ value|default:''|escapejs }}', 
-	serverError: '{{ error|default:''|escapejs }}',
-	clientError: '', 
-	isValid: null,
-	validate() {
-		{% if should_validate %}
-			const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
-			this.isValid = regex.test(this.value);
-			this.clientError = this.isValid ? '' : 'username@domain.com';
-		{% else %}
-			this.isValid = true;
-			this.clientError = '';
-		{% endif %}
-	},
-	getError() {
-	  this.validate();
-		if (this.serverError) return this.serverError;  
-		return this.clientError;  
-	},
-	init() {
-		this.$watch('value', () => {
-			this.validate();
-			if (this.serverError) this.serverError = '';
-		});
-	}
-}"
+       value: '{{ value|default:''|escapejs }}', 
+       serverError: '{{ error|default:''|escapejs }}',
+       clientError: '', 
+       isValid: null,
+       validate() {
+           {% if should_validate %}
+               const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+               this.isValid = regex.test(this.value);
+               this.clientError = this.isValid ? '' : 'username@domain.com';
+           {% else %}
+               this.isValid = true;
+               this.clientError = '';
+           {% endif %}
+       },
+       getError() {
+           this.validate();
+           if (this.serverError) return this.serverError;  
+           return this.clientError;  
+       },
+       init() {
+           this.$watch('value', () => {
+               this.validate();
+               if (this.serverError) this.serverError = '';
+           });
+       }
+   }"
 >
-	<div class="flex my-2 px-4 gap-2 items-center">
-		<label class="block text-gray-700 font-medium" for="email">
+	<div
+		class="flex flex-col md:flex-row my-2 px-2 md:px-4 gap-1 md:gap-2 items-start md:items-center"
+	>
+		<label
+			class="block text-sm md:text-base text-gray-700 font-medium"
+			for="email"
+		>
 			{% if verbose_name %}{{ verbose_name }}{% else %}Email{% endif %}
 		</label>
 		{% if error or should_validate %}
 		<span
 			x-show="getError()"
 			x-text="value && getError()"
-			class="block text-sm font-medium text-center"
+			class="block text-xs md:text-sm font-medium text-left md:text-center"
 			:class="{
-			  'text-red-500': serverError,
-			}"
+               'text-red-500': serverError,
+           }"
 		></span>
 		{% endif %}
 	</div>
@@ -52,18 +57,18 @@
 			x-model="value"
 			required
 			placeholder="{{ placeholder|default:'' }}"
-			class="w-full px-4 py-2 text-gray-700 border rounded-full focus:outline-none transition duration-150 ease-in-out bg-[#ECECEC]"
+			class="w-full px-3 md:px-4 py-2 md:py-2.5 text-sm md:text-base text-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-offset-0 transition duration-150 ease-in-out bg-[#ECECEC]"
 		/>
 		{% if should_validate %}
 		<span
 			x-show="value && isValid"
-			class="text-green-500 text-xl font-semibold select-none absolute right-4"
+			class="text-green-500 text-lg md:text-xl font-semibold select-none absolute right-3 md:right-4"
 			>✓</span
 		>
 
 		<span
 			x-show="value && !isValid"
-			class="text-red-500 text-xl font-semibold select-none absolute right-4"
+			class="text-red-500 text-lg md:text-xl font-semibold select-none absolute right-3 md:right-4"
 			>✗</span
 		>
 		{% endif %}

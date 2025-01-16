@@ -1,8 +1,7 @@
-<!-- prettier-ignore -->
-{% load auth_components %} 
-{% load static %}
+{% load auth_components %} {% load static %}
 <meta name="htmx-config" content='{"includeIndicatorStyles": false}' />
 <link rel="stylesheet" href="{% static 'src/css/htmx.css' %}" />
+
 <form
 	x-data="{ 
         showError: {% if form.errors %}true{% else %}false{% endif %}
@@ -14,7 +13,7 @@
             }
         })
     "
-	class="w-[70%] bg-white rounded-lg space-y-[21px]"
+	class="w-full px-4 md:w-[85%] mx-auto text-center"
 	hx-post="{% url 'users:login' %}"
 	hx-swap="outerHTML"
 	hx-trigger="submit throttle:300ms"
@@ -22,52 +21,49 @@
 	hx-on::after-request="this.classList.remove('htmx-request')"
 >
 	{% csrf_token %}
-	<p
-		x-show="showError"
-		class="text-red-500 text-sm absolute left-[50%] -translate-x-[50%]"
-	>
+	<p x-show="showError" class="text-red-500 text-sm text-center">
 		{% for error in form.errors %}
 		<span>{{ error }}</span>
 		{% endfor %}
 	</p>
 
-	<fieldset>
+	<fieldset class="mb-4">
 		<!--prettier-ignore-->
 		{% email_input verbose_name="電子郵件:" value=form.data.email placeholder="請輸入電子郵件" validate=False %}
 		<!--prettier-ignore-->
 		{% password_input verbose_name="密碼:" value=form.data.password placeholder="請輸入密碼" name="password" validate=False %}
 	</fieldset>
-	<div class="flex justify-center items-center gap-6">
-		<div class="relative">
-			{% moordule_button text="登入" color="#F6D246" %}
-			<div
-				class="htmx-indicator absolute inset-0 items-center justify-center bg-opacity-50 bg-gray-100 rounded"
-			>
-				<div
-					class="w-5 h-5 border-2 border-gray-300 border-t-blue-500 rounded-full animate-spin"
-				></div>
-			</div>
-		</div>
-		<a href="">忘記密碼</a>
-	</div>
-	<div class="text-center">OR</div>
-	<!--prettier-ignore-->
-	{% load socialaccount %}
 
-	<div class="flex justify-center">
+	<div class="relative mb-4 inline-block">
+		{% moordule_button text="登入" color="#F6D246" %}
+		<div
+			class="htmx-indicator absolute inset-0 items-center justify-center bg-opacity-50 bg-gray-100 rounded"
+		>
+			<div
+				class="w-5 h-5 border-2 border-gray-300 border-t-blue-500 rounded-full animate-spin"
+			></div>
+		</div>
+	</div>
+
+	<div class="text-center mb-2">或</div>
+
+	{% load socialaccount %}
+	<div class="flex justify-center mb-4 text-sm md:text-base">
 		<button
 			type="button"
-			class="flex items-center justify-center w-[52%] py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-white-shadow hover:brightness-110 bg-moordule-deep-blue"
+			class="flex items-center justify-center w-auto md:w-[200px] py-1 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-white-shadow hover:brightness-110 bg-moordule-deep-blue"
 		>
 			{% include 'shared/icon.html' %}
 			<a href="{% provider_login_url 'google' method='oauth2' %}">Google登入</a>
 		</button>
 	</div>
 
-	<div class="flex flex-col items-center gap-[21px]">
+	<div
+		class="flex flex-col items-center gap-3 md:gap-[21px] text-sm md:text-base"
+	>
 		<span>尚未擁有帳號？</span>
 		<a
-			class="text-white-shadow rounded-2xl py-0.5 px-6 outline-offset-2 bg-moordule-deep-blue outline outline-1 outline-moordule-deep-blue"
+			class="text-white-shadow rounded-2xl py-1.5 px-8 md:py-0.5 md:px-6 outline-offset-2 bg-moordule-deep-blue outline outline-1 outline-moordule-deep-blue"
 			href="{% url 'users:signup' %}"
 			>註冊</a
 		>
