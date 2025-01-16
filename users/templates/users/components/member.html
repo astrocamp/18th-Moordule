@@ -1,20 +1,65 @@
 {% block content %}
 {% load humanize %}
 <div class="relative max-w-7xl mt-8 mx-auto">
-	<div class="grid grid-cols-3 gap-4 p-6 bg-yellow-300 rounded-[24px]">
+	<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-6 bg-moordule-yellow rounded-[24px]">
 		<!-- 左側個人資料 -->
 		<div class="space-y-4">
 			<div class="bg-white p-4 rounded-[24px] shadow-lg">
-				<div
-					class="w-full h-48 bg-gray-200 rounded-[24px] flex items-center justify-center"
-				>
-					<span class="text-gray-500">請上傳照片</span>
+
+
+
+
+				 <div class="w-full h-48 rounded-[24px] flex items-center justify-center">
+					{% if user.avatar %}
+						<img src="{{ user.avatar.url }}" alt="用戶頭像" class="w-full h-full object-contain rounded-[24px]">
+					{% else %}
+						<span class="text-gray-500">用戶尚未設定頭像</span>
+					{% endif %}
+				
+				
 				</div>
+
+	</div>
+
+		<div class="bg-white p-2 rounded-[24px] ">
+	<div class=" w-full  bg-gray-200 rounded-[24px] flex items-center justify-center">
+			 <div class=" text-gray-500 text-lg mb-2">更新頭像，至圓圈中預覽更新</div>
+			 
+			 <div >
+		<div class="flex justify-end">{% include 'shared/image_preview.html' %}</div>
 			</div>
-			<div class="bg-white p-4 rounded-[24px] shadow-lg">
+	</div>
+		</div>
+		
+
+			
+			<div class="bg-gray-100 p-4 rounded-[24px] shadow-lg">
 				<div class="text-center space-y-2">
-					<p>{{userinfo}}</p>
-					<p>興趣 #</p>
+				
+				<div class=" rounded-3xl overflow-hidden shadow-lg border bg-white border-white">
+					<p class="text-center text-moordule-deep-blue text-lg font-bold mb-2 mt-4">歡迎回來"{{ user.username|default:'(尚未設定)' }} "好朋友</p>
+					<p class="text-center text-gray-500 text-lg mb-2">您有興趣的聚會類型：</p>
+					 <div class="bg-moordule-yellow p-4 h-full">
+					 {% if user.hobbies %}
+						<ul class="flex gap-4 justify-items-center sm:justify-between flex-wrap">
+							{% for hobby in user.hobbies %}
+								{% for choice in user.HOBBY_CHOICES %}
+									{% if choice.0 == hobby %}
+										<li class="block "><div class=" bg-white rounded-[24px] px-4 py-2">揪{{ choice.1 }}</div></li>
+									{% endif %}
+								{% endfor %}
+							{% endfor %}  
+						</ul>
+						{% else %}
+						<span class="block">尚未設定</span>
+						{% endif %}
+
+						<div class="mt-4">
+						 <a href="{%url 'activities:index' %}" class="bg-moordule-light-blue text-white-shadow px-4 py-2 rounded-[24px] hover:bg-moordule-deep-blue">參加聚會</a>
+						</div>
+					</div>
+					</div>
+
 				</div>
 			</div>
 		</div>

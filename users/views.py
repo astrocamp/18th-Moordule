@@ -76,7 +76,6 @@ def user_page_view(request, tag="member"):
         context["userinfo"] = user.email
         context["membership"] = user.membership_level
 
-        
         if wallet:
             context["wallet_balance"] = wallet.balence
         else:
@@ -112,16 +111,18 @@ def user_page_view(request, tag="member"):
 
         user = CustomUser.objects.get(id=user.id)
         context["membership"] = user.membership_level
-        
+
         wallet = Wallet.objects.filter(user=user).first()
         if wallet:
             context["wallet_balance"] = wallet.balence
 
-            transactions = Payment.objects.filter(user=wallet.user).order_by("-created_at")[:5]
+            transactions = Payment.objects.filter(user=wallet.user).order_by(
+                "-created_at"
+            )[:5]
             context["transactions"] = transactions
         else:
-            context["wallet_balance"] = 0  
-            context["transactions"] = []  
+            context["wallet_balance"] = 0
+            context["transactions"] = []
 
     else:
         # 若沒有符合任何條件，保留基本的 context
@@ -138,9 +139,9 @@ def upload_view(request: HttpRequest):
     image = request.FILES.get("image")
     print("uploading image")
     if image:
-        # 處理圖片上傳邏輯
-        # 例如：儲存到媒體目錄 or 儲存到雲端
-        # image.save(f'media/uploads/{image.name}')
+        user = request.user  # 獲取當前使用者
+        user.avatar = image  # 將圖片文件儲存到avatar欄位
+        user.save()  # 儲存使用者資料
 
         return JsonResponse(
             {

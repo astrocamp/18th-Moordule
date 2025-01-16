@@ -5,28 +5,28 @@
   <div class="space-y-6">
       <div class="">
           <span class="text-gray-700 block mb-1">姓名*</span>
-          <span class="block">{{ user.username|default:'尚未設定' }}</span>
+          <span class="block">{{ user.username|default:'(尚未設定)' }}</span>
       </div>
 
       <div class="">
           <span class="text-gray-700 block mb-1">生日*</span>
           <span class="block">
               {% if user.birth_date %} {{ user.birth_date|date:"Y-m-d" }} {% else %}
-              尚未設定 {% endif %}
+              (尚未設定) {% endif %}
           </span>
       </div>
 
       <div class="">
           <span class="text-gray-700 block mb-1">性別</span>
           <span class="block">
-              {{ user.get_gender_display|default:'尚未設定' }}
+              {{ user.get_gender_display|default:'(尚未設定)' }}
           </span>
       </div>
 
       <div class="">
           <span class="text-gray-700 block mb-1">所在地區*</span>
           <span class="block">
-              {{ user.get_live_in_display|default:'尚未設定' }}
+              {{ user.get_live_in_display|default:'(尚未設定)' }}
           </span>
       </div>
 
@@ -43,7 +43,7 @@
               {% endfor %}  
           </ul>
           {% else %}
-          <span class="block">尚未設定</span>
+          <span class="block">(尚未設定)</span>
           {% endif %}
       </div>
   </div>

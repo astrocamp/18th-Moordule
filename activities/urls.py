@@ -28,4 +28,9 @@ urlpatterns = [
     path("singing/", views.singing, name="singing"),
     path("movies/", views.movies, name="movies"),
     path("discussion/", views.discussion, name="discussion"),
+    path(
+        "<int:activity_id>/participants/",
+        views.view_activity_participants,
+        name="view_participants",
+    ),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

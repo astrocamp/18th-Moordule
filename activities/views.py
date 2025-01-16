@@ -11,6 +11,7 @@ from .forms import ActivityForm, CategoryForm
 from .models import Activity, Category, MeetupPaticipat
 from django.http import HttpResponseForbidden
 from datetime import date
+from datetime import timedelta
 
 
 def is_adult(birth_date):
@@ -296,22 +297,26 @@ def search(request):
 
 def today(request):
     today = timezone.now().date()
-    todays_events = Activity.objects.filter(start_time__date=today, status="approved").order_by("start_time")
-    
+    tomorrow = today + timedelta(days=1)
+
+    todays_events = Activity.objects.filter(
+        start_time__date__in=[today, tomorrow], status="approved"
+    ).order_by("start_time")
+
     activities_by_today = {}
-    activities_per_page = 8  
+    activities_per_page = 8
 
-    page_number = request.GET.get(f"page", 1) 
+    page_number = request.GET.get(f"page", 1)
 
-    paginator = Paginator(todays_events, activities_per_page)  
+    paginator = Paginator(todays_events, activities_per_page)
 
     try:
-        page_obj = paginator.page(page_number)  
+        page_obj = paginator.page(page_number)
     except PageNotAnInteger:
-        page_obj = paginator.page(1)  
+        page_obj = paginator.page(1)
     except EmptyPage:
-        page_obj = paginator.page(paginator.num_pages)  
-    activities_by_today[activities] = page_obj 
+        page_obj = paginator.page(paginator.num_pages)
+    activities_by_today[activities] = page_obj
 
     return render(
         request,
@@ -357,17 +362,73 @@ def render_activities(request, template_name):
 def eating(request):
     return render_activities(request, "activities/eating.html")
 
+
 def driking(request):
     return render_activities(request, "activities/driking.html")
+
 
 def sports(request):
     return render_activities(request, "activities/sports.html")
 
+
 def singing(request):
     return render_activities(request, "activities/singing.html")
+
 
 def movies(request):
     return render_activities(request, "activities/movies.html")
 
+
 def discussion(request):
     return render_activities(request, "activities/discussion.html")
+
+
+@login_required
+def view_activity_participants(request, activity_id):
+    activity = get_object_or_404(Activity, id=activity_id)
+
+    # 確保只有活動的創建者才能查看參與者資料
+    if activity.owner != request.user:
+        raise PermissionDenied("您無權查看此活動的參與者！")
+
+    participants = activity.participants.all()
+
+    participants_info = [
+        {
+            "username": participant.participant.username,  # 使用 participant.participant 存取 username
+            "avatar": (
+                participant.participant.avatar.url
+                if participant.participant.avatar
+                else None
+            ),
+            "bio": (
+                participant.participant.bio
+                if participant.participant.bio
+                else "無自我介紹"
+            ),
+            "age": (
+                participant.participant.birth_date
+                and (timezone.now().date() - participant.participant.birth_date).days
+                // 365
+                if participant.participant.birth_date
+                else "未知"
+            ),
+            "gender": (
+                participant.participant.get_gender_display()
+                if participant.participant.gender
+                else "未知"
+            ),
+            "live_in": (
+                participant.participant.get_live_in_display()
+                if participant.participant.live_in
+                else "未知"
+            ),
+        }
+        for participant in participants
+    ]
+
+    return render(
+        request,
+        "activities/participants.html",
+        {"activity": activity, "participants_info": participants_info},
+    )
