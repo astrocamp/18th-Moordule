@@ -25,7 +25,7 @@ class Activity(models.Model):
     duration = models.PositiveIntegerField(
         help_text="預估聚會持續時間（小時）", default=1
     )
-    max_participants = models.PositiveIntegerField(help_text="參加人數上限", default=10)
+    max_participants = models.PositiveIntegerField(help_text="參加人數上限", default=4)
     created_at = models.DateTimeField(auto_now_add=True, help_text="聚會建立時間")
     category = models.ForeignKey(
         "Category",
