@@ -189,42 +189,39 @@
     </h2>
 
     <div id="drink">
-         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-12">
+      <div class="grid grid-cols-1 lg:grid-cols-4 justify-center gap-6 mx-2 pt-8 ">
         {% comment %} Card {% endcomment %}
         {% for activity in upcoming_activities %}
-        
-                <div class="rounded-3xl overflow-hidden shadow-lg">
-                <img src="{{ activity.photo.url }}" alt="{{ activity.title }}"  class="h-48 w-full object-cover" />
-                <div class="bg-moordule-yellow p-4  h-full">
-                  <div class="flex justify-between items-center mb-2">
-                    <h3>{{ activity.title }}</h3>
-                    <div class="flex items-center gap-1">
-                      <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"/>
-                      </svg>
+        <div class="rounded-3xl overflow-hidden shadow-lg flex flex-col">
+          <img src="{{ activity.photo.url }}" alt="{{ activity.title }}"  class="h-48 w-full object-cover" />
+          <div class="bg-moordule-yellow p-4 flex flex-col flex-grow">
+            <div class="flex justify-between items-center mb-2">
+              <h3>{{ activity.title }}</h3>
+              <div class="flex items-center gap-1 text-sm">
+                <svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" />
+                </svg>
                         <span>已參加{{ activity.participants.count }} / {{ activity.max_participants }}人</span>
                     </div>
                   </div>
                   <div class="flex justify-between gap-2 text-sm mb-2">
-                    <div class="flex">
-                      <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                    <div class="flex items-center gap-1">
+                      <svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
                       </svg>
                       <p>地點: {{ activity.address }}</p>
                     </div>
                     <p>時間: {{ activity.start_time|date:"Y-m-d H:i" }}</p>
                   </div>
                   <span class="text-lg font-medium">聚會內容：</span>
-                  <p class="text-sm mb-4 text-lg">
+                  <p class="text-sm flex-grow">
                     {{ activity.description }}
                   </p>
-
+                  <div class="mt-auto">
             <a href="{% url 'activities:join' activity.id %}">
-            <button class="w-full py-2 rounded-full bg-white  font-bold"
-            >
-              馬上揪
-            </button>
+              <button class="w-full py-2 rounded-full bg-white  font-bold">馬上揪</button>
             </a>
+          </div>
           </div>
         </div>
          {% empty %}
