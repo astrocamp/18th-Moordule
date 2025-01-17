@@ -1,7 +1,7 @@
 {% extends "base/layout.html" %}
 {% load static %}
 {% block head %}
-    <title>activities</title>
+    <title>Information</title>
     <script src="https://maps.googleapis.com/maps/api/js?key={{google_maps_api_key}}&callback=initMap&loading=async" async defer></script>
     <script src="{% static 'src/map.js' %}"></script>
 {% endblock head %}
@@ -11,115 +11,115 @@
 <div class="bg-white text-gray-900">
    <!-- 按鈕去各區 -->
   <div class="flex justify-center space-x-10 my-10">
-    <a href="{% url 'activities:eating' %}"
-      ><button
+    <a href="{% url 'activities:eating' %}">
+      <button
         class="text-xl px-4 py-1 rounded-full bg-moordule-pink text-white-shadow hover:bg-pink-500"
-      >
-        揪吃飯
-      </button></a
-    >
-    <a href="{% url 'activities:driking' %}"
-      ><button
+      >揪吃飯
+      </button>
+    </a>
+    <a href="{% url 'activities:driking' %}">
+      <button
         class="text-xl px-4 py-1 rounded-full bg-moordule-yellow text-white-shadow hover:bg-yellow-500"
-      >
-        揪喝酒
-      </button></a
-    >
-     <a href="{% url 'activities:sports' %}"
-      ><button
+      >揪喝酒
+      </button>
+    </a>
+    <a href="{% url 'activities:sports' %}">
+      <button
         class="text-xl px-4 py-1 rounded-full bg-moordule-deep-blue text-white-shadow hover:bg-blue-500"
-      >
-        揪運動
-      </button></a
-    >
-    <a href="{% url 'activities:singing' %}"
-      ><button
+      >揪運動
+      </button>
+    </a>
+    <a href="{% url 'activities:singing' %}">
+      <button
         class="text-xl px-4 py-1 rounded-full bg-moordule-yellow text-white-shadow hover:bg-yellow-500"
-      >
-        揪唱歌
-      </button></a
-    >
-    <a href="{% url 'activities:movies' %}"
-      ><button
+      >揪唱歌
+      </button>
+    </a>
+    <a href="{% url 'activities:movies' %}">
+      <button
         class="text-xl px-4 py-1 rounded-full bg-moordule-pink text-white-shadow hover:bg-pink-500"
-      >
-        揪電影
-      </button></a
-    >
-    <a href="{% url 'activities:discussion' %}"
-      ><button
+      >揪電影
+      </button>
+    </a>
+    <a href="{% url 'activities:discussion' %}">
+      <button
         class="text-xl px-4 py-1 rounded-full bg-moordule-deep-blue text-white-shadow hover:bg-blue-500"
-      >
-        揪討論
-      </button></a
-    >
+      >揪討論
+      </button>
+    </a>
   </div>
-        <!-- 其他按鈕略 -->
-    </div>
 
-    <!-- 聚會資訊 -->
-    <div id="infortop" class="bg-yellow-300 rounded-3xl h-[600px] overflow-hidden shadow-lg mx-20">
-        <div class="px-10 py-10 flex row rounded-3xl gap-4 h-full">
-            <img src="{{ activity.photo.url }}" alt="{{ activity.title }}" class="basis-1/3 rounded-s-3xl bg-white object-cover">
+  <!-- 聚會資訊 -->
+  <div id="infortop" class="bg-moordule-yellow rounded-3xl h-auto overflow-hidden shadow-lg mx-4 md:mx-20">
+    <div class="px-4 py-6 md:px-10 md:py-10 flex flex-col md:flex-row gap-4">
+      <!-- 圖片區域 -->
+      <div class="w-full md:basis-1/2 flex items-center justify-center bg-white rounded-3xl overflow-hidden">
+        <img 
+          src="{{ activity.photo.url }}" 
+          alt="{{ activity.title }}" 
+          class="w-full h-full object-cover"
+        />
+      </div>
 
-            <div class="basis-2/3 rounded-r-3xl bg-white px-8 py-6">
-                <div class="flex justify-between items-center mb-2">
-                    <h3 class="font-bold text-2xl">{{ activity.title }}</h3>
-                    <div class="flex items-center gap-1">
-                        <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"></path>
-                        </svg>
-                        <span class="text-lg">已參加{{ activity.participants.count }} / {{ activity.max_participants }}人</span>
-                    </div>
-                </div>
+      <!-- 資訊區域 -->
+      <div class="w-full md:basis-1/2 bg-white px-4 py-6 md:px-8 md:py-6 rounded-3xl flex flex-col">
+        <!-- 標題 -->
+        <h3 class="font-bold text-2xl mb-4">{{ activity.title }}</h3>
 
-                <div class="flex justify-between gap-2 text-sm mb-2">
-                    <div class="flex">
-                        <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
-                        </svg>
-                        <span class="text-lg">{{ activity.address }}</span>
-                    </div>
-                    <div class="flex gap-8">
-                      <span class="text-lg">聚會日期：{{ activity.start_time|date:"Y-m-d" }}</span>
-                      <span class="text-lg">聚會時間：{{ activity.start_time|date:"H:i" }}</span>
-                    </div>
-                </div>
-
-                <div class="gap-4 pb-6 flex h-[280px] pt-4">
-                    <div class="basis-1/2">
-                        <span class="text-xl font-medium">聚會內容：</span>
-                        <p class="text-lg mb-4 text-lg">{{ activity.description }}</p>
-                    </div>
-                    <div class="basis-1/2">
-                      <div id="map" style="height: 280px; width: 100%;"></div>
-                      <input type="hidden" id="address" value="{{ activity.address|escapejs }}">
-                    </div>
-                </div>
-
-                <!-- 報名區塊 -->
-                 <!-- 第四排 -->
-                 <br>
-                {% if request.user.is_authenticated %}
-
-
-
-                        <form method="post" class="d-inline"  action="#infortop">
-                            {% csrf_token %}
-                            <button type="submit" name="join" class="w-full rounded-full text-white-shadow bg-moordule-pink font-bold p-2">加入聚會</button>
-                        </form>
-
-                    {% else %}
-                     <a href="{% url 'users:signin' %}">
-                    <button type="button" class="w-full rounded-full text-white-shadow bg-moordule-pink font-bold">請先登入以參加聚會</button>
-                    </a>
-                    {% endif %}
-
-
-
-
-            </div>
+        <!-- 日期與時間 -->
+        <div class="flex flex-wrap text-lg mb-4">
+          <span class="mr-6">日期：{{ activity.start_time|date:"Y-m-d" }}</span>
+          <span>時間：{{ activity.start_time|date:"H:i" }}</span>
         </div>
+
+        <!-- 參加人數 -->
+        <div class="flex items-center gap-2 mb-4">
+          <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"></path>
+          </svg>
+          <span>已參加 {{ activity.participants.count }} / {{ activity.max_participants }} 人</span>
+        </div>
+
+        <!-- 地址 -->
+        <div class="flex items-center gap-2 mb-4">
+          <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+          </svg>
+          <span>{{ activity.address }}</span>
+        </div>
+
+        <!-- 地圖 -->
+        <div class="w-full mb-4">
+          <div id="map" style="height: 280px; width: 100%;"></div>
+          <input type="hidden" id="address" value="{{ activity.address|escapejs }}">
+        </div>
+
+        <!-- 活動詳細 -->
+        <div class="mb-4">
+          <h4 class="text-xl font-medium">聚會內容：</h4>
+          <p class="text-lg">{{ activity.description }}</p>
+        </div>
+
+        <!-- 參加按鈕 -->
+        <div class="mt-auto">
+          {% if request.user.is_authenticated %}
+            <form method="post" action="#infortop">
+              {% csrf_token %}
+              <button type="submit" name="join" class="w-full rounded-full text-white bg-moordule-pink font-bold py-3">
+                加入聚會
+              </button>
+            </form>
+          {% else %}
+            <a href="{% url 'users:signin' %}">
+              <button class="w-full rounded-full text-white bg-moordule-pink font-bold py-3">
+                請先登入以參加聚會
+              </button>
+            </a>
+          {% endif %}
+        </div>
+      </div>
     </div>
+  </div>
+
 </div>
 {% endblock content %}
