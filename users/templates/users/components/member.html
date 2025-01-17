@@ -5,31 +5,23 @@
 		<!-- 左側個人資料 -->
 		<div class="space-y-4">
 			<div class="bg-white p-4 rounded-[24px] shadow-lg">
-
-
-
-
 				 <div class="w-full h-48 rounded-[24px] flex items-center justify-center">
 					{% if user.avatar %}
 						<img src="{{ user.avatar.url }}" alt="用戶頭像" class="w-full h-full object-contain rounded-[24px]">
 					{% else %}
 						<span class="text-gray-500">用戶尚未設定頭像</span>
 					{% endif %}
-				
-				
 				</div>
-
-	</div>
-
-		<div class="bg-white p-2 rounded-[24px] ">
-	<div class=" w-full  bg-gray-200 rounded-[24px] flex items-center justify-center">
-			 <div class=" text-gray-500 text-lg mb-2">更新頭像，至圓圈中預覽更新</div>
-			 
-			 <div >
-		<div class="flex justify-end">{% include 'shared/image_preview.html' %}</div>
 			</div>
-	</div>
-		</div>
+
+			
+			<div class="flex items-center justify-center">
+				<div class="bg-white p-4 rounded-[24px] w-full mb-2 p-2 basis-2/3">
+					<div class="bg-gray-200 rounded-[24px] text-gray-500 text-lg p-4">更新頭像，至圓圈中預覽更新</div>
+				</div>
+				<div class="flex justify-end basis-1/3">{% include 'shared/image_preview.html' %}</div>	
+			</div>
+		
 		
 
 			
@@ -126,7 +118,7 @@
 				>
 				<div class="w-64 h-24 mx-auto flex items-center justify-between gap-4">
 					<!-- 可參加 -->
-					<div class="bg-yellow-400 rounded-full w-28 h-28 flex flex-col items-center justify-between py-2">
+					<div class="bg-yellow-400 rounded-full w-full flex flex-col items-center justify-between py-2 px-4">
 					  <span class="text-white text-lg">可參加</span>
 					  <div class="flex items-center justify-between w-full px-2">
 						<span class="text-white text-7xl">{{ join_activity }}</span>
@@ -134,7 +126,7 @@
 					  </div>
 					</div>
 					<!-- 可創建 -->
-					<div class="bg-yellow-400 rounded-full w-28 h-28 flex flex-col items-center justify-between py-2">
+					<div class="bg-yellow-400 rounded-full w-full flex flex-col items-center justify-between py-2 px-4">
 					  <span class="text-white text-lg">可創建</span>
 					  <div class="flex items-center justify-between w-full px-2">
 						<span class="text-white text-7xl">{{ create_activity }}</span>
