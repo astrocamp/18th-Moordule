@@ -7,10 +7,10 @@
 {% block content%}
 <h1 class="text-3xl pt-20 m-8 text-center">LINE Pay 付款完成</h1>
 
-<div class="rounded-[24px] bg-moordule-yellow mx-20">
-  <div class="p-4 flex gap-4">
-
-    <div class="basis-1/2 ">
+<div class="rounded-[24px] bg-moordule-yellow mx-4 sm:mx-20">
+  <div class="p-4 flex flex-col sm:flex-row gap-4">
+    <!-- 主要方案 -->
+    <div class="basis-1/2">
       <div class="text-center mb-6">
         <h1 class="text-lg mb-2">好揪就要 一直揪</h1>
         <div class="flex justify-center items-baseline">
@@ -24,24 +24,24 @@
       </div>
       <div class="space-y-2 m-8 flex justify-center">
         <ul>
-          <li><span class="mr-2">✓</span> 參加聚會$159/次</li>
-          <li><span class="mr-2">✓</span> 創立聚會$80/次</li>
-          <li><span class="mr-2">✓</span> 贈送$200聚會金</li>
+          <li><span class="mr-2">✓</span> 參加聚會 $159/次</li>
+          <li><span class="mr-2">✓</span> 創立聚會 $80/次</li>
+          <li><span class="mr-2">✓</span> 贈送 $200 聚會金</li>
         </ul>
       </div>
-
       <a href="{% url 'users:user_page' tag='wallet' %}" class="bg-white rounded-[24px] mx-8 my-8 p-2 flex text-center justify-center">
-        <button class="text-yellow-500 " type="submit">前往我的錢包</button>
+        <button class="text-yellow-500" type="submit">前往我的錢包</button>
       </a>
-
     </div>
-    <div class="bg-white-600 basis-1/2 rounded-[24px]">
+
+    <!-- Enjoy your time -->
+    <div class="bg-white-600 basis-1/2 rounded-[24px] order-first sm:order-none">
       <div class="bg-block mt-4 mb-8 text-center text-3xl text-white-shadow">
         Enjoy your time!
       </div>
     </div>
   </div>
-
 </div>
+
 
 {% endblock %}
