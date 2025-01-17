@@ -127,9 +127,11 @@ def confirm_a(request):
         payment.save()  
 
         balance = Wallet.objects.filter(user=payment.user).first()
-        bouns_a = 50
+        
         if balance:
-            balance.balence += payment.amount + bouns_a
+            balance.balence += payment.amount
+            balance.join_activity += 1
+            balance.create_activity += 1
             balance.save()  
         else:
             Wallet.objects.create(user=payment.user, balence=payment.amount)  # 新增餘額
@@ -224,9 +226,11 @@ def confirm_b(request):
         payment.save()  # 更新資料庫中的狀態
 
         balance = Wallet.objects.filter(user=payment.user).first()
-        bouns_b = 100
+        
         if balance:
-            balance.balence += payment.amount + bouns_b
+            balance.balence += payment.amount
+            balance.join_activity += 3
+            balance.create_activity += 2
             balance.save()  # 更新餘額
         else:
             Wallet.objects.create(user=payment.user, balence=payment.amount)  # 新增餘額
@@ -325,9 +329,11 @@ def confirm_c(request):
         payment.save()  
 
         balance = Wallet.objects.filter(user=payment.user).first()
-        bouns_a = 200
+        
         if balance:
-            balance.balence += payment.amount + bouns_a
+            balance.balence += payment.amount 
+            balance.join_activity += 9
+            balance.create_activity += 6
             balance.save()  
         else:
             Wallet.objects.create(user=payment.user, balence=payment.amount)  # 新增餘額

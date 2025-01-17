@@ -19,3 +19,6 @@ class Wallet(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     balence = models.IntegerField(verbose_name="餘額", default=0)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    join_activity = models.IntegerField(verbose_name="參加活動", default=0)
+    create_activity = models.IntegerField(verbose_name="創建活動", default=0)
+    
