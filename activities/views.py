@@ -12,7 +12,8 @@ from .models import Activity, Category, MeetupPaticipat
 from django.http import HttpResponseForbidden
 from datetime import date
 from datetime import timedelta
-
+from django.db import transaction
+from cashflows.models import Wallet
 
 def is_adult(birth_date):
     # 計算年齡，並檢查是否已滿18歲
@@ -76,6 +77,17 @@ def create(request):
     if request.method == "POST":
         form = ActivityForm(request.POST, request.FILES)
         if form.is_valid():
+            with transaction.atomic():
+                wallet = Wallet.objects.select_for_update().get(user=request.user)
+
+                cteare_cost = 1
+                if wallet.create_activity < cteare_cost:
+                    messages.error(request, "餘額不足，請先充值！")
+                    return redirect("cashflows:index")
+
+                wallet.create_activity -= cteare_cost
+                wallet.save()
+                  
             activity = form.save(commit=False)
             if activity.start_time < timezone.now():
                 messages.error(request, "聚會開始時間必須晚於當前時間！")
@@ -87,7 +99,7 @@ def create(request):
 
             activity.owner = request.user
             activity.save()
-            messages.success(request, "創建聚會成功。")
+            messages.success(request, "創建聚會，並扣款成功。")
             return redirect("users:user_page", tag="my_activities")
 
         else:
@@ -193,7 +205,16 @@ def delete(request, activity_id):
 def confirm_delete(request, activity_id):
     activity = get_activity_for_user(request, activity_id)
     if request.method == "POST":
-        activity.delete()
+        wallet = Wallet.objects.get(user=request.user)
+
+        create_cost = 1  
+        with transaction.atomic():
+            # 扣除錢包餘額
+            wallet.create_activity += create_cost
+            wallet.save()
+
+
+            activity.delete()
         return redirect("users:user_page", tag="my_activities")
     return render(request, "activities/confirm_delete.html", {"activity": activity})
 
@@ -248,12 +269,26 @@ def join_activity(request, activity_id):
                         "google_maps_api_key": google_maps_api_key,
                     },
                 )
+            
+           
+            wallet = Wallet.objects.get(user=request.user)
 
+            activity_cost = 1  
+            if wallet.join_activity < activity_cost:
+                messages.error(request, "餘額不足，請先充值！")
+                return redirect("cashflows:index")  
+
+            # 使用交易保證扣款和參加活動的一致性
+            with transaction.atomic():
+                wallet.join_activity -= activity_cost
+                wallet.save()
+
+           
             participation, created = MeetupPaticipat.objects.get_or_create(
                 activity=activity, participant=request.user
             )
             messages.success(
-                request, "您已成功報名聚會！" if created else "您已經報名此聚會！"
+                request, "您已成功報名聚會，系統已自動扣款！" if created else "您已經報名此聚會！"
             )
 
     return render(
@@ -276,6 +311,14 @@ def leave_activity(request, activity_id):
     if request.method == "POST":
         if participation:
             participation.delete()
+
+            wallet = Wallet.objects.get(user=request.user)
+
+            activity_cost = 1  
+            with transaction.atomic():
+                wallet.join_activity += activity_cost
+                wallet.save()
+
             messages.success(request, "您已成功退出聚會！")
         else:
             messages.error(request, "您未參加此聚會，無法退出！")
