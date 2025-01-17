@@ -13,33 +13,39 @@
 
  
 
-    <nav class="space-x-5 flex justify-center items-center mt-5 mx-auto w-max">
-       <a href="{% url 'users:user_page' tag='member' %}">  
-    <button class="px-4 sm:px-6 py-2 sm:py-3 rounded-full hover:bg-yellow-500 text-white-shadow bg-yellow-300 text-xl">
-      我的頁面
-    </button>
-  </a>
+  <nav class="space-x-2 flex justify-center items-center mt-5 mx-auto w-max pt-20 sm:space-x-5">
+    <a href="{% url 'users:user_page' tag='member' %}">
+      <button class="px-1.5 p-1 rounded-full hover:bg-yellow-500 text-white-shadow text-sm sm:text-base sm:px-4 sm:py-2 md:text-xl md:px-6 md:py-3 bg-yellow-300">
+        我的頁面
+      </button>
+    </a>
 
-  <a href="{% url 'users:user_page' tag='account' %}">  
-    <button class="px-4 sm:px-6 py-2 sm:py-3 rounded-full hover:bg-yellow-500 text-white-shadow bg-yellow-300 text-xl">
-      我的帳號
-    </button>
-  </a>
+    <a href="{% url 'users:user_page' tag='account' %}">
+      <button class="px-1.5 p-1 rounded-full hover:bg-yellow-500 text-white-shadow text-sm sm:text-base sm:px-4 sm:py-2 md:text-xl md:px-6 md:py-3 bg-yellow-300">
+        我的帳號
+      </button>
+    </a>
 
-  <a href="{% url 'users:user_page' tag='activities' %}">  
-    <button class="px-4 sm:px-6 py-2 sm:py-3 rounded-full hover:bg-yellow-500 text-white-shadow bg-yellow-300 text-xl">
-      我的聚會
-    </button>
-  </a>
-  {% comment %} 以上更新為 user_page 的 URL{% endcomment %}
+    <a href="{% url 'users:user_page' tag='activities' %}">
+      <button class="px-1.5 p-1 rounded-full hover:bg-yellow-500 text-white-shadow text-sm sm:text-base sm:px-4 sm:py-2 md:text-xl md:px-6 md:py-3 bg-yellow-300">
+        我的聚會
+      </button>
+    </a>
 
-      
-      <a href="{% url 'activities:create' %}">
-        <button class="px-4 sm:px-6 py-2 sm:py-3  rounded-full hover:bg-yellow-500 text-white-shadow bg-yellow-400 text-xl">
-          創建聚會
-        </button>
-      </a>
-    </nav>
+    <a href="{% url 'activities:create' %}">
+      <button class="px-1.5 p-1 rounded-full hover:bg-yellow-500 text-white-shadow text-sm sm:text-base sm:px-4 sm:py-2 md:text-xl md:px-6 md:py-3 bg-yellow-300">
+        創建聚會
+      </button>
+    </a>
+
+     <a href="{% url 'users:user_page' tag='wallet'%}">
+      <button class="px-1.5 p-1 rounded-full hover:bg-yellow-500 text-white-shadow text-sm sm:text-base sm:px-4 sm:py-2 md:text-xl md:px-6 md:py-3 bg-yellow-300">
+        我的錢包
+      </button>
+    </a>
+  </nav>
+
+
 
  <form method="POST" class="mt-12 max-w-7xl mx-auto" enctype="multipart/form-data">
   {% csrf_token %}
