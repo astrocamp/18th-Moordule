@@ -1,31 +1,31 @@
 <div
 	x-data="{ 
-       value: '{{ value|default:''|escapejs }}', 
-       serverError: '{{ error|default:''|escapejs }}',
-       clientError: '', 
-       isValid: null,
-       validate() {
-           {% if should_validate %}
-               const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
-               this.isValid = regex.test(this.value);
-               this.clientError = this.isValid ? '' : 'username@domain.com';
-           {% else %}
-               this.isValid = true;
-               this.clientError = '';
-           {% endif %}
-       },
-       getError() {
-           this.validate();
-           if (this.serverError) return this.serverError;  
-           return this.clientError;  
-       },
-       init() {
-           this.$watch('value', () => {
-               this.validate();
-               if (this.serverError) this.serverError = '';
-           });
-       }
-   }"
+	value: '{{ value|default:''|escapejs }}', 
+	serverError: '{{ error|default:''|escapejs }}',
+	clientError: '', 
+	isValid: null,
+	validate() {
+		{% if should_validate %}
+			const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+			this.isValid = regex.test(this.value);
+			this.clientError = this.isValid ? '' : 'example: username@domain.com';
+		{% else %}
+			this.isValid = true;
+			this.clientError = '';
+		{% endif %}
+	},
+	getError() {
+	  this.validate();
+		if (this.serverError) return this.serverError;  
+		return this.clientError;  
+	},
+	init() {
+		this.$watch('value', () => {
+			this.validate();
+			if (this.serverError) this.serverError = '';
+		});
+	}
+}"
 >
 	<div
 		class="flex flex-col md:flex-row my-2 px-2 md:px-4 gap-1 md:gap-2 items-start md:items-center"
