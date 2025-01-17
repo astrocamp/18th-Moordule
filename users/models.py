@@ -137,3 +137,15 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.email
+
+def save(self, *args, **kwargs):
+    is_new = self._state.adding  
+    super().save(*args, **kwargs)
+    
+    if is_new:
+        from cashflows.models import Wallet
+        
+        Wallet.objects.create(
+            user=self,
+            balence=0
+        )
