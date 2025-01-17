@@ -12,10 +12,23 @@
               會員等級：{{ membership }}
             </span>
           </div>
-          <div class="w-64 h-24 mx-auto bg-yellow-400 rounded-full flex items-center justify-center gap-4">
-            <span class="text-white-shadow text-lg">剩餘</span>
-            <span class="text-white-shadow text-7xl">{{ wallet_balance|intcomma }}</span>
-            <span class="text-white-shadow text-lg">元</span>
+          <div class="w-64 h-24 mx-auto flex items-center justify-between gap-4">
+            <!-- 可參加 -->
+            <div class="bg-yellow-400 rounded-full w-28 h-28 flex flex-col items-center justify-between py-2">
+              <span class="text-white text-lg">可參加</span>
+              <div class="flex items-center justify-between w-full px-2">
+                <span class="text-white text-7xl">{{ join_activity }}</span>
+                <span class="text-white text-lg">次</span>
+              </div>
+            </div>
+            <!-- 可創建 -->
+            <div class="bg-yellow-400 rounded-full w-28 h-28 flex flex-col items-center justify-between py-2">
+              <span class="text-white text-lg">可創建</span>
+              <div class="flex items-center justify-between w-full px-2">
+                <span class="text-white text-7xl">{{ create_activity }}</span>
+                <span class="text-white text-lg">次</span>
+              </div>
+            </div>
           </div>
           <div class="text-center m-8 bg-white rounded-full">
             {% if membership == "Basic" %}

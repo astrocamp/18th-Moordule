@@ -77,9 +77,11 @@ def user_page_view(request, tag="member"):
         context["membership"] = user.membership_level
 
         if wallet:
-            context["wallet_balance"] = wallet.balence
+            context["join_activity"] = wallet.join_activity
+            context["create_activity"] = wallet.create_activity
         else:
-            context["wallet_balance"] = 0
+            context["join_activity"] = 0
+            context["create_activity"] = 0
 
         context["meetup"] = (
             Meetup.objects.filter(
@@ -114,14 +116,16 @@ def user_page_view(request, tag="member"):
 
         wallet = Wallet.objects.filter(user=user).first()
         if wallet:
-            context["wallet_balance"] = wallet.balence
+            context["join_activity"] = wallet.join_activity
+            context["create_activity"] = wallet.create_activity
 
             transactions = Payment.objects.filter(user=wallet.user).order_by(
                 "-created_at"
             )[:5]
             context["transactions"] = transactions
         else:
-            context["wallet_balance"] = 0
+            context["join_activity"] = 0
+            context["create_activity"] = 0
             context["transactions"] = []
 
     else:
