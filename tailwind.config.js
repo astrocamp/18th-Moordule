@@ -3,7 +3,14 @@ module.exports = {
 	content: ["**/templates/**/*.{html,js}"],
 	theme: {
 		extend: {
+			spacing: {
+				'21': '5.25rem',
+				'22': '5.5rem',
+				'23': '5.75rem',
+				'24': '6.0rem',
+			},
 			colors: {
+				
 				moordule: {
 					pink: "#F78888",
 					yellow: "#F6D246",
