@@ -93,6 +93,7 @@
 						時間：{{ meetup.start_time|date:"H:i" }}
 					</p>
 				</div>
+				{% with current_participants=meetup.participants.count %}
 				<p class="text-gray-500">
 					參加人數：{{ current_participants }}/{{ meetup.max_participants }}
 				</p>
@@ -103,7 +104,7 @@
 					聚會詳情
 				</button>
 				</a>
-				{% with current_participants=meetup.participants.count %}
+				
 				{% endwith %}
 			</div>
 			{% else %}
