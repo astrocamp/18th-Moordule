@@ -15,6 +15,7 @@ from datetime import timedelta
 from django.db import transaction
 from cashflows.models import Wallet
 
+
 def is_adult(birth_date):
     # 計算年齡，並檢查是否已滿18歲
     today = date.today()
@@ -87,7 +88,7 @@ def create(request):
 
                 wallet.create_activity -= cteare_cost
                 wallet.save()
-                  
+
             activity = form.save(commit=False)
             if activity.start_time < timezone.now():
                 messages.error(request, "聚會開始時間必須晚於當前時間！")
@@ -207,12 +208,11 @@ def confirm_delete(request, activity_id):
     if request.method == "POST":
         wallet = Wallet.objects.get(user=request.user)
 
-        create_cost = 1  
+        create_cost = 1
         with transaction.atomic():
             # 扣除錢包餘額
             wallet.create_activity += create_cost
             wallet.save()
-
 
             activity.delete()
         return redirect("users:user_page", tag="my_activities")
@@ -221,6 +221,24 @@ def confirm_delete(request, activity_id):
 
 def join_activity(request, activity_id):
     activity = get_object_or_404(Activity, id=activity_id)
+
+    overlapping_activities = MeetupPaticipat.objects.filter(participant=request.user)
+
+    overlapping_activities = [
+        meetup
+        for meetup in overlapping_activities
+        if (
+            meetup.activity.start_time < activity.end_time
+            and meetup.activity.end_time > activity.start_time
+        )
+    ]
+
+    if overlapping_activities:
+        messages.warning(
+            request, "提醒：您已報名了另一個在此時間段的活動，請確認是否有時間重疊！"
+        )
+    MeetupPaticipat.objects.create(participant=request.user, activity=activity)
+    return redirect("users:user_page", tag="activities")
 
     # 在用戶點擊按鈕時檢查是否滿 18 歲並且資料是否完整
     if (
@@ -269,26 +287,29 @@ def join_activity(request, activity_id):
                         "google_maps_api_key": google_maps_api_key,
                     },
                 )
-            
-           
+
             wallet = Wallet.objects.get(user=request.user)
 
-            activity_cost = 1  
+            activity_cost = 1
             if wallet.join_activity < activity_cost:
                 messages.error(request, "餘額不足，請先充值！")
-                return redirect("cashflows:index")  
+                return redirect("cashflows:index")
 
             # 使用交易保證扣款和參加活動的一致性
             with transaction.atomic():
                 wallet.join_activity -= activity_cost
                 wallet.save()
 
-           
             participation, created = MeetupPaticipat.objects.get_or_create(
                 activity=activity, participant=request.user
             )
             messages.success(
-                request, "您已成功報名聚會，系統已自動扣款！" if created else "您已經報名此聚會！"
+                request,
+                (
+                    "您已成功報名聚會，系統已自動扣款！"
+                    if created
+                    else "您已經報名此聚會！"
+                ),
             )
 
     return render(
@@ -314,7 +335,7 @@ def leave_activity(request, activity_id):
 
             wallet = Wallet.objects.get(user=request.user)
 
-            activity_cost = 1  
+            activity_cost = 1
             with transaction.atomic():
                 wallet.join_activity += activity_cost
                 wallet.save()
