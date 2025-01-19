@@ -222,24 +222,6 @@ def confirm_delete(request, activity_id):
 def join_activity(request, activity_id):
     activity = get_object_or_404(Activity, id=activity_id)
 
-    overlapping_activities = MeetupPaticipat.objects.filter(participant=request.user)
-
-    overlapping_activities = [
-        meetup
-        for meetup in overlapping_activities
-        if (
-            meetup.activity.start_time < activity.end_time
-            and meetup.activity.end_time > activity.start_time
-        )
-    ]
-
-    if overlapping_activities:
-        messages.warning(
-            request, "提醒：您已報名了另一個在此時間段的活動，請確認是否有時間重疊！"
-        )
-    MeetupPaticipat.objects.create(participant=request.user, activity=activity)
-    return redirect("users:user_page", tag="activities")
-
     # 在用戶點擊按鈕時檢查是否滿 18 歲並且資料是否完整
     if (
         not request.user.username
@@ -269,6 +251,23 @@ def join_activity(request, activity_id):
                 "google_maps_api_key": settings.GOOGLE_MAPS_API_KEY,
             },
         )
+    overlapping_activities = MeetupPaticipat.objects.filter(participant=request.user)
+
+    overlapping_activities = [
+        meetup
+        for meetup in overlapping_activities
+        if (
+            meetup.activity.start_time < activity.end_time
+            and meetup.activity.end_time > activity.start_time
+        )
+    ]
+
+    if overlapping_activities:
+        messages.warning(
+            request, "提醒：您已報名了另一個在此時間段的活動，請確認是否有時間重疊！"
+        )
+        MeetupPaticipat.objects.create(participant=request.user, activity=activity)
+        return redirect("users:user_page", tag="activities")
 
     is_participating = activity.participants.filter(id=request.user.id).exists()
     message = None
