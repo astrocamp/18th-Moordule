@@ -1,13 +1,12 @@
 # Moordule 多揪
 
-![moordule](<https://miro.medium.com/v2/resize:fit:1400/format:webp/1*M9eXElapdctvl-nQbPG38w.jpeg> =300x300)
+![moordule](https://miro.medium.com/v2/resize:fit:1400/format:webp/1*M9eXElapdctvl-nQbPG38w.jpeg)
 ![moordule-text](https://miro.medium.com/v2/resize:fit:1400/format:webp/1*sphjBoiQpYV1I4Z5hOl5Qw.jpeg)
 
 ### 揪朋友 來多揪 越揪越多好朋友
 
 ![Moordule-QRcode](https://miro.medium.com/v2/resize:fit:1000/format:webp/1*8gvVFPQIS7pDZhTqA2tsuA.png)
 
-![Moordule-QRcode](/images/qr-code.png)
 
 掃描 QR Code，輕鬆加入聚會，開啟人生新篇章
 
