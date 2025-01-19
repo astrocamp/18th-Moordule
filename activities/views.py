@@ -338,33 +338,6 @@ def join_activity(request, activity_id):
 def leave_activity(request, activity_id):
     activity = get_object_or_404(Activity, id=activity_id)
 
-    is_participating = activity.participants.filter(id=request.user.id).exists()
-    google_maps_api_key = settings.GOOGLE_MAPS_API_KEY
-    if request.method == "POST":
-        if "leave" in request.POST:
-            with transaction.atomic():
-                participation = MeetupPaticipat.objects.get(
-                    activity=activity, participant=request.user
-                )
-                participation.delete()
-
-            messages.success(request, "您已成功退出活動！")
-            return redirect("users:user_page", tag="activities")
-
-    return render(
-        request,
-        "activities/information.html",
-        {
-            "activity": activity,
-            "is_participating": is_participating,
-            "google_maps_api_key": google_maps_api_key,
-        },
-    )
-
-
-def leave_activity(request, activity_id):
-    activity = get_object_or_404(Activity, id=activity_id)
-
     participation = MeetupPaticipat.objects.filter(
         activity=activity, participant=request.user
     ).first()
