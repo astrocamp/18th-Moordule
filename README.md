@@ -5,7 +5,9 @@
 
 ### 揪朋友 來多揪 越揪越多好朋友
 
-![Moordule-QRcode] (/static/images/qr-code.png)
+![Moordule-QRcode](https://miro.medium.com/v2/resize:fit:1000/format:webp/1*8gvVFPQIS7pDZhTqA2tsuA.png)
+
+![Moordule-QRcode](/images/qr-code.png)
 
 掃描 QR Code，輕鬆加入聚會，開啟人生新篇章
 
