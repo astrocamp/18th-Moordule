@@ -222,6 +222,8 @@ def confirm_delete(request, activity_id):
 def join_activity(request, activity_id):
     activity = get_object_or_404(Activity, id=activity_id)
 
+    overlapping_activities = MeetupPaticipat.objects.filter(participant=request.user)
+
     # 在用戶點擊按鈕時檢查是否滿 18 歲並且資料是否完整
     if (
         not request.user.username
@@ -233,14 +235,12 @@ def join_activity(request, activity_id):
         return redirect(
             "users:user_page", tag="account"
         )  # 如果資料不完整，重定向到個人資料頁面
-
     # 檢查用戶是否年滿 18 歲
     if not is_adult(request.user.birth_date):
         messages.error(request, "您必須年滿 18 歲才能參加聚會。")
         return redirect(
             "users:user_page", tag="member"
         )  # 如果未滿 18 歲，重定向至個人資料頁面
-
     if activity.status != "approved":
         return render(
             request,
@@ -251,27 +251,40 @@ def join_activity(request, activity_id):
                 "google_maps_api_key": settings.GOOGLE_MAPS_API_KEY,
             },
         )
-    overlapping_activities = MeetupPaticipat.objects.filter(participant=request.user)
-
-    overlapping_activities = [
-        meetup
-        for meetup in overlapping_activities
-        if (
-            meetup.activity.start_time < activity.end_time
-            and meetup.activity.end_time > activity.start_time
-        )
-    ]
-
-    if overlapping_activities:
-        messages.warning(
-            request, "提醒：您已報名了另一個在此時間段的活動，請確認是否有時間重疊！"
-        )
-        MeetupPaticipat.objects.create(participant=request.user, activity=activity)
-        return redirect("users:user_page", tag="activities")
-
     is_participating = activity.participants.filter(id=request.user.id).exists()
     message = None
     google_maps_api_key = settings.GOOGLE_MAPS_API_KEY
+
+    # 按下「加入聚會」後才進行重疊活動的檢查
+    if request.method == "POST":
+        overlapping_activities = MeetupPaticipat.objects.filter(
+            participant=request.user
+        )
+        # 檢查是否有重疊的活動
+        overlapping_activities = [
+            meetup
+            for meetup in overlapping_activities
+            if (
+                meetup.activity.start_time < activity.end_time
+                and meetup.activity.end_time > activity.start_time
+            )
+        ]
+
+        # 若有重疊的活動，顯示提示訊息
+        if overlapping_activities:
+            messages.warning(
+                request,
+                "提醒：您已報名了另一個在此時間段的活動，請確認是否有時間重疊！",
+            )
+            # 不讓用戶加入此活動，返回原來的頁面
+            return render(
+                request,
+                "activities/information.html",
+                {
+                    "activity": activity,
+                    "google_maps_api_key": settings.GOOGLE_MAPS_API_KEY,
+                },
+            )
 
     if request.method == "POST":
         if "join" in request.POST:
@@ -310,6 +323,33 @@ def join_activity(request, activity_id):
                     else "您已經報名此聚會！"
                 ),
             )
+
+    return render(
+        request,
+        "activities/information.html",
+        {
+            "activity": activity,
+            "is_participating": is_participating,
+            "google_maps_api_key": google_maps_api_key,
+        },
+    )
+
+
+def leave_activity(request, activity_id):
+    activity = get_object_or_404(Activity, id=activity_id)
+
+    is_participating = activity.participants.filter(id=request.user.id).exists()
+    google_maps_api_key = settings.GOOGLE_MAPS_API_KEY
+    if request.method == "POST":
+        if "leave" in request.POST:
+            with transaction.atomic():
+                participation = MeetupPaticipat.objects.get(
+                    activity=activity, participant=request.user
+                )
+                participation.delete()
+
+            messages.success(request, "您已成功退出活動！")
+            return redirect("users:user_page", tag="activities")
 
     return render(
         request,
