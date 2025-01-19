@@ -5,7 +5,7 @@
 
 ### 揪朋友 來多揪 越揪越多好朋友
 
-![Moordule-QRcode] (https://miro.medium.com/v2/resize:fit:1400/format:webp/1*eUziMkHk2T129_qoLBXSFQ.png)
+![Moordule-QRcode] (/Users/leiyenchen/Desktop/18th-Moordule/static/images/qr-code.png)
 
 掃描 QR Code，輕鬆加入聚會，開啟人生新篇章
 
@@ -29,10 +29,12 @@ Moordule 多揪 是一個以**聚會**為出發點的交友平台，讓使用者
 
 - 參與聚會
 - 創建聚會
-- 儲值
+- 加值
 
 ### 聚會功能：
 - 六大聚會種類，輕鬆找到志同道合的朋友
+- 搜尋列
+- google map
 
 
 ### 金流功能：
@@ -62,16 +64,16 @@ cd 18th-Moordule(進入專案目錄)
 
 ## 技術使用
 
-前端：`HTML`,`CSS`,`Tailwind CSS`,`JavaScript`,`HTMX`,`Alpine.js`
-後端：`Python`,`Django`
-資料庫：`PostgreSQL`, [TablePlus](https://tableplus.com/)
-版本控制：`Git`, `GitHub`
-第三方登入：`Google`
-金流：`Line Pay`
-圖片上傳：`AWS S3` 
-部署：`Zeabur`
-排版設計:`Design.com`, `Illustrator`, `Canva`
-專案規劃：`Miro`, `Asana`
+- 前端：`HTML`,`CSS`,`Tailwind CSS`,`JavaScript`,`HTMX`,`Alpine.js`  
+- 後端：`Python`,`Django`  
+- 資料庫：`PostgreSQL`, [TablePlus](https://tableplus.com/)  
+- 版本控制：`Git`, `GitHub`  
+- 第三方登入：`Google`  
+- 金流：`Line Pay`  
+- 圖片上傳：`AWS S3`   
+- 部署：`Zeabur`  
+- 排版設計:`Design.com`, `Illustrator`, `Canva`   
+- 專案規劃：`Miro`, `Asana`  
 
 
 ## 團隊成員
@@ -79,7 +81,7 @@ cd 18th-Moordule(進入專案目錄)
 鄧鈺馨 Cindy [GitHub](https://github.com/YuHsinTengCindy)  
 - 頁面切版
 - 聚會系統
-- 創建聚會
+- 後台管理
 
 柳澤豐 RichardT [GitHub](https://github.com/richart-coder)  
 - 環境設定
@@ -94,6 +96,7 @@ cd 18th-Moordule(進入專案目錄)
 張家瑞 Gary [GitHub](https://github.com/Gary0306)  
 - 搜尋功能
 - Google 日曆串接
+- Banner輪播
 
 陳思妤 Emma [GitHub](https://github.com/Emma-EC)  
 - 頁面切版
@@ -103,3 +106,4 @@ cd 18th-Moordule(進入專案目錄)
 王廷安 [GitHub](https://github.com/Tingan111)  
 - 圖片上傳
 - 通知視窗
+- RWD設定
