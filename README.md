@@ -5,11 +5,13 @@
 
 ### 揪朋友 來多揪 越揪越多好朋友
 
-![Moordule-QRcode] (/Users/leiyenchen/Desktop/18th-Moordule/static/images/qr-code.png)
+![Moordule-QRcode] (/static/images/qr-code.png)
 
 掃描 QR Code，輕鬆加入聚會，開啟人生新篇章
 
 專案網址 : https://moordule.com  
+
+專案影片介紹：https://www.youtube.com/watch?v=wA4ZW-SrpdU
  
 
 ### 關於多揪
