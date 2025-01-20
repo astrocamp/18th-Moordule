@@ -21,6 +21,9 @@ def index_view(request):
     return render(request, "pages/index.html", context)
 
 
+def info(request):
+    return render(request, "pages/info.html")
+
 def privacy(request):
     return render(request, "pages/privacy.html")
 
