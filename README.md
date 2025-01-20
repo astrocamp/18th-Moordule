@@ -69,7 +69,7 @@ cd 18th-Moordule(進入專案目錄)
 
 - 前端：`HTML`,`CSS`,`Tailwind CSS`,`JavaScript`,`HTMX`,`Alpine.js`  
 - 後端：`Python`,`Django`  
-- 資料庫：`PostgreSQL`, [TablePlus](https://tableplus.com/)  
+- 資料庫：`PostgreSQL` 
 - 版本控制：`Git`, `GitHub`  
 - 第三方登入：`Google`  
 - 金流：`Line Pay`  
