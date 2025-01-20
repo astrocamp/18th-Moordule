@@ -13,20 +13,15 @@ ALLOWED_HOSTS = allowed_hosts_env + [line_pay_hostname] + ['moordule.com', 'www.
 CSRF_TRUSTED_ORIGINS = [f"https://{os.getenv('HOSTNAME')}"] 
 
 AUTH_USER_MODEL = "users.CustomUser"
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 DEBUG = os.getenv("DEBUG", "True") == "True"
 
-# 初始化環境變數
-# BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 BASE_DIR = Path(__file__).resolve().parent.parent
-# env = environ.Env(DEBUG=(bool, False))
-# environ.Env.read_env(str(BASE_DIR / ".env"))
+
 db_url = os.getenv("DATABASE_URL")
-# AUTH_USER_MODEL = "users.CustomUser"
-# DEBUG = env.bool("DEBUG", default=False)
+
 LOGIN_URL = "users:signin"
 
-# Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -93,7 +88,6 @@ TEMPLATES = [
             "builtins": [
                 "shared.templatetags.common_components",
                 "shared.templatetags.navigation",
-                # "shared.templatetags.meetup_components",
             ],
         },
     },
